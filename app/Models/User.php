@@ -44,4 +44,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function setPassword($value){
+        return $this->attributes['password'] = Hash::make($value);
+    }
 }
