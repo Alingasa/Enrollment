@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\CivilStatusEnum;
+use App\EnrolledStatus;
+use App\GenderEnum;
 use App\GradeEnum;
+use App\ReligionEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +18,7 @@ class Enrollment extends Model
 
     protected $fillable = [
         'school_id',
+        'section_id',
         '_token',
         'first_name',
         'middle_name',
@@ -36,6 +41,7 @@ class Enrollment extends Model
         'profile_image',
         'status',
         'status_type',
+        'facebook_url'
     ];
 
     protected $appends = ['full_name', 'age'];
@@ -43,6 +49,10 @@ class Enrollment extends Model
     public function casts(){
         return [
             'grade_level'       => GradeEnum::class,
+            'gender'            =>   GenderEnum::class,
+            'civil_status'      => CivilStatusEnum::class,
+            'religion'          => ReligionEnum::class,
+            'status'            => EnrolledStatus::class,
         ];
     }
 

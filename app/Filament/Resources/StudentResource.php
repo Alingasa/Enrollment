@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\Subject;
+use App\Filament\Resources\StudentResource\Pages;
+use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
+use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubjectResource extends Resource
+class StudentResource extends Resource
 {
-    protected static ?string $model = Subject::class;
+    protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,19 +24,12 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('teacher_id')
+                Forms\Components\TextInput::make('enrollment_id')
+                    ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('section_id')
+                Forms\Components\TextInput::make('subject_id')
+                    ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('subject_code')
-                    ->required(),
-                Forms\Components\TextInput::make('subject_title'),
-                Forms\Components\TextInput::make('strand_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_type'),
-                Forms\Components\TextInput::make('units')
-                    ->numeric(),
-                Forms\Components\TextInput::make('grade_level'),
             ]);
     }
 
@@ -43,26 +37,14 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('teacher_id')
+                Tables\Columns\TextColumn::make('enrollment.first_name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('enrollment_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('section_id')
+                Tables\Columns\TextColumn::make('subject_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subject_code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('subject_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('strand_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subject_type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('units')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grade_level')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -96,16 +78,17 @@ class SubjectResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'view' => Pages\ViewSubject::route('/{record}'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            'index' => Pages\ListStudents::route('/'),
+            'create' => Pages\CreateStudent::route('/create'),
+            'view' => Pages\ViewStudent::route('/{record}'),
+            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 
