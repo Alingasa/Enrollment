@@ -10,28 +10,34 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #032013;
             font-family: 'Arial', sans-serif;
-            background-image: url('image/mlg.jpg');
+            background-image: url('image/school.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
         .form-container {
-            background: #fff;
+            background-color: #032013;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0,0,0,1);
             padding: 30px;
             margin: 30px auto;
             max-width: 900px;
+            color: white;
         }
         .form-label {
             font-weight: bold;
+        }
+        .form-text {
+            background-color: rgb(215, 215, 215);
         }
         .form-control, .form-select {
             border-radius: 12px;
             border: 1px solid #ced4da;
             padding: 10px;
+            background-color: rgb(208, 208, 208);
+
         }
         .btn-primary, .btn-danger {
             padding: 10px 20px;
@@ -249,7 +255,7 @@
                 @enderror
             </div>
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="submit" class="btn btn-primary" value="Submit">
                 <a href="/" type="button" class="btn btn-danger">Cancel</a>
             </div>
         </form>
