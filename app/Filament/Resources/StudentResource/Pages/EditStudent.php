@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
-use App\Filament\Resources\StudentResource;
 use Filament\Actions;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\StudentResource;
 
 class EditStudent extends EditRecord
 {
@@ -19,4 +20,8 @@ class EditStudent extends EditRecord
             Actions\RestoreAction::make(),
         ];
     }
+
+
+
+
 }

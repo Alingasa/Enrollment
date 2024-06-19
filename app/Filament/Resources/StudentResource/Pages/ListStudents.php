@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
-use App\Filament\Resources\StudentResource;
 use Filament\Actions;
+use Filament\Tables\Table;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\StudentResource;
 
 class ListStudents extends ListRecords
 {
@@ -16,4 +17,6 @@ class ListStudents extends ListRecords
             // Actions\CreateAction::make(),
         ];
     }
+
+
 }

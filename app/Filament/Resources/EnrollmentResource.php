@@ -28,18 +28,6 @@ class EnrollmentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
-                ->columns(2)
-                ->schema([
-                    Forms\Components\Radio::make('status')
-                    ->required()
-                    ->options([
-                        '1' => 'Rejected',
-                        '2' => 'Approved',
-                    ])
-                    ->default(1),
-
-                ])->visible(fn ($operation) => ($operation == 'edit')),
                 Forms\Components\Section::make('Student Detail')
                 ->columns(3)
                 ->schema([
@@ -198,6 +186,27 @@ class EnrollmentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('approve')
+                    // ->label('')
+                    ->color('success')
+                    ->modalHeading('Approve')
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-hand-thumb-up')
+                    ->action(fn ($record) => $record->update([
+                        'status'    => EnrolledStatus::ENROLLED,
+                    ])),
+
+                    Tables\Actions\Action::make('reject')
+                    // ->label('')
+                    ->modalHeading('Reject')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-hand-thumb-down')
+                    ->action(fn ($record) => $record->update([
+                        'status'    => EnrolledStatus::PENDING,
+                    ])),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
