@@ -23,7 +23,23 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('teacher_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('section_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('subject_code')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('subject_title')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('strand_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('subject_type')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('units')
+                    ->numeric(),
+                Forms\Components\TextInput::make('grade_level')
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,12 +47,44 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('teacher_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('section_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject_code')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('subject_title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('strand_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject_type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('units')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('grade_level')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -60,6 +108,7 @@ class SubjectResource extends Resource
         return [
             'index' => Pages\ListSubjects::route('/'),
             'create' => Pages\CreateSubject::route('/create'),
+            'view' => Pages\ViewSubject::route('/{record}'),
             'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
     }
