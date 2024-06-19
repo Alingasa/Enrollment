@@ -21,7 +21,7 @@ class Teacher extends Model
     {
         return [
             'status'    => TeacherStatus::class,
-            'gender'            =>   GenderEnum::class,
+            'gender'    =>   GenderEnum::class,
         ];
     }
 
