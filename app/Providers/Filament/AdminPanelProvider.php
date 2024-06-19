@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandName('HighSchool-Enrollment')
             ->login()
             ->colors([
                 'primary' => Color::Sky,
