@@ -6,6 +6,7 @@ use App\GradeEnum;
 use App\GenderEnum;
 use Filament\Forms;
 use Filament\Tables;
+use App\ReligionEnum;
 use App\EnrolledStatus;
 use App\CivilStatusEnum;
 use Filament\Forms\Form;
@@ -15,8 +16,7 @@ use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EnrollmentResource\Pages;
-use App\Filament\Resources\EnrollmentResource\RelationManagers;
-use App\ReligionEnum;
+
 
 class EnrollmentResource extends Resource
 {
@@ -99,7 +99,7 @@ class EnrollmentResource extends Resource
                         ->numeric()
                         ->default(1),
                     Forms\Components\TextInput::make('guardian_name'),
-                    ])
+                    ])->columns(3)
 
                     ])
             ]);
@@ -221,6 +221,7 @@ class EnrollmentResource extends Resource
     {
         return [
             //
+
         ];
     }
 

@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('enrollment_id')->constrained()->cascadeOnUpdate();
-            $table->foreignId('subject_id')->constrained()->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

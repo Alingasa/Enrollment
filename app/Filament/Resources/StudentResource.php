@@ -5,8 +5,6 @@ namespace App\Filament\Resources;
 use App\EnrolledStatus;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
-use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
-use App\Models\Enrollment;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,14 +13,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Enrollment;
 
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
 
     public static function form(Form $form): Form
     {
@@ -40,26 +37,13 @@ class StudentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-                ->query(Enrollment::query()->where('status', EnrolledStatus::ENROLLED))
-                 ->columns([
-                Tables\Columns\TextColumn::make('status')
+            ->query(Enrollment::where('status', EnrolledStatus::ENROLLED))
+            ->columns([
+                Tables\Columns\TextColumn::make('enrollment_id')
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('profile_image')
-                    ->default(url('default_images/me.jpg'))
-                    ->circular()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('school_id')
-                    ->badge()
-                    ->color('danger')
-                    ->default('Set ID')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('full_name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('strand')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('subject_id')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
@@ -78,7 +62,6 @@ class StudentResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -94,7 +77,6 @@ class StudentResource extends Resource
     {
         return [
             //
-            SubjectsRelationManager::class,
         ];
     }
 
@@ -103,7 +85,6 @@ class StudentResource extends Resource
         return [
             'index' => Pages\ListStudents::route('/'),
             'create' => Pages\CreateStudent::route('/create'),
-            'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }

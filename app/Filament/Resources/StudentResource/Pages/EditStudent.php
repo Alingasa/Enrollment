@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
-use Filament\Actions;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\StudentResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
 
 class EditStudent extends EditRecord
 {
@@ -14,14 +13,9 @@ class EditStudent extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
             Actions\DeleteAction::make(),
             Actions\ForceDeleteAction::make(),
             Actions\RestoreAction::make(),
         ];
     }
-
-
-
-
 }
