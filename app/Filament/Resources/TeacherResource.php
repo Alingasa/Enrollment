@@ -40,6 +40,7 @@ class TeacherResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
                     ->email()
                     ->maxLength(255),
                 Forms\Components\Select::make('gender')
@@ -64,45 +65,39 @@ class TeacherResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('school_id')
-                    ->searchable(),
+                ->columns([
+                    Tables\Columns\ImageColumn::make('profile_image')
+                        ->circular()
+                        ->default(url('default_images/me.jpg'))
+                        ->alignCenter()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('school_id')
+                        ->label('School ID')
+                        ->default('Set ID')
+                        ->badge()
+                        ->color('danger')
+                        ->sortable(),
                     Tables\Columns\TextColumn::make('full_name')
-                    ->searchable(['first_name', 'middle_name', 'last_name'])
-                    ->sortable(['middle_name', 'first_name', 'last_name']),
-                // Tables\Columns\TextColumn::make('first_name')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('middle_name')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('last_name')
-                //     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gender')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contact_number')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('barangay')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('municipality')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('province')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('zip_code')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                        ->searchable(['first_name', 'middle_name', 'last_name'])
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('email')
+                        ->copyable()
+                       ->copyMessage('Email address copied')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('gender')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('deleted_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
