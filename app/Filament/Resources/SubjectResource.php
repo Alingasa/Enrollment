@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\Subject;
+use App\GradeEnum;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Subject;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SubjectResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SubjectResource\RelationManagers;
 
 class SubjectResource extends Resource
 {
@@ -25,19 +26,33 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('teacher_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('section_id')
-                    ->numeric(),
+                Forms\Components\Select::make('teacher_id')
+                    ->label('Teacher')
+                    ->relationship(name: 'teacher', titleAttribute: 'first_name' )
+                    ->required(),
+                Forms\Components\Select::make('section_id')
+                ->label('Section')
+                ->relationship(name: 'section', titleAttribute: 'name' )
+                ->required(),
                 Forms\Components\TextInput::make('subject_code')
                     ->required(),
-                Forms\Components\TextInput::make('subject_title'),
-                Forms\Components\TextInput::make('strand_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_type'),
+                Forms\Components\TextInput::make('subject_title')
+                    ->required(),
+                Forms\Components\Select::make('strand_id')
+                    ->relationship(name: 'strand', titleAttribute: 'name'),
+                Forms\Components\Select::make('subject_type')
+                    ->options([
+                        'LECTURE' => 'LECTURE',
+                        'LABORATORY' => 'LABORATORY'
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('units')
-                    ->numeric(),
-                Forms\Components\TextInput::make('grade_level'),
+                    ->maxLength(1)
+                    ->numeric()
+                    ->required(),
+                Forms\Components\Select::make('grade_level')
+                    ->options(GradeEnum::class)
+                    ->required(),
             ]);
     }
 
@@ -45,17 +60,17 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('teacher_id')
+                Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('section_id')
+                Tables\Columns\TextColumn::make('section.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subject_title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('strand_id')
+                Tables\Columns\TextColumn::make('strand.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_type')
