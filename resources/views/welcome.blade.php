@@ -10,15 +10,16 @@
 
     <style>
         body {
-            background-color: #f0f8ff;
+            background-color: #032013;
             font-family: 'Arial', sans-serif;
-            background-image: url('image/mlg.jpg');
+            background-image: url('image/school.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
         .boxform {
-            background-color: #ffffff;
+            background-color: #032013;
+            color:white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
             border-radius: 10px;
             padding: 2rem;
@@ -66,6 +67,14 @@
 
 
     <script>
+         @if(session('success_apply'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Successfully Apply for Enrollment',
+            showConfirmButton: false,
+            timer: 2500
+        });
+        @endif
         @if(session('update_success'))
         Swal.fire({
             icon: 'success',
