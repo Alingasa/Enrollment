@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\GenderEnum;
 use App\TeacherStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +21,7 @@ class Teacher extends Model
     {
         return [
             'status'    => TeacherStatus::class,
+            'gender'            =>   GenderEnum::class,
         ];
     }
 

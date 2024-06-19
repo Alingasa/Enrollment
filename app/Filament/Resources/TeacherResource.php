@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TeacherResource\Pages;
-use App\Filament\Resources\TeacherResource\RelationManagers;
-use App\Models\Teacher;
+use App\GenderEnum;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Teacher;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TeacherResource\RelationManagers;
 
 class TeacherResource extends Resource
 {
@@ -24,6 +25,7 @@ class TeacherResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('school_id')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')
                     ->required()
@@ -36,11 +38,12 @@ class TeacherResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gender')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('gender')
+                    ->options(GenderEnum::class)
+                    ->required(),
                 Forms\Components\TextInput::make('contact_number')
-                    ->maxLength(255),
+                    ->numeric()
+                    ->maxLength(11),
                 Forms\Components\TextInput::make('barangay')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('municipality')
@@ -58,12 +61,15 @@ class TeacherResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('school_id')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('first_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('middle_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('last_name')
-                    ->searchable(),
+                    Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(['first_name', 'middle_name', 'last_name'])
+                    ->sortable(['middle_name', 'first_name', 'last_name']),
+                // Tables\Columns\TextColumn::make('first_name')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('middle_name')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('last_name')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
