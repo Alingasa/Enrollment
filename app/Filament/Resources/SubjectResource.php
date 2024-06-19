@@ -26,7 +26,10 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('teacher_id')
+                Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
+                    Forms\Components\Select::make('teacher_id')
                     ->label('Teacher')
                     ->relationship(name: 'teacher', titleAttribute: 'first_name' )
                     ->required(),
@@ -53,6 +56,8 @@ class SubjectResource extends Resource
                 Forms\Components\Select::make('grade_level')
                     ->options(GradeEnum::class)
                     ->required(),
+                ])
+
             ]);
     }
 

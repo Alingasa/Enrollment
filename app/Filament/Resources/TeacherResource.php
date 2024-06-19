@@ -25,7 +25,10 @@ class TeacherResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('school_id')
+                Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('school_id')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')
@@ -53,6 +56,8 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('zip_code')
                     ->numeric(),
+                ])
+
             ]);
     }
 

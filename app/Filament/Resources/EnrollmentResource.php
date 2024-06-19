@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EnrollmentResource\Pages;
@@ -70,13 +72,15 @@ class EnrollmentResource extends Resource
                         ->visible(fn ($get, $operation) => ($operation == 'edit') && in_array($get('status'), [
                             EnrolledStatus::ENROLLED->value,
                         ]))
-                        ->unique(table: 'students', column: 'school_id', ignoreRecord: true),
+                        ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true),
                     Forms\Components\TextInput::make('first_name')
                         ->required(),
                     Forms\Components\TextInput::make('middle_name'),
                     Forms\Components\TextInput::make('last_name')
                         ->required(),
                     Forms\Components\TextInput::make('email')
+                        ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
+                        ->live()
                         ->email(),
                     Forms\Components\DatePicker::make('birthdate')
                         ->required(),
@@ -84,8 +88,10 @@ class EnrollmentResource extends Resource
                         ->options(GenderEnum::class)
                         ->required(),
                     Forms\Components\Select::make('civil_status')
+                        ->required()
                         ->options(CivilStatusEnum::class),
-                    Forms\Components\TextInput::make('contact_number'),
+                    Forms\Components\TextInput::make('contact_number')
+                        ->required(),
                     Forms\Components\Select::make('religion')
                         ->required()
                         ->options(ReligionEnum::class),
@@ -112,6 +118,7 @@ class EnrollmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
             ->columns([
                 Tables\Columns\TextColumn::make('status')
                     ->sortable(),
@@ -121,14 +128,22 @@ class EnrollmentResource extends Resource
                     ->circular(),
                 Tables\Columns\TextColumn::make('school_id')
                     ->default('Set ID')
+                    ->label('School ID')
                     ->badge()
-                    ->color('danger')
+                    ->color(fn ($state): string => match($state){
+                        'Set ID' => 'danger',
+                         $state => 'warning'
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('full_name')
                     ->searchable(['first_name', 'middle_name', 'last_name'])
                     ->sortable(['middle_name', 'first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('strand.name')
                     ->default('No Strand')
+                    ->color(fn ($state) => match($state){
+                        'No Strand' => 'primary',
+                        $state => 'success'
+                    })
                     ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
@@ -138,6 +153,9 @@ class EnrollmentResource extends Resource
                 // Tables\Columns\TextColumn::make('last_name')
                 //     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    // ->unique(table: 'enrollments', column: 'email')
+                    ->copyable()
+                    ->copyMessage('Email address copied')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('birthdate')
                 //     ->date()
@@ -186,7 +204,14 @@ class EnrollmentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
-            ])
+                SelectFilter::make('Status')
+                ->options(EnrolledStatus::class),
+                SelectFilter::make('grade_level')
+                ->options(GradeEnum::class),
+                SelectFilter::make('strand_id')
+                ->label('By Strands')
+                ->relationship('strand', 'name'),
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),

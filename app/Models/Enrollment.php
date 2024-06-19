@@ -17,9 +17,10 @@ class Enrollment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'school_id',
+
         'section_id',
         '_token',
+        'school_id',
         'first_name',
         'middle_name',
         'last_name',
