@@ -61,7 +61,9 @@ class EnrollmentResource extends Resource
                         ]))
                         ->searchable(),
                     Forms\Components\Select::make('section_id')
-                        ->relationship(name: 'section', titleAttribute: 'name')
+                        ->relationship(name: 'section',
+                        titleAttribute: 'name',
+                        )
                         ->searchable()
                         ->preload()
                         ->label('Section')
@@ -251,7 +253,7 @@ class EnrollmentResource extends Resource
         return [
             //
             SubjectsRelationManager::class,
-            SectionRelationManager::class,
+            // SectionRelationManager::class,
         ];
     }
 
