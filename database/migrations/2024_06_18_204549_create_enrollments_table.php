@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('status')->default(1);
             $table->foreignId('strand_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->foreignId('section_id')->nullable()->constrained()->cascadeOnUpdate();
-            $table->foreignId('subject_id')->nullable()->constrained()->cascadeOnUpdate();
+            // $table->foreignId('subject_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->string('grade_level')->nullable();
             $table->string('school_id')->unique()->nullable();
             $table->string('first_name');

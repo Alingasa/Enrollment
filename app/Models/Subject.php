@@ -26,7 +26,7 @@ class Subject extends Model
     }
 
     public function enrollments(){
-        return $this->hasMany(Enrollment::class);
+        return $this->belongsToMany(related: Enrollment::class , table: 'enrollment_subject');
     }
 
 

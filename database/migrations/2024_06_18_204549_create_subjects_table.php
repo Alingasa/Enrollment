@@ -24,6 +24,13 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('enrollment_subject', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('enrollment_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+        });
     }
 
     /**

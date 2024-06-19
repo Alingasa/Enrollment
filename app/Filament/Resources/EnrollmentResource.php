@@ -16,13 +16,17 @@ use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EnrollmentResource\Pages;
+use App\Filament\Resources\EnrollmentResource\RelationManagers\SectionRelationManager;
+use App\Filament\Resources\EnrollmentResource\RelationManagers\SubjectsRelationManager;
 
 
 class EnrollmentResource extends Resource
 {
     protected static ?string $model = Enrollment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+
+
 
     public static function form(Form $form): Form
     {
@@ -221,7 +225,8 @@ class EnrollmentResource extends Resource
     {
         return [
             //
-
+            SubjectsRelationManager::class,
+            SectionRelationManager::class,
         ];
     }
 
