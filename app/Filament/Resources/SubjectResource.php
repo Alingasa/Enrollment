@@ -28,18 +28,14 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('section_id')
                     ->numeric(),
                 Forms\Components\TextInput::make('subject_code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('subject_title')
-                    ->maxLength(255),
+                    ->required(),
+                Forms\Components\TextInput::make('subject_title'),
                 Forms\Components\TextInput::make('strand_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('subject_type')
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('subject_type'),
                 Forms\Components\TextInput::make('units')
                     ->numeric(),
-                Forms\Components\TextInput::make('grade_level')
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('grade_level'),
             ]);
     }
 

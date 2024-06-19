@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TeacherResource\Pages;
-use App\Filament\Resources\TeacherResource\RelationManagers;
-use App\Models\Teacher;
+use App\EnrolledStatus;
+use App\Filament\Resources\StudentResource\Pages;
+use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
+use App\Models\Enrollment;
+use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,32 +15,24 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class TeacherResource extends Resource
+class StudentResource extends Resource
 {
-    protected static ?string $model = Teacher::class;
+    protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('school_id'),
-                Forms\Components\TextInput::make('first_name')
-                    ->required(),
-                Forms\Components\TextInput::make('middle_name'),
-                Forms\Components\TextInput::make('last_name')
-                    ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->email(),
-                Forms\Components\TextInput::make('gender')
-                    ->required(),
-                Forms\Components\TextInput::make('contact_number'),
-                Forms\Components\TextInput::make('barangay'),
-                Forms\Components\TextInput::make('municipality'),
-                Forms\Components\TextInput::make('province'),
-                Forms\Components\TextInput::make('zip_code')
+                Forms\Components\TextInput::make('enrollment_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('subject_id')
+                    ->required()
                     ->numeric(),
             ]);
     }
@@ -45,29 +40,26 @@ class TeacherResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+                ->query(Enrollment::query()->where('status', EnrolledStatus::ENROLLED))
+                 ->columns([
+                Tables\Columns\TextColumn::make('status')
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('profile_image')
+                    ->default(url('default_images/me.jpg'))
+                    ->circular()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('school_id')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('first_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('middle_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('last_name')
-                    ->searchable(),
+                    ->badge()
+                    ->color('danger')
+                    ->default('Set ID')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('strand')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gender')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contact_number')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('barangay')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('municipality')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('province')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('zip_code')
-                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('grade_level')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
@@ -102,16 +94,17 @@ class TeacherResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTeachers::route('/'),
-            'create' => Pages\CreateTeacher::route('/create'),
-            'view' => Pages\ViewTeacher::route('/{record}'),
-            'edit' => Pages\EditTeacher::route('/{record}/edit'),
+            'index' => Pages\ListStudents::route('/'),
+            'create' => Pages\CreateStudent::route('/create'),
+            'view' => Pages\ViewStudent::route('/{record}'),
+            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 

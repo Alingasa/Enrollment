@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\EnrollmentResource\Pages;
+namespace App\Filament\Resources\StudentResource\Pages;
 
 use Filament\Actions;
-use App\EnrolledStatus;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Resources\EnrollmentResource;
+use App\Filament\Resources\StudentResource;
 
-class EditEnrollment extends EditRecord
+class EditStudent extends EditRecord
 {
-    protected static string $resource = EnrollmentResource::class;
+    protected static string $resource = StudentResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -21,5 +20,8 @@ class EditEnrollment extends EditRecord
             Actions\RestoreAction::make(),
         ];
     }
+
+
+
 
 }
