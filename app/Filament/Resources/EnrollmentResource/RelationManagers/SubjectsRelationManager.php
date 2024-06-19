@@ -14,6 +14,10 @@ class SubjectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'subjects';
 
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
 
     public function form(Form $form): Form
     {
@@ -21,7 +25,7 @@ class SubjectsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('subject_title')
                 ->live()
-
+                 ->preload()
                     ->required()
                     ->maxLength(255),
 
@@ -58,9 +62,9 @@ class SubjectsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DetachBulkAction::make(),
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\RestoreBulkAction::make(),
+                    // Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([

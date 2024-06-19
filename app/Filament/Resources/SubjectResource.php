@@ -41,8 +41,6 @@ class SubjectResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('subject_title')
                     ->required(),
-                Forms\Components\Select::make('strand_id')
-                    ->relationship(name: 'strand', titleAttribute: 'name'),
                 Forms\Components\Select::make('subject_type')
                     ->options([
                         'LECTURE' => 'LECTURE',
@@ -54,8 +52,15 @@ class SubjectResource extends Resource
                     ->numeric()
                     ->required(),
                 Forms\Components\Select::make('grade_level')
+                    ->live()
                     ->options(GradeEnum::class)
                     ->required(),
+                Forms\Components\Select::make('strand_id')
+                    ->relationship(name: 'strand', titleAttribute: 'name')
+                    ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
+                        GradeEnum::GRADE11->value,
+                        GradeEnum::GRADE12->value,
+                    ]))
                 ])
 
             ]);
