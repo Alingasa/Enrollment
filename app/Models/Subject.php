@@ -25,5 +25,9 @@ class Subject extends Model
         return $this->belongsTo(Section::class);
     }
 
+    public function enrollments(){
+        return $this->hasMany(Enrollment::class);
+    }
+
 
 }

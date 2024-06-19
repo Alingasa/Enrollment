@@ -14,17 +14,13 @@ class Teacher extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['full_name', 'age'];
+    protected $appends = ['full_name'];
 
     protected function casts()
     {
         return [
             'status'    => TeacherStatus::class,
         ];
-    }
-    public function getAgeAttribute()
-    {
-        return Carbon::parse($this->birthdate)->age;
     }
 
     public function getFullNameAttribute()

@@ -23,20 +23,30 @@ class TeacherResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('school_id'),
+                Forms\Components\TextInput::make('school_id')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')
-                    ->required(),
-                Forms\Components\TextInput::make('middle_name'),
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('middle_name')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->email(),
+                    ->email()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('gender')
-                    ->required(),
-                Forms\Components\TextInput::make('contact_number'),
-                Forms\Components\TextInput::make('barangay'),
-                Forms\Components\TextInput::make('municipality'),
-                Forms\Components\TextInput::make('province'),
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('contact_number')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('barangay')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('municipality')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('province')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('zip_code')
                     ->numeric(),
             ]);

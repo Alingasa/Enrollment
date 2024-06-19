@@ -12,8 +12,4 @@ class Student extends Model
 
     protected $guarded = [];
 
-    public function enrollment(){
-        return $this->belongsTo(Enrollment::class);
-    }
-
 }

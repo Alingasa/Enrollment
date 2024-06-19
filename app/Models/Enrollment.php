@@ -78,7 +78,7 @@ class Enrollment extends Model
         return $this->belongsTo(Section::class);
     }
 
-    public function students(){
-        return $this->hasMany(Student::class);
+    public function subject(){
+        return $this->belongsTo(Subject::class);
     }
 }
