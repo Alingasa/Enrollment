@@ -151,7 +151,7 @@
             @endif
 
         </div>
-{{-- {{dd($record)}} --}}
+{{dd($record)}}
         <div class="details">
             <p><span>NAME:</span> {{ $record->full_name}}</p>
             <p><span>DATE OF BIRTH:</span> {{$record->birthdate}}</p>
