@@ -255,7 +255,7 @@
                 @enderror
             </div>
             <div class="col-md-12 text-center">
-                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="submit" class="btn btn-primary" value="Apply for enrollment">
                 <a href="/" type="button" class="btn btn-danger">Cancel</a>
             </div>
         </form>
