@@ -16,9 +16,14 @@ class ProfileController extends Controller
         try {
             $id = Crypt::decryptString($hash);
             $record = Enrollment::findOrFail($id);
-
+            if ($record){
             // foreach ($record as $records) {
                 $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
+            }
+            else{
+                $record = Teacher::findOrFail($id);
+                $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
+            }
             // }
         } catch (\Exception $e) {
             // Handle the error if decryption fails or record is not found
