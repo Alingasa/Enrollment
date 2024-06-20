@@ -140,7 +140,7 @@
         <div class="header">
             {{-- <img src="/default_images/MLG_Logo.png" alt="Logo"> --}}
             <h1>HighSchool</h1>
-            <h2>Student</h2>
+            <h2>School ID: {{ $record->school_id }}</h2>
         </div>
         <div class="photo">
             {{-- <img src="{{ $record->profile_image ?? 'http://try.test/default_images/me.jpg' }}" alt="profile"> --}}

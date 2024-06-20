@@ -42,6 +42,6 @@ class ProfileController extends Controller
             abort(404, 'Record not found');
         }
 
-        return view('profile.teacher', compact('record'));
+        return view('profile.show', compact('record'));
     }
 }
