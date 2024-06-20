@@ -15,7 +15,7 @@ class Teacher extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'age'];
 
     protected function casts()
     {
@@ -23,6 +23,11 @@ class Teacher extends Model
             'status'    => TeacherStatus::class,
             'gender'    =>   GenderEnum::class,
         ];
+    }
+
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->birthdate)->age;
     }
 
     public function getFullNameAttribute()

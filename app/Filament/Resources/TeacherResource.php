@@ -50,6 +50,8 @@ class TeacherResource extends Resource
                     ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
                     ->email()
                     ->maxLength(255),
+                Forms\Components\DatePicker::make('birthdate')
+                    ->required(),
                 Forms\Components\Select::make('gender')
                     ->options(GenderEnum::class)
                     ->required(),
@@ -64,6 +66,8 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('zip_code')
                     ->numeric(),
+                Forms\Components\TextInput::make('guardian_name')
+                    ->maxLength(255),
                 ])
 
             ]);
