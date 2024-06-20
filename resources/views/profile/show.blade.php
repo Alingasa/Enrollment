@@ -145,9 +145,9 @@
         <div class="photo">
             {{-- <img src="{{ $record->profile_image ?? 'http://try.test/default_images/me.jpg' }}" alt="profile"> --}}
             @if ($record->profile_image)
-            <img src='{{"http://enrollment-highschool.webactivities.online/storage/".$record->profile_image}}'; alt="profile"/>
+            <img src='{{"profile_image/".$record->profile_image}}'; alt="profile"/>
             @else
-            <img src="{{'http://enrollment-highschool.webactivities.online/default_images/me.jpg'}}" alt="profile">
+            <img src="{{'profile_iamge/'.$record->profile_image}}" alt="profile">
             @endif
 
         </div>
