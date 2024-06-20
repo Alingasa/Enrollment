@@ -69,7 +69,10 @@ class EnrollmentResource extends Resource
                         ->searchable()
                         ->preload()
                         ->label('Section')
-                        ->visible(fn ($get, $operation) => ($operation == 'edit')),
+                        ->visible(fn ($get, $operation) => ($operation == 'edit') && in_array($get('status'),[
+                            EnrolledStatus::ENROLLED->value,
+
+                        ])),
                    Forms\Components\TextInput::make('school_id')
                         ->placeholder('Set ID')
                         ->label('Shool ID')
@@ -126,6 +129,7 @@ class EnrollmentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('status')
                     ->sortable(),
+
                 Tables\Columns\ImageColumn::make('profile_image')
                     ->defaultImageUrl(url('default_images/me.jpg'))
                     ->alignCenter()
@@ -145,22 +149,24 @@ class EnrollmentResource extends Resource
                 Tables\Columns\TextColumn::make('strand.name')
                     ->default('No Strand')
                     ->color(fn ($state) => match($state){
-                        'No Strand' => 'primary',
-                        $state => 'success'
+                        'No Strand' => 'danger',
+                        $state => 'warning'
                     })
                     ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('section.name')
+                    ->sortable(),
                 // Tables\Columns\TextColumn::make('middle_name')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('last_name')
                 //     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    // ->unique(table: 'enrollments', column: 'email')
-                    ->copyable()
-                    ->copyMessage('Email address copied')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('email')
+                //     // ->unique(table: 'enrollments', column: 'email')
+                //     ->copyable()
+                //     ->copyMessage('Email address copied')
+                //     ->searchable(),
                 // Tables\Columns\TextColumn::make('birthdate')
                 //     ->date()
                 //     ->sortable(),
@@ -242,6 +248,7 @@ class EnrollmentResource extends Resource
                         )
                         ->searchable()
                         ->preload()
+                        // ->placeholder(fn ($record) => $record->section()->pluck('name', 'id'))
                         ->label('Section')
                         ->required(),
                     ])
@@ -256,21 +263,33 @@ class EnrollmentResource extends Resource
                         }
                         Notification::make()
                         ->title('Student Approved Successfully!')
+                        ->icon('heroicon-o-check-circle')
                         ->success()
                         ->send();
                         $record->save();
                         return $record;
                     }
-                ),
+                )->visible(function (Enrollment $record){
+                    return $record->status == EnrolledStatus::PENDING;
+                }),
                     Tables\Actions\Action::make('reject')
                     // ->label('')
                     ->modalHeading('Reject')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->icon('heroicon-o-hand-thumb-down')
-                    ->action(fn ($record) => $record->update([
-                        'status'    => EnrolledStatus::PENDING,
-                    ])),
+                    ->action(function ($record){
+                        Notification::make()
+                        ->title('Rejected')
+                        ->icon('heroicon-o-X-circle')
+                        ->danger()
+                        ->send();
+                        $record->update([
+                            'status' => EnrolledStatus::PENDING,
+                        ]);
+                    })->visible(function ($record){
+                        return $record->status == EnrolledStatus::ENROLLED;
+                    }),
                 ]),
             ])
             ->bulkActions([

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\TeacherResource\RelationManagers\SubjectsRelationManager;
 use App\GenderEnum;
 use Filament\Forms;
 use Filament\Tables;
@@ -127,6 +128,7 @@ class TeacherResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
         ];
     }
 

@@ -26,10 +26,6 @@ class EditEnrollment extends EditRecord
             $subjects = $section->subjects()->pluck('id');
             $record->subjects()->syncWithoutDetaching($subjects);
         }
-
-
-
-
         return $record;
     }
 

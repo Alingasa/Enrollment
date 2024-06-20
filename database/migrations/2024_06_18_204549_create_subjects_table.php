@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('subject_type')->nullable();
             $table->integer('units')->nullable();
             $table->string('grade_level')->nullable();
+            $table->string('room')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

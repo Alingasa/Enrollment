@@ -34,5 +34,7 @@ class Teacher extends Model
         return $fullName;
     }
 
-
+     public function subjects(){
+        return $this->hasMany(Subject::class);
+     }
 }
