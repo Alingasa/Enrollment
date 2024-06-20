@@ -223,6 +223,7 @@
             // Construct the URL dynamically with the school_id value
             var actionUrl = '/findschoolid/' + encodeURIComponent(schoolId);
 
+
             // Set the action attribute of the form
             form.setAttribute('action', actionUrl);
 
