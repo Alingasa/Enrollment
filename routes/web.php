@@ -12,4 +12,5 @@ Route::get('/',[EnrollmentController::class,'welcome']);
 Route::resource('/students', EnrollmentController::class);
 Route::get('/findschoolid/{school_id}',[EnrollmentController::class,'findschoolid']);
 Route::get('/profile/{hash}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/{hash}', [ProfileController::class, 'teacher'])->name('profile.teacher');
 Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateSchool']);

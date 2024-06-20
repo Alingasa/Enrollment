@@ -26,4 +26,21 @@ class ProfileController extends Controller
 
         return view('profile.show', compact('record'));
     }
+
+
+    public function teacher($hash){
+        try {
+            $id = Crypt::decryptString($hash);
+            $record = Enrollment::findOrFail($id);
+
+            // foreach ($record as $records) {
+                $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
+            // }
+        } catch (\Exception $e) {
+            // Handle the error if decryption fails or record is not found
+            abort(404, 'Record not found');
+        }
+
+        return view('profile.teacher', compact('record'));
+    }
 }
