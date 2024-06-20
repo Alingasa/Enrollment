@@ -15,7 +15,7 @@ class ProfileController extends Controller
     public function show($hash){
         try {
             $id = Crypt::decryptString($hash);
-            $record = Teacher::findOrFail($id);
+            $record = Enrollment::findOrFail($id);
 //sdfslfkjsflsdfjksdlf
             // foreach ($record as $records) {
                 $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
@@ -42,6 +42,6 @@ class ProfileController extends Controller
             abort(404, 'Record not found');
         }
 
-        return view('profile.teacher', compact('record'));
+        return view('profile.show', compact('record'));
     }
 }
