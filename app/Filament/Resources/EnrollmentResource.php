@@ -30,7 +30,21 @@ class EnrollmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return 'danger';
+    }
 
+    public static function getNavigationBadge(): ?string
+{
+
+    $count = Enrollment::where('status', EnrolledStatus::PENDING)->count();
+
+    if($count == 0){
+        return null;
+    }
+    return $count;
+}
 
     public static function form(Form $form): Form
     {
