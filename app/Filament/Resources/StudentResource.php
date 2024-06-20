@@ -125,7 +125,7 @@ class StudentResource extends Resource
     {
         return [
             'index' => Pages\ListStudents::route('/'),
-            'qr-code' => Pages\ViewQrCode::route('/{record}/qr-code'),
+            'qr-code' => Pages\ViewQrCode::route('/{record}/teacher'),
         ];
     }
 
