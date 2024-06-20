@@ -97,6 +97,7 @@ class StudentResource extends Resource
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('Qr')
                 ->icon('heroicon-o-qr-code')
                ->modalContent(fn (Enrollment $record): View => view(

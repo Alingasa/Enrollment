@@ -9,6 +9,8 @@ use App\Models\Subject;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SubjectResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -31,12 +33,18 @@ class SubjectResource extends Resource
                 ->schema([
                     Forms\Components\Select::make('teacher_id')
                     ->label('Teacher')
-                    ->relationship(name: 'teacher', titleAttribute: 'first_name' )
-                    ->required(),
+                    ->relationship(name: 'teacher', titleAttribute: 'first_name')
+                    ->required()
+                    ->live()
+                    ->preload()
+                    ->searchable(['first_name', 'last_name', 'middle_name']),
                 Forms\Components\Select::make('section_id')
                 ->label('Section')
                 ->relationship(name: 'section', titleAttribute: 'name' )
-                ->required(),
+                ->required()
+                ->live()
+                ->preload()
+                ->searchable(),
                 Forms\Components\TextInput::make('subject_code')
                     ->required(),
                 Forms\Components\TextInput::make('subject_title')
@@ -55,6 +63,8 @@ class SubjectResource extends Resource
                     ->live()
                     ->options(GradeEnum::class)
                     ->required(),
+                Forms\Components\TextInput::make('room')
+                    ->placeholder('Optional'),
                 Forms\Components\Select::make('strand_id')
                     ->relationship(name: 'strand', titleAttribute: 'name')
                     ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
@@ -81,7 +91,12 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('subject_title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('strand.name')
-                    ->numeric()
+                    ->default('No Strand')
+                    ->badge()
+                    ->color(fn ($state) => match($state){
+                        'No Strand' => 'danger',
+                        $state => 'warning',
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_type')
                     ->searchable(),
@@ -89,6 +104,13 @@ class SubjectResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('room')
+                    ->default('TBA')
+                    ->color(fn ($state) => match($state){
+                        'TBA' => 'danger',
+                        $state => '',
+                       })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
@@ -105,7 +127,16 @@ class SubjectResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
-            ])
+                Tables\Filters\TrashedFilter::make(),
+                SelectFilter::make('grade_level')
+                ->options(GradeEnum::class),
+                SelectFilter::make('strand_id')
+                ->label('By Strands')
+                ->relationship('strand', 'name'),
+                SelectFilter::make('section_id')
+                ->label('By Section')
+                ->relationship('section', 'name'),
+            ],  layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
