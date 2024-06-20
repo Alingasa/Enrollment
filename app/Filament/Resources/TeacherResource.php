@@ -121,7 +121,7 @@ class TeacherResource extends Resource
                 ->icon('heroicon-o-qr-code')
                 ->modalCancelActionLabel('Close')
                ->modalContent(fn (Teacher $record): View => view(
-                  'filament.resources.student-resource.pages.teacher',
+                  'filament.resources.student-resource.pages.view-qr-code',
                ['record' => $record],
                ))->modalSubmitAction(false),
             ])
