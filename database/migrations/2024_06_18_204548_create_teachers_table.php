@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('municipality')->nullable();
             $table->string('province')->nullable();
             $table->integer('zip_code')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('guardian_name')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
