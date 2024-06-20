@@ -80,7 +80,11 @@ class EnrollmentController extends Controller
         Enrollment::create($data);
 
 
-        return redirect()->to('http://latesthsenrollmentsystem.test/')
+
+
+        return redirect()->to('http://highschoolenrollment.webactivities.online/')
+
+
             ->with('success_apply','You are successfully apply for enrollment!');
 
     }
@@ -315,6 +319,10 @@ catch (\Illuminate\Database\QueryException $e)
 
         $student->update($data);
 
-        return redirect()->to('http://latesthsenrollmentsystem.test/')->with('update_success', 'You are successfully apply for enrollment!');
+
+
+        return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('update_success', 'You are successfully apply for enrollment!');
+
+
     }
 }

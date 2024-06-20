@@ -10,20 +10,21 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-            background-image: url('image/mlg.jpg');
+
+            background-image: url('../image/school.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            font-family: 'Arial', sans-serif;
         }
         .form-container {
-            background: #fff;
+            background-color: #032013;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0,0,0,1);
             padding: 30px;
             margin: 30px auto;
             max-width: 900px;
+            color: white;
         }
         .form-label {
             font-weight: bold;

@@ -67,11 +67,11 @@ class TeacherResource extends Resource
     {
         return $table
                 ->columns([
-                    Tables\Columns\ImageColumn::make('profile_image')
-                        ->circular()
-                        ->default(url('default_images/me.jpg'))
-                        ->alignCenter()
-                        ->sortable(),
+                    // Tables\Columns\ImageColumn::make('profile_image')
+                    //     ->circular()
+                    //     ->default(url('default_images/me.jpg'))
+                    //     ->alignCenter()
+                    //     ->sortable(),
                     Tables\Columns\TextColumn::make('school_id')
                         ->label('School ID')
                         ->default('Set ID')
