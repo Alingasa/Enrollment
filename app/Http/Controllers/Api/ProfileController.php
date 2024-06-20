@@ -15,15 +15,10 @@ class ProfileController extends Controller
     public function show($hash){
         try {
             $id = Crypt::decryptString($hash);
-            $record = Enrollment::findOrFail($id);
-            if ($record){
+            $record = Teacher::findOrFail($id);
+//sdfslfkjsflsdfjksdlf
             // foreach ($record as $records) {
                 $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
-            }
-            else{
-                $record = Teacher::findOrFail($id);
-                $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
-            }
             // }
         } catch (\Exception $e) {
             // Handle the error if decryption fails or record is not found
@@ -47,6 +42,6 @@ class ProfileController extends Controller
             abort(404, 'Record not found');
         }
 
-        return view('profile.show', compact('record'));
+        return view('profile.teacher', compact('record'));
     }
 }
