@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -218,16 +220,48 @@ class EnrollmentResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ActionGroup::make([
+                    // Tables\Actions\Action::make('approve')
+                    // // ->label('')
+                    // ->color('success')
+                    // ->modalHeading('Approve')
+                    // ->requiresConfirmation()
+                    // ->icon('heroicon-o-hand-thumb-up')
+                    // ->action(fn ($record) => $record->update([
+                    //     'status'    => EnrolledStatus::ENROLLED,
+                    // ])),
                     Tables\Actions\Action::make('approve')
                     // ->label('')
                     ->color('success')
                     ->modalHeading('Approve')
                     ->requiresConfirmation()
                     ->icon('heroicon-o-hand-thumb-up')
-                    ->action(fn ($record) => $record->update([
-                        'status'    => EnrolledStatus::ENROLLED,
-                    ])),
-
+                    ->form([
+                        Select::make('section_id')
+                        ->relationship(name: 'section',
+                        titleAttribute: 'name',
+                        )
+                        ->searchable()
+                        ->preload()
+                        ->label('Section')
+                        ->required(),
+                    ])
+                    ->action(function (Enrollment $record){
+                        $record->update([
+                            'section_id' => $record->section_id,
+                            'status'    => EnrolledStatus::ENROLLED,
+                        ]);
+                        if($section = $record->section) {
+                            $subjects = $section->subjects()->pluck('id');
+                            $record->subjects()->syncWithoutDetaching($subjects);
+                        }
+                        Notification::make()
+                        ->title('Student Approved Successfully!')
+                        ->success()
+                        ->send();
+                        $record->save();
+                        return $record;
+                    }
+                ),
                     Tables\Actions\Action::make('reject')
                     // ->label('')
                     ->modalHeading('Reject')

@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -105,6 +106,13 @@ class TeacherResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Qr')
+                ->icon('heroicon-o-qr-code')
+                ->modalCancelActionLabel('Close')
+               ->modalContent(fn (Teacher $record): View => view(
+                  'filament.resources.student-resource.pages.view-qr-code',
+               ['record' => $record],
+               ))->modalSubmitAction(false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

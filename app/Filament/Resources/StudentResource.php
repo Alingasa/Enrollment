@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -96,7 +97,14 @@ class StudentResource extends Resource
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Qr')
+                ->icon('heroicon-o-qr-code')
+               ->modalContent(fn (Enrollment $record): View => view(
+                  'filament.resources.student-resource.pages.view-qr-code',
+               ['record' => $record],
+               ))->modalSubmitAction(false),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -117,6 +125,7 @@ class StudentResource extends Resource
     {
         return [
             'index' => Pages\ListStudents::route('/'),
+            'qr-code' => Pages\ViewQrCode::route('/{record}/qr-code'),
         ];
     }
 

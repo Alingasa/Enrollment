@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnrollmentController;
 
@@ -10,4 +11,5 @@ use App\Http\Controllers\EnrollmentController;
 Route::get('/',[EnrollmentController::class,'welcome']);
 Route::resource('/students', EnrollmentController::class);
 Route::get('/findschoolid/{school_id}',[EnrollmentController::class,'findschoolid']);
+Route::get('/profile/{hash}', [ProfileController::class, 'show'])->name('profile.show');
 Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateSchool']);

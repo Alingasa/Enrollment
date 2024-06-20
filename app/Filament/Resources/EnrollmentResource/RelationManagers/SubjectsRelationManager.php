@@ -23,9 +23,10 @@ class SubjectsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('subject_title')
-                ->live()
-                 ->preload()
+                Forms\Components\Select::make('subject_title')
+                    ->label('')
+                    ->live()
+                    ->preload()
                     ->required()
                     ->maxLength(255),
 
@@ -37,6 +38,7 @@ class SubjectsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('subject_title')
+            ->searchable()
             ->columns([
                 Tables\Columns\TextColumn::make('teacher.full_name'),
                 Tables\Columns\TextColumn::make('subject_code'),
