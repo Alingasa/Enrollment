@@ -15,8 +15,8 @@ class ProfileController extends Controller
     public function show($hash){
         try {
             $id = Crypt::decryptString($hash);
-            $record = Enrollment::findOrFail($id);
-
+            $record = Teacher::findOrFail($id);
+//sdfslfkjsflsdfjksdlf
             // foreach ($record as $records) {
                 $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
             // }

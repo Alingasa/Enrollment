@@ -15,7 +15,7 @@ class Teacher extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['full_name', 'age'];
+    protected $appends = ['full_name','age'];
 
     protected function casts()
     {
