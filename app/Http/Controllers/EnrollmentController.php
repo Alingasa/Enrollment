@@ -81,7 +81,9 @@ class EnrollmentController extends Controller
 
 
 
+
         return redirect()->to('http://highschoolenrollment.webactivities.online/')
+
 
             ->with('success_apply','You are successfully apply for enrollment!');
 
@@ -318,7 +320,9 @@ catch (\Illuminate\Database\QueryException $e)
         $student->update($data);
 
 
+
         return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('update_success', 'You are successfully apply for enrollment!');
+
 
     }
 }
