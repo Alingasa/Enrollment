@@ -10,5 +10,6 @@ class ViewQrCode extends ViewRecord
 {
     protected static string $resource = TeacherResource::class;
 
-    protected static string $view = 'filament.resources.student-resource.pages.view-qr-code';
+    protected static string $view = 'filament.resources.student-resource.pages.teacher';
+
 }
