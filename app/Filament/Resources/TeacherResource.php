@@ -37,6 +37,7 @@ class TeacherResource extends Resource
                     ->imageEditor()
                     ->image(),
                     Forms\Components\TextInput::make('school_id')
+                    ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')

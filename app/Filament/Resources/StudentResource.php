@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use App\EnrolledStatus;
 use App\Models\Student;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
@@ -30,12 +31,74 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('enrollment_id')
+                Forms\Components\Section::make()
+                ->schema([
+                    Forms\Components\FileUpload::make('profile_image')
+                    ->avatar()
+                    ->previewable()
+                    ->imagePreviewHeight(500)
+                    ->image()
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                    ]),
+                Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('school_id')
+                    ->placeholder('Set ID')
+                    ->label('School ID')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_id')
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                  Forms\Components\Select::make('strand.name')
+                    ->relationship(name: 'strand', titleAttribute: 'name')
+                    ->default('No Strand')
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                      Forms\Components\Select::make('section_id')
+                      ->relationship(name: 'section', titleAttribute: 'name')
+                      ->required()
+                      ->placeholder('No Strand')
+                       ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                  Forms\Components\TextInput::make('grade_level')
+                        ->required()
+                         ->afterStateUpdated(function ($state,Set $set) {
+                          } ),
+                  Forms\Components\TextInput::make('full_name')
                     ->required()
-                    ->numeric(),
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                  Forms\Components\TextInput::make('first_name')
+                      ->required()
+                       ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                  Forms\Components\TextInput::make('last_name')
+                  ->afterStateUpdated(function ($state,Set $set) {
+                    } ),
+                    Forms\Components\TextInput::make('email')
+                    ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                      Forms\Components\TextInput::make('birthdate')
+                      ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                        Forms\Components\TextInput::make('gender')
+                        ->afterStateUpdated(function ($state,Set $set) {
+                          } ),
+                  Forms\Components\TextInput::make('civil_status')
+                          ->afterStateUpdated(function ($state,Set $set) {
+                            } ),
+                  Forms\Components\TextInput::make('contact_number')
+                            ->afterStateUpdated(function ($state,Set $set) {
+                              } ),
+                  Forms\Components\TextInput::make('religion')
+                              ->afterStateUpdated(function ($state,Set $set) {
+                                } ),
+                  Forms\Components\TextInput::make('facebook_url')
+                                ->afterStateUpdated(function ($state,Set $set) {
+                                  } ),
+                ])
+
             ]);
     }
 
@@ -50,7 +113,7 @@ class StudentResource extends Resource
                     ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('school_id')
-                    ->label('Strand')
+                    ->label('School ID')
                     ->default('Set ID')
                     ->badge()
                     ->color('danger')
@@ -98,6 +161,14 @@ class StudentResource extends Resource
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
+                // ->mutateRecordDataUsing(function (array $data, Set $set): array {
+                //     // dd($data);
+
+
+
+
+                //     return $data;
+                // }),
                 Tables\Actions\Action::make('Qr')
                 ->icon('heroicon-o-qr-code')
                ->modalContent(fn (Enrollment $record): View => view(

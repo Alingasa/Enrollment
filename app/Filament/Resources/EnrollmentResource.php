@@ -76,6 +76,7 @@ class EnrollmentResource extends Resource
                    Forms\Components\TextInput::make('school_id')
                         ->placeholder('Set ID')
                         ->label('Shool ID')
+                        ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true)
                         ->visible(fn ($get, $operation) => ($operation == 'edit') && in_array($get('status'), [
                             EnrolledStatus::ENROLLED->value,
                         ]))
