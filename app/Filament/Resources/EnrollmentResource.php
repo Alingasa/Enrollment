@@ -108,11 +108,14 @@ class EnrollmentResource extends Resource
                                 ->image()
                                 ->columnSpanFull(),
                                 Forms\Components\TextInput::make('first_name')
+                                    ->placeholder('first name')
                                     ->required(),
 
-                                Forms\Components\TextInput::make('middle_name'),
+                                Forms\Components\TextInput::make('middle_name')
+                                    ->placeholder('middle name'),
 
                                 Forms\Components\TextInput::make('last_name')
+                                    ->placeholder('last name')
                                     ->required(),
                                     Forms\Components\Select::make('civil_status')
                                     ->required()
@@ -127,11 +130,14 @@ class EnrollmentResource extends Resource
                                             ->required(),
                                             Forms\Components\TextInput::make('email')
                                             ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
+                                            ->placeholder('example@gmail.com')
                                             ->live()
                                             ->email(),
                                             Forms\Components\TextInput::make('contact_number')
+                                            ->placeholder('09XXXXXXXXX')
                                             ->numeric(),
                                             Forms\Components\TextInput::make('facebook_url')
+                                            ->placeholder('https://www.facebook.com/sample-url')
                                             ->columnSpanFull(),
 
                             ])
@@ -141,17 +147,23 @@ class EnrollmentResource extends Resource
 
                             Forms\Components\Section::make('Personal Address')
                                 ->schema([
-                                Forms\Components\TextInput::make('purok'),
+                                Forms\Components\TextInput::make('purok')
+                                ->placeholder('purok'),
 
-                                Forms\Components\TextInput::make('sitio_street'),
+                                Forms\Components\TextInput::make('sitio_street')
+                                ->placeholder('sitio'),
 
-                                Forms\Components\TextInput::make('barangay'),
+                                Forms\Components\TextInput::make('barangay')
+                                ->placeholder('barangay'),
 
-                                Forms\Components\TextInput::make('municipality'),
+                                Forms\Components\TextInput::make('municipality')
+                                ->placeholder('municipality'),
 
-                                Forms\Components\TextInput::make('province'),
+                                Forms\Components\TextInput::make('province')
+                                ->placeholder('province'),
 
                                 Forms\Components\TextInput::make('zip_code')
+                                    ->placeholder('zip code')
                                     ->numeric(),
 
                                 Forms\Components\TextInput::make('status_type')
@@ -167,9 +179,11 @@ class EnrollmentResource extends Resource
                                     ->schema([
                                 Forms\Components\TextInput::make('guardian_name')
                                 ->label('Parent \ Guardian name')
+                                ->placeholder('parent\guardian name')
                                 ->required(),
                                     Forms\Components\TextInput::make('incaseof_emergency')
                                     ->label('Contact Number')
+                                    ->placeholder('contact number')
                                 ->numeric(),
                                     ])
                                 ->columns(2),

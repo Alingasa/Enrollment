@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('zip_code')->nullable();
             $table->date('birthdate')->nullable();
             $table->string('guardian_name')->nullable();
+            $table->string('incaseof_emergency')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
