@@ -28,23 +28,18 @@ class TeacherResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                ->columns(2)
                 ->schema([
                     Forms\Components\FileUpload::make('profile_image')
-                    ->avatar()
+                    // ->avatar()
                     ->previewable()
-                    ->imagePreviewHeight(500)
+                    ->imagePreviewHeight(200)
                     ->imageEditor()
                     ->image(),
                 ]),
-                Forms\Components\Section::make()
-                ->columns(2)
+                Forms\Components\Section::make('Personal Information')
+                ->columns(3)
                 ->schema([
-                    Forms\Components\TextInput::make('school_id')
-                    ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('first_name')
+                    Forms\Components\TextInput::make('first_name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('middle_name')
@@ -64,6 +59,20 @@ class TeacherResource extends Resource
                 Forms\Components\TextInput::make('contact_number')
                     ->numeric()
                     ->maxLength(11),
+                    Forms\Components\TextInput::make('school_id')
+                    ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
+                    ->required()
+                    ->maxLength(255),
+
+
+
+                ]),
+
+
+
+                Forms\Components\Section::make('Personal Address')
+                ->columns(3)
+                ->schema([
                 Forms\Components\TextInput::make('barangay')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('municipality')
@@ -72,8 +81,20 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('zip_code')
                     ->numeric(),
-                Forms\Components\TextInput::make('guardian_name')
+
+                ]),
+
+
+                Forms\Components\Section::make('Incase of Emergency')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('guardian_name')
+                    ->label('Parents \ Guardian name')
                     ->maxLength(255),
+                    Forms\Components\TextInput::make('incaseof_emergency')
+                    ->label('Contact Number')
+                    ->maxLength(11)
+                    ->numeric(),
                 ])
 
                 ]);
