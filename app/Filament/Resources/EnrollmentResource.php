@@ -169,7 +169,7 @@ class EnrollmentResource extends Resource
                                 ->label('Parent \ Guardian name')
                                 ->required(),
                                     Forms\Components\TextInput::make('incaseof_emergency')
-                                    ->label('Contact')
+                                    ->label('Contact Number')
                                 ->numeric(),
                                     ])
                                 ->columns(2),

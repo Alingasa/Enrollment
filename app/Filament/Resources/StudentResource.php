@@ -8,6 +8,7 @@ use Filament\Tables;
 use App\EnrolledStatus;
 use App\Models\Student;
 use Filament\Forms\Set;
+use App\CivilStatusEnum;
 use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
@@ -38,8 +39,10 @@ class StudentResource extends Resource
                     Group::make([
                     Forms\Components\FileUpload::make('profile_image')
                     ->label('Profile Image')
+                    // ->avatar()
                     ->previewable()
-                    ->imagePreviewHeight(235)
+                    ->maxWidth(200)
+                    ->imagePreviewHeight(220)
                     ->image()
                     ->alignCenter()
                     ->afterStateUpdated(function ($state,Set $set) {
@@ -56,6 +59,16 @@ class StudentResource extends Resource
                               $set(['record' => null]); // Ensure record is null if no enrollment found
                           }
                       }),
+                      Forms\Components\TextInput::make('full_name')
+                      ->required()
+                       ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                        Forms\Components\TextInput::make('school_id')
+                        ->placeholder('Set ID')
+                        ->label('School ID')
+                        ->required()
+                         ->afterStateUpdated(function ($state,Set $set) {
+                          } ),
                     ])->columns(2),
 
                     ]),
@@ -66,15 +79,10 @@ class StudentResource extends Resource
                 //             'filament.resources.student-resource.pages.view-qr-code',
                 //          ['record' => $record]);
                 //     } ),
-                Forms\Components\Section::make()
-                ->columns(2)
+                Forms\Components\Section::make('Other detials')
+                ->columns(3)
                 ->schema([
-                    Forms\Components\TextInput::make('school_id')
-                    ->placeholder('Set ID')
-                    ->label('School ID')
-                    ->required()
-                     ->afterStateUpdated(function ($state,Set $set) {
-                      } ),
+
                   Forms\Components\Select::make('strand.name')
                     ->relationship(name: 'strand', titleAttribute: 'name')
                     ->default('No Strand')
@@ -90,17 +98,14 @@ class StudentResource extends Resource
                         ->required()
                          ->afterStateUpdated(function ($state,Set $set) {
                           } ),
-                  Forms\Components\TextInput::make('full_name')
-                    ->required()
-                     ->afterStateUpdated(function ($state,Set $set) {
-                      } ),
-                  Forms\Components\TextInput::make('first_name')
-                      ->required()
-                       ->afterStateUpdated(function ($state,Set $set) {
-                        } ),
-                  Forms\Components\TextInput::make('last_name')
-                  ->afterStateUpdated(function ($state,Set $set) {
-                    } ),
+
+                //   Forms\Components\TextInput::make('first_name')
+                //       ->required()
+                //        ->afterStateUpdated(function ($state,Set $set) {
+                //         } ),
+                //   Forms\Components\TextInput::make('last_name')
+                //   ->afterStateUpdated(function ($state,Set $set) {
+                //     } ),
                     Forms\Components\TextInput::make('email')
                     ->afterStateUpdated(function ($state,Set $set) {
                       } ),
@@ -110,7 +115,8 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('gender')
                         ->afterStateUpdated(function ($state,Set $set) {
                           } ),
-                  Forms\Components\TextInput::make('civil_status')
+                  Forms\Components\Select::make('civil_status')
+                          ->options(CivilStatusEnum::class)
                           ->afterStateUpdated(function ($state,Set $set) {
                             } ),
                   Forms\Components\TextInput::make('contact_number')
@@ -121,7 +127,8 @@ class StudentResource extends Resource
                                 } ),
                   Forms\Components\TextInput::make('facebook_url')
                                 ->afterStateUpdated(function ($state,Set $set) {
-                                  } ),
+                                  } )
+                                  ->columnSpanFull(),
                 ])
 
             ]);
