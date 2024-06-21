@@ -24,7 +24,7 @@ class EnrolledChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Blog posts',
+                    'label' => 'Enrolled',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],

@@ -63,8 +63,10 @@ class SubjectResource extends Resource
                     ->live()
                     ->options(GradeEnum::class)
                     ->required(),
-                Forms\Components\TextInput::make('room')
-                    ->placeholder('Optional'),
+                Forms\Components\Select::make('room_id')
+                    ->relationship(name: 'room', titleAttribute: 'room')
+                    ->label('Room ID')
+                    ->unique(table: 'subjects', column: 'room_id'),
                 Forms\Components\Select::make('strand_id')
                     ->relationship(name: 'strand', titleAttribute: 'name')
                     ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [

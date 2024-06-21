@@ -36,7 +36,12 @@ class TeacherResource extends Resource
                     ->imagePreviewHeight(500)
                     ->imageEditor()
                     ->image(),
+                ]),
+                Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
                     Forms\Components\TextInput::make('school_id')
+                    ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')
@@ -71,7 +76,9 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 ])
 
-            ]);
+                ]);
+
+
     }
 
     public static function table(Table $table): Table

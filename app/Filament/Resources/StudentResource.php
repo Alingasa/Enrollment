@@ -7,11 +7,13 @@ use Filament\Forms;
 use Filament\Tables;
 use App\EnrolledStatus;
 use App\Models\Student;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Contracts\View\View;
+use Filament\Forms\Components\Group;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -30,12 +32,98 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('enrollment_id')
+
+                Forms\Components\Section::make()
+                ->schema([
+                    Group::make([
+                    Forms\Components\FileUpload::make('profile_image')
+                    ->label('Profile Image')
+                    ->previewable()
+                    ->imagePreviewHeight(235)
+                    ->image()
+                    ->alignCenter()
+                    ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                    Forms\Components\ViewField::make('qr_code')
+                      ->label('Qr Code')
+                      ->view('filament.resources.student-resource.pages.view-qr-code', ['record' => 'record']) // Initialize record as null
+                      ->afterStateUpdated(function ($state, $set) {
+                          // Fetch enrollment data based on state
+                          $enrollment = Enrollment::find($state->get('id'));
+                          if ($enrollment) {
+                              $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
+                          } else {
+                              $set(['record' => null]); // Ensure record is null if no enrollment found
+                          }
+                      }),
+                    ])->columns(2),
+
+                    ]),
+                // Forms\Components\ViewField::make('Qr')
+                //     ->view('filament.resources.student-resource.pages.view-qr-code')
+                //     ->afterStateUpdated(function ($state,Set $set) {
+                //         fn (Enrollment $record): View => view(
+                //             'filament.resources.student-resource.pages.view-qr-code',
+                //          ['record' => $record]);
+                //     } ),
+                Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('school_id')
+                    ->placeholder('Set ID')
+                    ->label('School ID')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_id')
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                  Forms\Components\Select::make('strand.name')
+                    ->relationship(name: 'strand', titleAttribute: 'name')
+                    ->default('No Strand')
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                      Forms\Components\Select::make('section_id')
+                      ->relationship(name: 'section', titleAttribute: 'name')
+                      ->required()
+                      ->placeholder('No Strand')
+                       ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                  Forms\Components\TextInput::make('grade_level')
+                        ->required()
+                         ->afterStateUpdated(function ($state,Set $set) {
+                          } ),
+                  Forms\Components\TextInput::make('full_name')
                     ->required()
-                    ->numeric(),
+                     ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                  Forms\Components\TextInput::make('first_name')
+                      ->required()
+                       ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                  Forms\Components\TextInput::make('last_name')
+                  ->afterStateUpdated(function ($state,Set $set) {
+                    } ),
+                    Forms\Components\TextInput::make('email')
+                    ->afterStateUpdated(function ($state,Set $set) {
+                      } ),
+                      Forms\Components\TextInput::make('birthdate')
+                      ->afterStateUpdated(function ($state,Set $set) {
+                        } ),
+                        Forms\Components\TextInput::make('gender')
+                        ->afterStateUpdated(function ($state,Set $set) {
+                          } ),
+                  Forms\Components\TextInput::make('civil_status')
+                          ->afterStateUpdated(function ($state,Set $set) {
+                            } ),
+                  Forms\Components\TextInput::make('contact_number')
+                            ->afterStateUpdated(function ($state,Set $set) {
+                              } ),
+                  Forms\Components\TextInput::make('religion')
+                              ->afterStateUpdated(function ($state,Set $set) {
+                                } ),
+                  Forms\Components\TextInput::make('facebook_url')
+                                ->afterStateUpdated(function ($state,Set $set) {
+                                  } ),
+                ])
+
             ]);
     }
 
@@ -50,7 +138,7 @@ class StudentResource extends Resource
                     ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('school_id')
-                    ->label('Strand')
+                    ->label('School ID')
                     ->default('Set ID')
                     ->badge()
                     ->color('danger')
@@ -94,16 +182,25 @@ class StudentResource extends Resource
                 SelectFilter::make('strand_id')
                 ->label('By Strands')
                 ->relationship('strand', 'name'),
-            ], layout: FiltersLayout::AboveContentCollapsible)
+            ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->icon(''),
+                // ->mutateRecordDataUsing(function (array $data, Set $set): array {
+                //     // dd($data);
+
+
+
+
+                //     return $data;
+                // }),
                 Tables\Actions\Action::make('Qr')
                 ->icon('heroicon-o-qr-code')
                ->modalContent(fn (Enrollment $record): View => view(
                   'filament.resources.student-resource.pages.view-qr-code',
                ['record' => $record],
-               ))->modalSubmitAction(false),
+               ))->modalSubmitAction(false)->hidden(),
             ])
 
             ->bulkActions([

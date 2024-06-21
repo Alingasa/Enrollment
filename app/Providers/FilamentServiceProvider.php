@@ -45,7 +45,6 @@ class FilamentServiceProvider extends ServiceProvider
 
         TableViewAction::configureUsing(function (TableViewAction $action) {
             $action
-                ->slideOver()
                 ->label('')
                 ->color('warning')
                 ->icon('heroicon-o-eye');
@@ -53,7 +52,6 @@ class FilamentServiceProvider extends ServiceProvider
 
         TableEditAction::configureUsing(function (TableEditAction $action) {
             $action
-                ->slideOver()
                 ->label('')
                 ->icon('heroicon-o-pencil');
         }, isImportant: true);
