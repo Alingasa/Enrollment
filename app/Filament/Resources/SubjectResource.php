@@ -44,6 +44,9 @@ class SubjectResource extends Resource
                     ->live()
                     ->preload()
                     ->searchable(['first_name', 'last_name', 'middle_name']),
+                Forms\Components\TextInput::make('subject_code')
+                    ->placeholder('subject code')
+                    ->required(),
                 Forms\Components\Select::make('section_id')
                 ->label('Section')
                 ->relationship(name: 'section', titleAttribute: 'name' )
@@ -51,9 +54,7 @@ class SubjectResource extends Resource
                 ->live()
                 ->preload()
                 ->searchable(),
-                Forms\Components\TextInput::make('subject_code')
-                    ->placeholder('subject code')
-                    ->required(),
+
                 Forms\Components\TextInput::make('subject_title')
                     ->placeholder('subject title')
                     ->required(),
@@ -118,47 +119,54 @@ class SubjectResource extends Resource
                         );
                     }
                 ),
+                Tables\Columns\TextColumn::make('subject_code')
+                ->label('Code')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('subject_title')
+                ->label('Subject')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('section.name')
+                ->numeric()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('section.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subject_code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('subject_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('strand.name')
-                    ->default('No Strand')
-                    ->badge()
-                    ->color(fn ($state) => match($state){
-                        'No Strand' => 'danger',
-                        $state => 'warning',
-                    })
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subject_type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('units')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grade_level')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('room')
-                    ->default('TBA')
-                    ->searchable()
-                    ->color(fn ($state) => match($state){
-                        'TBA' => 'danger',
-                        $state => '',
-                       })
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('day')
-                ->label('Schedule')
-                ->formatStateUsing(function ($state, $record) {
-                    $string = '';
-                   $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
-                //    dd($record);
-                   return $string;
-                  }),
+                    ->label('Schedule')
+                    ->formatStateUsing(function ($state, $record) {
+                        $string = '';
+                       $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
+                    //    dd($record);
+                       return $string;
+                      }),
+                Tables\Columns\TextColumn::make('subject_type')
+                      ->searchable(),
+                  Tables\Columns\TextColumn::make('units')
+                      ->numeric()
+                      ->sortable(),
+                Tables\Columns\TextColumn::make('room')
+                ->label('Room')
+                ->default('TBA'),
+                // Tables\Columns\TextColumn::make('strand.name')
+                //     ->default('No Strand')
+                //     ->badge()
+                //     ->color(fn ($state) => match($state){
+                //         'No Strand' => 'danger',
+                //         $state => 'warning',
+                //     })
+                //     ->sortable(),
+
+                // Tables\Columns\TextColumn::make('grade_level')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('room')
+                //     ->default('TBA')
+                //     ->searchable()
+                //     ->color(fn ($state) => match($state){
+                //         'TBA' => 'danger',
+                //         $state => '',
+                //        })
+                //     ->searchable(),
+
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -183,7 +191,7 @@ class SubjectResource extends Resource
                 SelectFilter::make('section_id')
                 ->label('By Section')
                 ->relationship('section', 'name'),
-            ],  layout: FiltersLayout::AboveContentCollapsible)
+            ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),

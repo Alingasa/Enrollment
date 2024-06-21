@@ -31,7 +31,7 @@ class SubjectsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('subject_title')
             ->columns([
-                Tables\Columns\TextColumn::make('No.')->state(
+                Tables\Columns\TextColumn::make('#')->state(
                     static function (HasTable $livewire, stdClass $rowLoop): string {
                         return (string) (
                             $rowLoop->iteration +
@@ -41,25 +41,34 @@ class SubjectsRelationManager extends RelationManager
                         );
                     }
                 ),
-                Tables\Columns\TextColumn::make('section.name'),
-                Tables\Columns\TextColumn::make('subject_code'),
-                Tables\Columns\TextColumn::make('subject_title'),
-                Tables\Columns\TextColumn::make('subject_type'),
-                Tables\Columns\TextColumn::make('units'),
-                Tables\Columns\TextColumn::make('grade_level'),
-                Tables\Columns\TextColumn::make('strand.name')
-                ->default('No Strand')
-                ->color(fn ($state) => match($state){
-                    'No Strand' => 'danger',
-                    $state => 'warning',
-                })
-                ->badge(),
-               Tables\Columns\TextColumn::make('room')
-               ->default('TBA')
-               ->color(fn ($state) => match($state){
-                'TBA' => 'danger',
-                $state => '',
-               }),
+                Tables\Columns\TextColumn::make('subject_code')
+                ->label('Code')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('subject_title')
+                ->label('Subject')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('section.name')
+                ->numeric()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('teacher.full_name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('day')
+                    ->label('Schedule')
+                    ->formatStateUsing(function ($state, $record) {
+                        $string = '';
+                       $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
+                    //    dd($record);
+                       return $string;
+                      }),
+                Tables\Columns\TextColumn::make('subject_type')
+                      ->searchable(),
+                  Tables\Columns\TextColumn::make('units')
+                      ->numeric()
+                      ->sortable(),
+                Tables\Columns\TextColumn::make('room')
+                      ->label('Room')
+                      ->searchable(),
             ])
             ->filters([
                 //
