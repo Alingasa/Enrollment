@@ -28,7 +28,8 @@ class RoomResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('room')
-                    ->label('Rooms')
+                    ->label('Room')
+                    ->placeholder('create room')
                     ->unique(table: 'rooms', column: 'room', ignoreRecord: true)
                     ->autocapitalize()
                     ->maxLength(255),

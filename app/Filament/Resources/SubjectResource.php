@@ -46,8 +46,10 @@ class SubjectResource extends Resource
                 ->preload()
                 ->searchable(),
                 Forms\Components\TextInput::make('subject_code')
+                    ->placeholder('subject code')
                     ->required(),
                 Forms\Components\TextInput::make('subject_title')
+                    ->placeholder('subject title')
                     ->required(),
                 Forms\Components\Select::make('subject_type')
                     ->options([
@@ -56,6 +58,7 @@ class SubjectResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('units')
+                    ->placeholder('0')
                     ->maxLength(1)
                     ->numeric()
                     ->required(),
