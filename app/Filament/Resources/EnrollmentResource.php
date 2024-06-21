@@ -108,14 +108,14 @@ class EnrollmentResource extends Resource
                                 ->image()
                                 ->columnSpanFull(),
                                 Forms\Components\TextInput::make('first_name')
-                                    ->placeholder('first name')
+                                    ->placeholder('juan')
                                     ->required(),
 
                                 Forms\Components\TextInput::make('middle_name')
-                                    ->placeholder('middle name'),
+                                    ->placeholder('dela'),
 
                                 Forms\Components\TextInput::make('last_name')
-                                    ->placeholder('last name')
+                                    ->placeholder('cruz')
                                     ->required(),
                                     Forms\Components\Select::make('civil_status')
                                     ->required()
@@ -163,7 +163,7 @@ class EnrollmentResource extends Resource
                                 ->placeholder('province'),
 
                                 Forms\Components\TextInput::make('zip_code')
-                                    ->placeholder('zip code')
+                                    ->placeholder('0000')
                                     ->numeric(),
 
                                 Forms\Components\TextInput::make('status_type')
@@ -179,11 +179,11 @@ class EnrollmentResource extends Resource
                                     ->schema([
                                 Forms\Components\TextInput::make('guardian_name')
                                 ->label('Parent \ Guardian name')
-                                ->placeholder('parent\guardian name')
+                                ->placeholder('juan dela cruz')
                                 ->required(),
                                     Forms\Components\TextInput::make('incaseof_emergency')
                                     ->label('Contact Number')
-                                    ->placeholder('contact number')
+                                    ->placeholder('09XXXXXXXXX')
                                 ->numeric(),
                                     ])
                                 ->columns(2),
@@ -227,47 +227,7 @@ class EnrollmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('middle_name')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('last_name')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('email')
-                //     // ->unique(table: 'enrollments', column: 'email')
-                //     ->copyable()
-                //     ->copyMessage('Email address copied')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('birthdate')
-                //     ->date()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('gender')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('civil_status')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('contact_number')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('religion')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('facebook_url')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('purok')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('sitio_street')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('barangay')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('municipality')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('province')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('zip_code')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('status_type')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('guardian_name')
-                //     ->searchable(),
+
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -293,18 +253,7 @@ class EnrollmentResource extends Resource
                 ->relationship('strand', 'name'),
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
 
-                    // Tables\Actions\Action::make('approve')
-                    // // ->label('')
-                    // ->color('success')
-                    // ->modalHeading('Approve')
-                    // ->requiresConfirmation()
-                    // ->icon('heroicon-o-hand-thumb-up')
-                    // ->action(fn ($record) => $record->update([
-                    //     'status'    => EnrolledStatus::ENROLLED,
-                    // ])),
                     Tables\Actions\Action::make('approve')
                     // ->label('')
                     ->color('success')

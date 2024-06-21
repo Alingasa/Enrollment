@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('guardian_name')->nullable();
             $table->string('incaseof_emergency')->nullable();
+            $table->string('qr_code')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

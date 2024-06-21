@@ -26,6 +26,7 @@ class StrandResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->placeholder('create strand')
                     ->required(),
             ]);
     }

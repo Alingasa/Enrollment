@@ -14,6 +14,6 @@ class StrandSeeder extends Seeder
     public function run(): void
     {
         //
-        Strand::factory(50)->create();
+        Strand::factory(5)->create();
     }
 }
