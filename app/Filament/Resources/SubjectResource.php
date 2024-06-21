@@ -72,8 +72,8 @@ class SubjectResource extends Resource
                     ->searchable()
                     ->required()
                     ->relationship(name: 'room', titleAttribute: 'room')
-                    ->label('Room ID')
-                    ->unique(table: 'subjects', column: 'room_id'),
+                    ->label('Room ID'),
+                    // ->unique(table: 'subjects', column: 'room_id'),
                 Forms\Components\Select::make('strand_id')
                     ->relationship(name: 'strand', titleAttribute: 'name')
                     ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
@@ -116,6 +116,7 @@ class SubjectResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('room')
                     ->default('TBA')
+                    ->searchable()
                     ->color(fn ($state) => match($state){
                         'TBA' => 'danger',
                         $state => '',

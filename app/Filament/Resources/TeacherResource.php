@@ -27,20 +27,34 @@ class TeacherResource extends Resource
     {
         return $form
             ->schema([
-                // Forms\Components\Section::make()
-                // ->schema([
-
-                // ]),
-                Forms\Components\Section::make('Personal Information')
-                ->columns(3)
+                Forms\Components\Section::make()
+                ->columns(2)
                 ->schema([
                     Forms\Components\FileUpload::make('profile_image')
                     // ->avatar()
-                    ->columnSpanFull()
+                    // ->columnSpanFull()
                     ->previewable()
                     ->imagePreviewHeight(200)
                     ->imageEditor()
                     ->image(),
+                    Forms\Components\ViewField::make('qr_code')
+                    ->label('Qr Code')
+                    ->view('filament.resources.student-resource.pages.view-qr-code', ['record' => 'record']) // Initialize record as null
+                    ->afterStateUpdated(function ($state, $set) {
+                        // Fetch enrollment data based on state
+                        $enrollment = Teacher::find($state->get('id'));
+                        if ($enrollment) {
+                            $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
+                        } else {
+                            $set(['record' => null]); // Ensure record is null if no enrollment found
+                        }
+                    }),
+
+                ]),
+                Forms\Components\Section::make('Personal Information')
+                ->columns(3)
+                ->schema([
+
                     Forms\Components\TextInput::make('first_name')
                     ->placeholder('juan')
                     ->required()
