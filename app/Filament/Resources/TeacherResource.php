@@ -171,15 +171,15 @@ class TeacherResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Qr')
-                ->icon('heroicon-o-qr-code')
-                ->modalCancelActionLabel('Close')
-               ->modalContent(fn (Teacher $record): View => view(
-                  'filament.resources.student-resource.pages.teacher',
-               ['record' => $record],
-               ))->modalSubmitAction(false),
+            //     Tables\Actions\ViewAction::make(),
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\Action::make('Qr')
+            //     ->icon('heroicon-o-qr-code')
+            //     ->modalCancelActionLabel('Close')
+            //    ->modalContent(fn (Teacher $record): View => view(
+            //       'filament.resources.student-resource.pages.teacher',
+            //    ['record' => $record],
+            //    ))->modalSubmitAction(false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
