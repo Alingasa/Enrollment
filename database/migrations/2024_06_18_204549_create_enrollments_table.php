@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('religion')->nullable();                 // might select from datalist (not strict)
             $table->string('facebook_url')->nullable();
-
+            $table->integer('incaseof_emergency')->nullable();
             /**
              * Address
              */

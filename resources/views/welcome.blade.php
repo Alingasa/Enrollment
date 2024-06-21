@@ -158,6 +158,35 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        // Function to check for session messages and display SweetAlert
+        function displaySessionMessage() {
+            // Check if the session has a success_apply message
+            @if(session('success_apply'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Applied for Enrollment',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            @endif
+
+            // Check if the session has an update_success message
+            @if(session('update_success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Updated Enrollment',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            @endif
+        }
+
+        // Call displaySessionMessage function when the document is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            displaySessionMessage();
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function(event) {

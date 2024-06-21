@@ -12,7 +12,9 @@ use App\CivilStatusEnum;
 use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
+use Doctrine\DBAL\Schema\Column;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
@@ -22,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EnrollmentResource\Pages;
 use App\Filament\Resources\EnrollmentResource\RelationManagers\SectionRelationManager;
 use App\Filament\Resources\EnrollmentResource\RelationManagers\SubjectsRelationManager;
-
+use PhpParser\Node\Stmt\Label;
 
 class EnrollmentResource extends Resource
 {
@@ -49,92 +51,130 @@ class EnrollmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
-                Forms\Components\Section::make('Student Detail')
-                ->columns(3)
-                ->schema([
-                    Forms\Components\Section::make()
+                Forms\Components\Section::make('Select Grade to Enroll')
                     ->schema([
-                        Forms\Components\FileUpload::make('profile_image')
-                        ->avatar()
-                        ->previewable()
-                        ->imagePreviewHeight(500)
-                        ->imageEditor()
-                        ->image(),
+                            Forms\Components\Section::make()
+                            ->schema([
 
-                    ]),
-                    Forms\Components\Section::make([
-                        Forms\Components\Select::make('grade_level')
-                        ->live()
-                        ->options(GradeEnum::class),
-                    Forms\Components\Select::make('strand_id')
-                        ->label('Strand')
-                        ->relationship(name: 'strand', titleAttribute: 'name')
-                        ->preload()
-                        ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
-                            GradeEnum::GRADE11->value,
-                            GradeEnum::GRADE12->value,
-                        ]))
-                        ->searchable(),
-                    Forms\Components\Select::make('section_id')
-                        ->relationship(name: 'section',
-                        titleAttribute: 'name',
-                        )
-                        ->searchable()
-                        ->preload()
-                        ->label('Section')
-                        ->visible(fn ($get, $operation) => ($operation == 'edit') && in_array($get('status'),[
-                            EnrolledStatus::ENROLLED->value,
+                                Forms\Components\Select::make('grade_level')
+                                ->live()
+                                ->options(GradeEnum::class)
+                                ->required(),
 
-                        ])),
-                   Forms\Components\TextInput::make('school_id')
-                        ->placeholder('Set ID')
-                        ->label('Shool ID')
-                        ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true)
-                        ->visible(fn ($get, $operation) => ($operation == 'edit') && in_array($get('status'), [
-                            EnrolledStatus::ENROLLED->value,
-                        ]))
-                        ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true),
-                    Forms\Components\TextInput::make('first_name')
-                        ->required(),
-                    Forms\Components\TextInput::make('middle_name'),
-                    Forms\Components\TextInput::make('last_name')
-                        ->required(),
-                    Forms\Components\TextInput::make('email')
-                        ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
-                        ->live()
-                        ->email(),
-                    Forms\Components\DatePicker::make('birthdate')
-                        ->required(),
-                    Forms\Components\Select::make('gender')
-                        ->options(GenderEnum::class)
-                        ->required(),
-                    Forms\Components\Select::make('civil_status')
-                        ->required()
-                        ->options(CivilStatusEnum::class),
-                    Forms\Components\TextInput::make('contact_number')
-                        ->required(),
-                    Forms\Components\Select::make('religion')
-                        ->required()
-                        ->options(ReligionEnum::class),
-                    Forms\Components\TextInput::make('facebook_url'),
-                    Forms\Components\TextInput::make('purok'),
-                    Forms\Components\TextInput::make('sitio_street'),
-                    Forms\Components\TextInput::make('barangay'),
-                    Forms\Components\TextInput::make('municipality'),
-                    Forms\Components\TextInput::make('province'),
-                    Forms\Components\TextInput::make('zip_code')
-                        ->numeric(),
-                    Forms\Components\TextInput::make('status_type')
-                        ->hidden()
-                        ->required()
-                        ->numeric()
-                        ->default(1),
-                    Forms\Components\TextInput::make('guardian_name'),
-                    ])->columns(3)
+                            Forms\Components\Select::make('strand_id')
+                                ->label('Strand')
+                                ->relationship(name: 'strand', titleAttribute: 'name')
+                                ->preload()
+                                ->visible(function ($get, $operation) {
+                                    return ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
+                                        GradeEnum::GRADE11->value,
+                                        GradeEnum::GRADE12->value,
+                                    ]);
+                                })
+                                ->searchable(),
+                            ]),
 
-                    ])
-            ]);
+
+                                Forms\Components\Select::make('section_id')
+                                    ->relationship(name: 'section', titleAttribute: 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->label('Section')
+                                    ->visible(function ($get, $operation) {
+                                        return ($operation == 'edit') && in_array($get('status'), [
+                                            EnrolledStatus::ENROLLED->value,
+                                        ]);
+                                    }),
+
+                                Forms\Components\TextInput::make('school_id')
+                                    ->placeholder('Set ID')
+                                    ->label('School ID')
+                                    ->visible(function ($get, $operation) {
+                                        return ($operation == 'edit') && in_array($get('status'), [
+                                            EnrolledStatus::ENROLLED->value,
+                                        ]);
+                                    })
+                                    ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true),
+                            ]),
+                        Forms\Components\Section::make('Personal Information')
+                            ->schema([
+                                Forms\Components\FileUpload::make('profile_image')
+                                // ->avatar()
+                                ->previewable()
+                                ->imagePreviewHeight(200)
+                                ->imageEditor()
+                                ->image()
+                                ->columnSpanFull(),
+                                Forms\Components\TextInput::make('first_name')
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('middle_name'),
+
+                                Forms\Components\TextInput::make('last_name')
+                                    ->required(),
+                                    Forms\Components\Select::make('civil_status')
+                                    ->required()
+                                    ->options(CivilStatusEnum::class),
+                                    Forms\Components\Select::make('gender')
+                                    ->options(GenderEnum::class)
+                                    ->required(),
+                                    Forms\Components\Select::make('religion')
+                                            ->required()
+                                            ->options(ReligionEnum::class),
+                                            Forms\Components\DatePicker::make('birthdate')
+                                            ->required(),
+                                            Forms\Components\TextInput::make('email')
+                                            ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
+                                            ->live()
+                                            ->email(),
+                                            Forms\Components\TextInput::make('contact_number')
+                                            ->numeric(),
+                                            Forms\Components\TextInput::make('facebook_url')
+                                            ->columnSpanFull(),
+
+                            ])
+                            ->columns(3),
+
+
+
+                            Forms\Components\Section::make('Personal Address')
+                                ->schema([
+                                Forms\Components\TextInput::make('purok'),
+
+                                Forms\Components\TextInput::make('sitio_street'),
+
+                                Forms\Components\TextInput::make('barangay'),
+
+                                Forms\Components\TextInput::make('municipality'),
+
+                                Forms\Components\TextInput::make('province'),
+
+                                Forms\Components\TextInput::make('zip_code')
+                                    ->numeric(),
+
+                                Forms\Components\TextInput::make('status_type')
+                                    ->hidden()
+                                    ->required()
+                                    ->numeric()
+                                    ->default(1),
+                                    ])
+                                    ->columns(2),
+
+
+                                    Forms\Components\Section::make('Incase of Emergency')
+                                    ->schema([
+                                Forms\Components\TextInput::make('guardian_name')
+                                ->label('Parent \ Guardian name')
+                                ->required(),
+                                    Forms\Components\TextInput::make('incaseof_emergency')
+                                    ->label('Contact')
+                                ->numeric(),
+                                    ])
+                                ->columns(2),
+                        ]);
+
     }
 
     public static function table(Table $table): Table
