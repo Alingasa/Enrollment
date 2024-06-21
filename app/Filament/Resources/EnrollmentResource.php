@@ -194,7 +194,7 @@ class EnrollmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-
+            // ->query(Enrollment::where('status', EnrolledStatus::PENDING))
             ->columns([
                 Tables\Columns\TextColumn::make('status')
                     ->sortable(),
@@ -284,7 +284,8 @@ class EnrollmentResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
                 SelectFilter::make('Status')
-                ->options(EnrolledStatus::class),
+                ->options(EnrolledStatus::class)
+                ->default(EnrolledStatus::PENDING->value),
                 SelectFilter::make('grade_level')
                 ->options(GradeEnum::class),
                 SelectFilter::make('strand_id')

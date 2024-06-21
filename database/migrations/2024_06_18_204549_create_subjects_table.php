@@ -22,7 +22,12 @@ return new class extends Migration
             $table->string('subject_type')->nullable();
             $table->integer('units')->nullable();
             $table->string('grade_level')->nullable();
+
+            //Schedules
             $table->string('room')->nullable();
+            $table->json('day')->nullable();
+            $table->string('time_start')->nullable();
+            $table->string('time_end')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

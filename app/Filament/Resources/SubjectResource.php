@@ -2,16 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use stdClass;
 use App\GradeEnum;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Subject;
 use Filament\Forms\Form;
+use App\DaySelectionEnum;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TimePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\SubjectResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectResource\RelationManagers;
@@ -70,15 +76,30 @@ class SubjectResource extends Resource
                     ->required()
                     ->relationship(name: 'room', titleAttribute: 'room')
                     ->label('Room ID')
-                    ->unique(table: 'subjects', column: 'room_id'),
+                    ->unique(table: 'subjects', column: 'room_id', ignoreRecord: true),
+
+
                 Forms\Components\Select::make('strand_id')
                     ->relationship(name: 'strand', titleAttribute: 'name')
                     ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
                         GradeEnum::GRADE11->value,
                         GradeEnum::GRADE12->value,
-                    ]))
-                ])
 
+                    ])),
+
+                    ]),
+                    Forms\Components\Section::make('Schedule')
+                    ->schema([
+                        Forms\Components\CheckboxList::make('day')
+                       ->label('Day')
+
+                       ->options(DaySelectionEnum::class)
+                       ->columns(6),
+                        Forms\Components\TimePicker::make('time_start')
+                        ->seconds(false),
+                        Forms\Components\TimePicker::make('time_end')
+                        ->seconds(false),
+                    ]),
             ]);
     }
 
@@ -86,6 +107,16 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('#')->state(
+                    static function (HasTable $livewire, stdClass $rowLoop): string {
+                        return (string) (
+                            $rowLoop->iteration +
+                            ($livewire->getTableRecordsPerPage() * (
+                                $livewire->getTablePage() - 1
+                            ))
+                        );
+                    }
+                ),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
@@ -118,6 +149,14 @@ class SubjectResource extends Resource
                         $state => '',
                        })
                     ->searchable(),
+                Tables\Columns\TextColumn::make('day')
+                ->label('Schedule')
+                ->formatStateUsing(function ($state, $record) {
+                    $string = '';
+                   $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
+                //    dd($record);
+                   return $string;
+                  }),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -144,8 +183,8 @@ class SubjectResource extends Resource
                 ->relationship('section', 'name'),
             ],  layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
