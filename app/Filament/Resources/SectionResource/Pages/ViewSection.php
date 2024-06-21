@@ -13,7 +13,9 @@ class ViewSection extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+            ->icon('heroicon-o-pencil-square')
+            ->color('warning'),
         ];
     }
 }

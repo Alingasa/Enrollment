@@ -13,7 +13,9 @@ class ListStrands extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            ->label('New Strand')
+            ->icon('heroicon-o-plus'),
         ];
     }
 }

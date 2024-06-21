@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\EnrolledStatus;
 use App\Models\Strand;
 use App\Models\Section;
 use App\Models\Student;
@@ -20,18 +21,18 @@ class DataTypeOverview extends BaseWidget
             Stat::make('Enrolled', Enrollment::query()->count())
             ->description('Enrollee')
             ->descriptionIcon('heroicon-m-users', IconPosition::Before),
+            Stat::make('Students', Enrollment::query()->where('status', EnrolledStatus::ENROLLED)->count())
+            ->description('Students')
+            ->descriptionIcon('heroicon-m-users', IconPosition::Before),
             Stat::make('Subjects', Subject::query()->count())
             ->description('Subjects')
             ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
-            Stat::make('Strands', Strand::query()->count())
-            ->description('Strands')
-            ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
-            Stat::make('Students', Student::query()->count())
-            ->description('Students')
-            ->descriptionIcon('heroicon-m-users', IconPosition::Before),
             Stat::make('Section', Section::query()->count())
             ->description('Section')
             ->descriptionIcon('heroicon-m-rectangle-stack', IconPosition::Before),
+            Stat::make('Strands', Strand::query()->count())
+            ->description('Strands')
+            ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
         ];
     }
 }

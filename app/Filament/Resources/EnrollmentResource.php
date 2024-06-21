@@ -158,9 +158,6 @@ class EnrollmentResource extends Resource
                          $state => 'warning'
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('full_name')
-                    ->searchable(['first_name', 'middle_name', 'last_name'])
-                    ->sortable(['middle_name', 'first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('strand.name')
                     ->default('No Strand')
                     ->color(fn ($state) => match($state){
@@ -169,10 +166,13 @@ class EnrollmentResource extends Resource
                     })
                     ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('grade_level')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(['first_name', 'middle_name', 'last_name'])
+                    ->sortable(['middle_name', 'first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('section.name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('grade_level')
+                    ->searchable(),
                 // Tables\Columns\TextColumn::make('middle_name')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('last_name')
@@ -236,11 +236,11 @@ class EnrollmentResource extends Resource
                 SelectFilter::make('strand_id')
                 ->label('By Strands')
                 ->relationship('strand', 'name'),
-            ], layout: FiltersLayout::AboveContentCollapsible)
+            ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ActionGroup::make([
+                // Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
+
                     // Tables\Actions\Action::make('approve')
                     // // ->label('')
                     // ->color('success')
@@ -305,8 +305,7 @@ class EnrollmentResource extends Resource
                     })->visible(function ($record){
                         return $record->status == EnrolledStatus::ENROLLED;
                     }),
-                ]),
-            ])
+                ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

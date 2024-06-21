@@ -29,5 +29,9 @@ class Subject extends Model
         return $this->belongsToMany(related: Enrollment::class , table: 'enrollment_subject');
     }
 
+    public function room(){
+        return $this->belongsTo(Room::class);
+    }
+
 
 }

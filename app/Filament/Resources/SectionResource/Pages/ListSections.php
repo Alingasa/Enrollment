@@ -13,7 +13,9 @@ class ListSections extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            ->label('New Section')
+            ->icon('heroicon-o-plus'),
         ];
     }
 }

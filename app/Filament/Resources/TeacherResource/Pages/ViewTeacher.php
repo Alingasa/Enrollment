@@ -13,7 +13,9 @@ class ViewTeacher extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+            ->icon('warning')
+            ->icon('heroicon-o-pencil-quare'),
         ];
     }
 }

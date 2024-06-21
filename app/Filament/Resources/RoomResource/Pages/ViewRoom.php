@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\EnrollmentResource\Pages;
+namespace App\Filament\Resources\RoomResource\Pages;
 
-use App\Filament\Resources\EnrollmentResource;
+use App\Filament\Resources\RoomResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewEnrollment extends ViewRecord
+class ViewRoom extends ViewRecord
 {
-    protected static string $resource = EnrollmentResource::class;
+    protected static string $resource = RoomResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\EditAction::make()
-            ->label('Edit')
             ->color('warning')
             ->icon('heroicon-o-pencil-square'),
         ];
