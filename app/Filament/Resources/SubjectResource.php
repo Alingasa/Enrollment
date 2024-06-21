@@ -64,6 +64,10 @@ class SubjectResource extends Resource
                     ->options(GradeEnum::class)
                     ->required(),
                 Forms\Components\Select::make('room_id')
+                    ->live()
+                    ->preload()
+                    ->searchable()
+                    ->required()
                     ->relationship(name: 'room', titleAttribute: 'room')
                     ->label('Room ID')
                     ->unique(table: 'subjects', column: 'room_id'),
