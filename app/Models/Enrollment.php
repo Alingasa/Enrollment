@@ -42,7 +42,8 @@ class Enrollment extends Model
         'profile_image',
         'status',
         'status_type',
-        'facebook_url'
+        'facebook_url',
+        'incaseof_emergency'
     ];
 
     protected $appends = ['full_name', 'age'];
