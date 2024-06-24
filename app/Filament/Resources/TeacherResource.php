@@ -89,8 +89,6 @@ class TeacherResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-
-
                 ]),
 
 
