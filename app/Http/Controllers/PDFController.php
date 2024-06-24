@@ -21,4 +21,12 @@ class PDFController extends Controller
 
         return $pdf->download('subjects.pdf');
     }
+
+    public function downloadpdfstudent(){
+
+        $pdf = PDF::loadView('listStudent', $data);
+
+        return $pdf->download('students.pdf');
+    }
+
 }
