@@ -39,7 +39,7 @@ class SubjectsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-
+        ->recordTitleAttribute('subject_title')
         ->columns([
             Tables\Columns\TextColumn::make('#')->state(
                 static function (HasTable $livewire, stdClass $rowLoop): string {
