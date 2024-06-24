@@ -26,9 +26,13 @@ class EditTeacher extends EditRecord
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $record->update(Arr::except($data, ['email']));
-        $record->user()->update([
+        $record['id']=$record->user()->update([
             'email' => $data['email']
         ]);
+        // $record->teacher()->update([
+        //     'email' => $data['email']
+        // ]);
+
         return $record;
     }
 
