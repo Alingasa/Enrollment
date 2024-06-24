@@ -70,8 +70,9 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->placeholder('example@gmail.com')
+                    // ->unique(table: 'users', column: 'email', ignoreRecord: true)
                     ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
-                    ->unique(table: 'users', column: 'email', ignoreRecord: true)
+                    ->required()
                     ->email()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('birthdate')
@@ -88,8 +89,6 @@ class TeacherResource extends Resource
                     ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
-
-
 
                 ]),
 

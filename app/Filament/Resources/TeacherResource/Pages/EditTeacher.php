@@ -23,14 +23,16 @@ class EditTeacher extends EditRecord
             Actions\RestoreAction::make(),
         ];
     }
-    protected function handleRecordUpdate(Model $record, array $data): Model
-    {
-        $record->update(Arr::except($data, ['email']));
-        $record->user()->update([
-            'email' => $data['email']
-        ]);
-        return $record;
-    }
+    // protected function handleRecordUpdate(Model $record, array $data): Model
+    // {
+    //     $record->update($data);
+    //     $record->user()->update([
+    //         'email' => $data['email']
+    //     ]);
+
+    //     $record->save();
+    //     return $record;
+    // }
 
     // protected function mutateFormDataBeforeFill(array $data): array
     // {
