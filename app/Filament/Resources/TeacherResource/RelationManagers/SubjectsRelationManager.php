@@ -20,15 +20,16 @@ class SubjectsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('subject_title')
-                    ->required()
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('subject_title')
+                //     ->required()
+                //     ->maxLength(255),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+
             ->recordTitleAttribute('subject_title')
             ->columns([
                 Tables\Columns\TextColumn::make('#')->state(
@@ -71,16 +72,19 @@ class SubjectsRelationManager extends RelationManager
                       ->searchable(),
             ])
             ->filters([
+
                 //
             ])
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
                 // Tables\Actions\AttachAction::make(),
+
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('view'),
             ]);
     }
 }

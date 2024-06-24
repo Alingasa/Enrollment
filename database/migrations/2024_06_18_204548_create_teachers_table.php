@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->string('profile_image')->nullable();
             $table->string('school_id')->unique()->nullable();
             $table->string('first_name');

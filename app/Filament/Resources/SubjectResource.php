@@ -21,6 +21,7 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\SubjectResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectResource\RelationManagers;
+use App\Filament\Resources\SubjectResource\RelationManagers\EnrollmentsRelationManager;
 
 class SubjectResource extends Resource
 {
@@ -44,16 +45,18 @@ class SubjectResource extends Resource
                     ->live()
                     ->preload()
                     ->searchable(['first_name', 'last_name', 'middle_name']),
+                    Forms\Components\Select::make('section_id')
+                    ->label('Section')
+                    ->relationship(name: 'section', titleAttribute: 'name' )
+                    ->required()
+                    ->live()
+                    ->preload()
+                    ->searchable(),
                 Forms\Components\TextInput::make('subject_code')
                     ->placeholder('subject code')
+                    ->unique(table:"subjects",column:"subject_code",ignoreRecord:true)
                     ->required(),
-                Forms\Components\Select::make('section_id')
-                ->label('Section')
-                ->relationship(name: 'section', titleAttribute: 'name' )
-                ->required()
-                ->live()
-                ->preload()
-                ->searchable(),
+
 
                 Forms\Components\TextInput::make('subject_title')
                     ->placeholder('subject title')
@@ -144,7 +147,7 @@ class SubjectResource extends Resource
                   Tables\Columns\TextColumn::make('units')
                       ->numeric()
                       ->sortable(),
-                Tables\Columns\TextColumn::make('room')
+                Tables\Columns\TextColumn::make('room.room')
                 ->label('Room')
                 ->default('TBA'),
                 // Tables\Columns\TextColumn::make('strand.name')
@@ -209,6 +212,7 @@ class SubjectResource extends Resource
     {
         return [
             //
+            EnrollmentsRelationManager::class,
         ];
     }
 
