@@ -223,7 +223,14 @@ class StudentResource extends Resource
                ['record' => $record],
                ))->modalSubmitAction(false)->hidden(),
             ])
+            ->headerActions([
+                Tables\Actions\Action::make('print')
+                ->url(fn() => route('download.tes'))
+                ->openUrlInNewaTab()
+                ->label('print')
+                ->icon('heroicon-o-printer'),
 
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

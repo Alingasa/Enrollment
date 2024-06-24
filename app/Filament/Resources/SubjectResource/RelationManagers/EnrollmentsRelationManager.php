@@ -84,6 +84,7 @@ class EnrollmentsRelationManager extends RelationManager
                 ->color('danger')
 
                 // Tables\Actions\CreateAction::make(),
+
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
