@@ -69,6 +69,7 @@ class TeacherResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->placeholder('example@gmail.com')
                     ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
+                    ->unique(table: 'users', column: 'email', ignoreRecord: true)
                     ->email()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('birthdate')
@@ -147,7 +148,7 @@ class TeacherResource extends Resource
                         ->sortable(),
                     Tables\Columns\TextColumn::make('full_name')
                         ->searchable(['first_name', 'middle_name', 'last_name'])
-                        ->sortable(),
+                        ->sortable(['first_name', 'last_name', 'middle_name']),
                     Tables\Columns\TextColumn::make('email')
                         ->copyable()
                        ->copyMessage('Email address copied')
@@ -171,7 +172,7 @@ class TeacherResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-            //     Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
             //     Tables\Actions\EditAction::make(),
             //     Tables\Actions\Action::make('Qr')
             //     ->icon('heroicon-o-qr-code')

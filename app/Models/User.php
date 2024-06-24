@@ -3,12 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
+use App\Models\Teacher;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -18,6 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'role',
         'name',
         'email',
         'password',
@@ -48,5 +52,21 @@ class User extends Authenticatable
 
     public function setPassword($value){
         return $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function teacher(){
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // dd($panel->getId(), $this->role);
+        // dd(auth()->user()->role);
+        // dd($this->role == 'teacher');
+        if($panel->getId() == 'admin'){
+           return empty($this->teacher);
+        }
+        // dd($panel);
+        return true;
     }
 }

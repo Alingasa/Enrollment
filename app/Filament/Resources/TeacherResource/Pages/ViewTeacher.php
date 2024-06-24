@@ -14,7 +14,7 @@ class ViewTeacher extends ViewRecord
     {
         return [
             Actions\EditAction::make()
-            ->icon('warning')
+            ->color('warning')
             ->icon('heroicon-o-pencil-square'),
         ];
     }
