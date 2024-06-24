@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\GradeEnum;
 use Filament\Forms;
 use Filament\Tables;
+use Pages\ViewStudent;
 use App\EnrolledStatus;
 use App\Models\Student;
 use Filament\Forms\Set;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\EnrollmentResource\RelationManagers\SubjectsRelationManager;
 
 class StudentResource extends Resource
 {
@@ -223,6 +225,7 @@ class StudentResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
         ];
     }
 
@@ -231,6 +234,8 @@ class StudentResource extends Resource
         return [
             'index' => Pages\ListStudents::route('/'),
             'qr-code' => Pages\ViewQrCode::route('/{record}/teacher'),
+            'view' => Pages\ViewStudent::route('/{record}'),
+            // 'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 

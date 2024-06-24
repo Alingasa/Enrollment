@@ -39,32 +39,47 @@ class SubjectsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('subject_title')
-            ->searchable()
-            ->columns([
-                Tables\Columns\TextColumn::make('No.')->state(
-                    static function (HasTable $livewire, stdClass $rowLoop): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->getTableRecordsPerPage() * (
-                                $livewire->getTablePage() - 1
-                            ))
-                        );
-                    }
-                ),
-                Tables\Columns\TextColumn::make('teacher.full_name'),
-                Tables\Columns\TextColumn::make('subject_code'),
-                Tables\Columns\TextColumn::make('subject_title'),
-                Tables\Columns\TextColumn::make('units'),
-                Tables\Columns\TextColumn::make('subject_type'),
-                Tables\Columns\TextColumn::make('grade_level'),
-                Tables\Columns\TextColumn::make('room')
-               ->default('TBA')
-               ->color(fn ($state) => match($state){
-                'TBA' => 'danger',
-                $state => '',
-               }),
-            ])
+
+        ->columns([
+            Tables\Columns\TextColumn::make('#')->state(
+                static function (HasTable $livewire, stdClass $rowLoop): string {
+                    return (string) (
+                        $rowLoop->iteration +
+                        ($livewire->getTableRecordsPerPage() * (
+                            $livewire->getTablePage() - 1
+                        ))
+                    );
+                }
+            ),
+            Tables\Columns\TextColumn::make('subject_code')
+            ->label('Code')
+            ->searchable(),
+            Tables\Columns\TextColumn::make('subject_title')
+            ->label('Subject')
+            ->searchable(),
+            Tables\Columns\TextColumn::make('section.name')
+            ->numeric()
+            ->sortable(),
+            Tables\Columns\TextColumn::make('teacher.full_name')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('day')
+                ->label('Schedule')
+                ->formatStateUsing(function ($state, $record) {
+                    $string = '';
+                   $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
+                //    dd($record);
+                   return $string;
+                  }),
+            Tables\Columns\TextColumn::make('subject_type')
+                  ->searchable(),
+              Tables\Columns\TextColumn::make('units')
+                  ->numeric()
+                  ->sortable(),
+            Tables\Columns\TextColumn::make('room')
+            ->label('Room')
+            ->default('TBA'),
+        ])
             ->filters([
                 Tables\Filters\TrashedFilter::make()
             ])

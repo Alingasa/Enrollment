@@ -12,6 +12,7 @@ use App\CivilStatusEnum;
 use Filament\Forms\Form;
 use App\Models\Enrollment;
 use Filament\Tables\Table;
+use PhpParser\Node\Stmt\Label;
 use Doctrine\DBAL\Schema\Column;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Group;
@@ -20,11 +21,11 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EnrollmentResource\Pages;
 use App\Filament\Resources\EnrollmentResource\RelationManagers\SectionRelationManager;
 use App\Filament\Resources\EnrollmentResource\RelationManagers\SubjectsRelationManager;
-use PhpParser\Node\Stmt\Label;
 
 class EnrollmentResource extends Resource
 {
@@ -223,8 +224,17 @@ class EnrollmentResource extends Resource
                 Tables\Columns\TextColumn::make('full_name')
                     ->searchable(['first_name', 'middle_name', 'last_name'])
                     ->sortable(['middle_name', 'first_name', 'last_name']),
+
                 Tables\Columns\TextColumn::make('section.name')
+                    ->default('Empty')
+                    ->badge()
+                    ->color(fn ($state): string => match($state){
+                        'Empty' => 'danger',
+                        $state => 'primary'
+                    })
+
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('grade_level')
                     ->searchable(),
 
