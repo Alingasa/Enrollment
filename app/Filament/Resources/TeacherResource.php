@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TeacherResource\RelationManagers\SubjectsRelationManager;
+use stdClass;
 use App\GenderEnum;
 use Filament\Forms;
 use Filament\Tables;
@@ -11,10 +11,12 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Contracts\View\View;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TeacherResource\RelationManagers;
+use App\Filament\Resources\TeacherResource\RelationManagers\SubjectsRelationManager;
 
 class TeacherResource extends Resource
 {
@@ -135,6 +137,16 @@ class TeacherResource extends Resource
     {
         return $table
                 ->columns([
+                    Tables\Columns\TextColumn::make('#')->state(
+                        static function (HasTable $livewire, stdClass $rowLoop): string {
+                            return (string) (
+                                $rowLoop->iteration +
+                                ($livewire->getTableRecordsPerPage() * (
+                                    $livewire->getTablePage() - 1
+                                ))
+                            );
+                        }
+                    ),
                     Tables\Columns\ImageColumn::make('profile_image')
                         ->circular()
                         ->default(url('default_images/me.jpg'))
