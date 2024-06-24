@@ -77,7 +77,9 @@ class EnrollmentsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\Action::make('Print')
-                ->url(fn () => route('download.tes'))
+                ->url(fn () => route('download.tes', [
+                    'record' => $this->getOwnerRecord()->getKey()
+                ]))
                 ->openUrlInNewTab()
                 ->label('Print')
                 ->icon('heroicon-m-printer')

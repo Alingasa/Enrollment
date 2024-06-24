@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-jandel
+@foreach ($student as $students)
+<p>{{$students->full_name}}</p>
+@endforeach
 </body>
 </html>

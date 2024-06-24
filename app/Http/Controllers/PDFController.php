@@ -11,16 +11,13 @@ class PDFController extends Controller
 {
     //
     public function downloadpdf(){
-        $subject = Subject::whereHas('teacher', function($quer){
-            $quer->where('user_id');
-        });
+        $subject = Subject::findOrFail(request()->query('record'));
 
-        dd($subject);
 
-        $data = [
-            'subject' => $subject
-        ];
-        $pdf = PDF::loadView('listStudent', $data);
+        $student = $subject->enrollments;
+
+
+        $pdf = PDF::loadView('listStudent', compact('student'));
 
         return $pdf->download('subjects.pdf');
     }
