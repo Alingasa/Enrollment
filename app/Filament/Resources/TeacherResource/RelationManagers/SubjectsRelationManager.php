@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SubjectResource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
@@ -31,6 +32,7 @@ class SubjectsRelationManager extends RelationManager
         return $table
 
             ->recordTitleAttribute('subject_title')
+            ->recordUrl(fn ($record) => SubjectResource::getUrl('view', ['record' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('#')->state(
                     static function (HasTable $livewire, stdClass $rowLoop): string {
@@ -67,8 +69,9 @@ class SubjectsRelationManager extends RelationManager
                   Tables\Columns\TextColumn::make('units')
                       ->numeric()
                       ->sortable(),
-                Tables\Columns\TextColumn::make('room')
+                Tables\Columns\TextColumn::make('room.room')
                       ->label('Room')
+                      ->default('TBA')
                       ->searchable(),
             ])
             ->filters([
@@ -84,7 +87,9 @@ class SubjectsRelationManager extends RelationManager
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('view'),
+                Tables\Actions\Action::make('view')
+                ->label('')
+                ->icon(''),
             ]);
     }
 }
