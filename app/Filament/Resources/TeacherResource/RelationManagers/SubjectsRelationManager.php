@@ -81,15 +81,10 @@ class SubjectsRelationManager extends RelationManager
 
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                ->icon('')
-                ->slideOver(),
-
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
-                // Tables\Actions\Action::make('view')
-                // ->icon('heroicon-o-eye'),
+                Tables\Actions\Action::make('view'),
             ]);
     }
 }
