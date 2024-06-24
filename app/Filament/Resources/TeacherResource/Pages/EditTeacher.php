@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\TeacherResource;
+use Illuminate\Support\Arr;
 
 class EditTeacher extends EditRecord
 {
@@ -21,6 +22,14 @@ class EditTeacher extends EditRecord
             Actions\ForceDeleteAction::make(),
             Actions\RestoreAction::make(),
         ];
+    }
+    protected function handleRecordUpdate(Model $record, array $data): Model
+    {
+        $record->update(Arr::except($data, ['email']));
+        $record->user()->update([
+            'email' => $data['email']
+        ]);
+        return $record;
     }
 
     // protected function mutateFormDataBeforeFill(array $data): array
