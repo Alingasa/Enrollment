@@ -76,7 +76,7 @@ class SubjectsRelationManager extends RelationManager
               Tables\Columns\TextColumn::make('units')
                   ->numeric()
                   ->sortable(),
-            Tables\Columns\TextColumn::make('room')
+            Tables\Columns\TextColumn::make('room.room')
             ->label('Room')
             ->default('TBA'),
         ])

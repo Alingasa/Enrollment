@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use stdClass;
 use App\GradeEnum;
 use Filament\Forms;
 use Filament\Tables;
@@ -17,6 +18,7 @@ use Filament\Resources\Resource;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Group;
 use Filament\Support\Enums\Alignment;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -141,6 +143,16 @@ class StudentResource extends Resource
         return $table
             ->query(Enrollment::where('status', EnrolledStatus::ENROLLED))
             ->columns([
+                Tables\Columns\TextColumn::make('#')->state(
+                    static function (HasTable $livewire, stdClass $rowLoop): string {
+                        return (string) (
+                            $rowLoop->iteration +
+                            ($livewire->getTableRecordsPerPage() * (
+                                $livewire->getTablePage() - 1
+                            ))
+                        );
+                    }
+                ),
                 Tables\Columns\ImageColumn::make('profile_image')
                     ->circular()
                     ->default(url('default_images/me.jpg'))
