@@ -13,14 +13,16 @@ class TeacherSubjectTypeOverview extends BaseWidget
 {
     protected function getStats(): array
     {
+        // $user = auth()->user()->id;
         return [
             //
+
             Stat::make('Subjects', Subject::whereHas('teacher', fn($query) => $query->where('user_id', auth()->user()->id))->count())
             ->description('Subjects')
             ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
-            Stat::make('Students', Subject::with('enrollments')->where('id',auth()->user()->id)->count())
-            ->description('Students')
-            ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
+            // Stat::make('Students', Subject::whereHas('enrollments')->where('teacher_id', auth()->user()->id)->count())
+            // ->description('Students')
+            // ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
 
         ];
     }
