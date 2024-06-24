@@ -162,6 +162,7 @@ class TeacherResource extends Resource
                         ->searchable(['first_name', 'middle_name', 'last_name'])
                         ->sortable(['first_name', 'last_name', 'middle_name']),
                     Tables\Columns\TextColumn::make('user.email')
+                        ->label('Email')
                         ->copyable()
                        ->copyMessage('Email address copied')
                         ->sortable(),
