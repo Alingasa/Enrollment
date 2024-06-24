@@ -71,6 +71,7 @@ class SubjectsRelationManager extends RelationManager
                       ->searchable(),
             ])
             ->filters([
+
                 //
             ])
             ->headerActions([
@@ -78,9 +79,11 @@ class SubjectsRelationManager extends RelationManager
                 // Tables\Actions\AttachAction::make(),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
                 // Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\Action::make('view')
+                // ->icon('heroicon-o-eye'),
             ]);
     }
 }

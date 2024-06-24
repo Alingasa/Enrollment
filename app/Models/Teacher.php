@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\GenderEnum;
+use App\Models\User;
 use App\TeacherStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,4 +43,12 @@ class Teacher extends Model
      public function subjects(){
         return $this->hasMany(Subject::class);
      }
+
+     public function user(){
+        return $this->belongsTo(User::class);
+     }
+//     $teacher = Auth::user(); // Assuming Teacher model implements the Authenticatable contract
+
+// // Load subjects related to the logged-in teacher
+//         $subjects = $teacher->subjects;
 }
