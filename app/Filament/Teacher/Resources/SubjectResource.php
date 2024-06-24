@@ -6,6 +6,7 @@ use stdClass;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Teacher\Resources\SubjectResource\Pages;
 use App\Filament\Teacher\Resources\SubjectResource\RelationManagers;
+use App\Filament\Resources\SubjectResource\RelationManagers\EnrollmentsRelationManager;
 
 class SubjectResource extends Resource
 {
@@ -128,6 +130,8 @@ class SubjectResource extends Resource
     {
         return [
             //
+            EnrollmentsRelationManager::class,
+
         ];
     }
 
