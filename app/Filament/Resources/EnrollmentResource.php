@@ -310,7 +310,7 @@ class EnrollmentResource extends Resource
                     ->action(function ($record){
                         Notification::make()
                         ->title('Rejected')
-                        ->icon('heroicon-o-X-circle')
+                        ->icon('heroicon-o-x-circle')
                         ->danger()
                         ->send();
                         $record->update([
