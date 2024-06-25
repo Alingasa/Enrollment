@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subject;
+use Carbon\Carbon;
 
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
@@ -30,10 +31,14 @@ class PDFController extends Controller
     public function teacherProfile(){
         $teacher = Teacher::findorFail(request()->query('record'));
 
-        $teacherSchedule = $teacher->subjects;
 
-        // dd($teacher);
-        $pdf = PDF::loadView('teacherProfile', compact('teacher'));
+
+            $teacher->birthdate = Carbon::parse($teacher->birthdate)->isoFormat('MMMM DD, YYYY');
+
+        $teacherSchedule = $teacher->subjects;
+// dd($teacherSchedule);
+    // dd($teacher);
+        $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule'))->setPaper('a4', 'landscape');
 
         return $pdf->stream('Teacher.pdf');
 
