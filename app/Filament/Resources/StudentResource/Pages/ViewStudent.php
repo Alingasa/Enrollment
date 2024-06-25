@@ -11,7 +11,9 @@ class ViewStudent extends ViewRecord
 {
 
     protected static string $resource = EnrollmentResource::class;
+
     public ?array $data = [];
+
     protected function getHeaderActions(): array
     {
         return [

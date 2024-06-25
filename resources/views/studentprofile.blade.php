@@ -52,6 +52,7 @@
 
         <div class="personal-info">
             <div>
+                {{-- @dd($data) --}}
             @if($data->profile_image)
             <img style="height: 140px; width: 140px;" src="{{public_path('storage/'.$data->profile_image)}}" alt="">
             @else
