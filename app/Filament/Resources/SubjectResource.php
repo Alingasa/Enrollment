@@ -97,12 +97,14 @@ class SubjectResource extends Resource
                     ->schema([
                         Forms\Components\CheckboxList::make('day')
                        ->label('Day')
-
+                       ->required()
                        ->options(DaySelectionEnum::class)
                        ->columns(6),
                         Forms\Components\TimePicker::make('time_start')
+                        ->required()
                         ->seconds(false),
                         Forms\Components\TimePicker::make('time_end')
+                        ->required()
                         ->seconds(false),
                     ]),
             ]);
