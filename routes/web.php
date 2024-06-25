@@ -25,5 +25,5 @@ Route::get('teacher', [PDFController::class, 'teacherProfile'])->name('teacher.p
 
 Route::get('downloadpdfstudent', [PDFController::class, 'downloadpdfstudent'])->name('download.allstudent');
 Route::get('downloadpdfstudentprofile', [PDFController::class, 'downloadpdfstudentprofile'])->name('download.studentprofile');
-Route::get('downloadpdfstudentprofile', [PDFController::class, 'downloadpdfallsubjects'])->name('download.allsubjects');
+Route::get('downloadpdfallsubjects', [PDFController::class, 'downloadpdfallsubjects'])->name('download.allsubjects');
 
