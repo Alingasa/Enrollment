@@ -66,25 +66,20 @@ class PDFController extends Controller
     public function downloadpdfstudentprofile(){
       $data = Enrollment::findOrFail(request()->query('record'));
      $section =   $data->load('section');
-// dd($data);
-    //   $subjects = Subject::findOrFail(request()->query('record'));
 
-// dd($section->section->name);
     $subjects = $data->subjects;
 
-    // dd($subjects);
-    foreach($subjects as $t){
-        // dd($t->id);
-        $teacher = Teacher::findOrFail($t->id);
-        // $room
 
-        // dd($teacher);
+    foreach($subjects as $t){
+
+        $teacher = Teacher::findOrFail($t->id);
+
     }
-// dd($subjects);
+
       $options = [
         'isPhpEnabled' => true,
         'defaultFont' => 'Arial',
-        // 'orientation' => 'landscape',
+        'orientation' => 'landscape',
     ];
 
     $pdf = PDF::setOptions($options)

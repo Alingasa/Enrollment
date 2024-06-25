@@ -71,10 +71,9 @@
             </tbody>
         </table>
 
-          <!-- Footer -->
-          <div class="footer">
-            <span>No. of students: {{ count($data) }}</span>
-        </div>
+    <div class="footer">
+        <p>No. of Students: {{ count($data) }}</p>
+    </div>
     </div>
 
     <!-- Bootstrap JS and dependencies (optional) -->
