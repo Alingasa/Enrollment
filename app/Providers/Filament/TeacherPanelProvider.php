@@ -2,11 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Teacher\Resources\TeacherResource\Pages\Dashboard;
 use App\Filament\Teacher\Resources\TeacherResource\Widgets\TeacherSubjectTypeOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -33,7 +33,9 @@ class TeacherPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\\Filament\\Teacher\\Resources')
             ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\\Filament\\Teacher\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
+                // Dashboard::class,
+                // Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Teacher/Widgets'), for: 'App\\Filament\\Teacher\\Widgets')
             ->widgets([

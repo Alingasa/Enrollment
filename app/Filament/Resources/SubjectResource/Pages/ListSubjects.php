@@ -16,6 +16,14 @@ class ListSubjects extends ListRecords
             Actions\CreateAction::make()
             ->label('New Subject')
             ->icon('heroicon-o-plus'),
+
+            Actions\Action::make('print')
+            ->url(fn() => route('download.allsubjects'))
+            ->openUrlInNewTab()
+            ->label('print subjects')
+            ->icon('heroicon-o-printer')
+            ->color('danger'),
+
         ];
     }
 }

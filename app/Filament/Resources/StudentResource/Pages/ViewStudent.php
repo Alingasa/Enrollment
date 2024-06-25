@@ -9,8 +9,9 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewStudent extends ViewRecord
 {
-    protected static string $resource = EnrollmentResource::class;
 
+    protected static string $resource = EnrollmentResource::class;
+    public ?array $data = [];
     protected function getHeaderActions(): array
     {
         return [
@@ -18,6 +19,15 @@ class ViewStudent extends ViewRecord
             ->label('Edit')
             ->color('warning')
             ->icon('heroicon-o-pencil-square'),
+
+            Actions\Action::make('print')
+            ->url(fn() => route('download.studentprofile',[
+                'record' => $this->data['id'],
+            ]))
+            ->openUrlInNewTab()
+            ->label('print profile')
+            ->icon('heroicon-o-printer')
+            ->color('danger'),
         ];
     }
 }

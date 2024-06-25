@@ -16,10 +16,10 @@ class SubjectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'subjects';
 
-    public function isReadOnly(): bool
-    {
-        return false;
-    }
+    // public function isReadOnly(): bool
+    // {
+    //     return false;
+    // }
 
     public function form(Form $form): Form
     {
