@@ -76,22 +76,18 @@ class PDFController extends Controller
 
 
     public function downloadpdfstudentprofile(){
-      $data = Enrollment::findOrFail(request()->query('record'));
+     $data = Enrollment::findOrFail(request()->query('record'));
+    //  dd($data);
      $section =   $data->load('section');
 
     $subjects = $data->subjects;
-
-
     foreach($subjects as $t){
 
         $teacher = Teacher::findOrFail($t->id);
 
     }
 
-
-
     $pdf = PDF::loadView('studentprofile', compact('data','subjects', 'section', 'teacher'))->setPaper('a4', 'landscape');
-
 
     return $pdf->stream('studentprofile.pdf');
 
