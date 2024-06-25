@@ -88,17 +88,36 @@ class PDFController extends Controller
 
     }
 
-      $options = [
-        'isPhpEnabled' => true,
-        'defaultFont' => 'Arial',
-        'orientation' => 'landscape',
-    ];
 
-    $pdf = PDF::setOptions($options)
-    ->loadView('studentprofile', compact('data','subjects', 'section', 'teacher'));
+
+    $pdf = PDF::loadView('studentprofile', compact('data','subjects', 'section', 'teacher'))->setPaper('a4', 'landscape');
 
 
     return $pdf->stream('studentprofile.pdf');
+
+    }
+
+
+
+
+    public function downloadpdfallsubjects(){
+        $subj = Subject::with('section', 'teacher')->get();
+
+        foreach($subj as $t){
+
+            $teac = Teacher::findOrFail($t->id);
+            $section = Section::findorFail($t->section_id);
+            // dd($t->section_id);
+
+        }
+
+        // $sect =   $subj->load('section');
+
+
+    $pdf = PDF::loadView('allsubjects', compact('subj','section','teac'))->setPaper('a4','landscape');
+
+
+    return $pdf->stream('allsubjects.pdf');
     }
 
 }

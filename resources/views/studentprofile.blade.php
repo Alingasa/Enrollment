@@ -115,25 +115,27 @@
             text-align: center;
             vertical-align: middle;
         }
+
         </style>
 </head>
 <body>
     <div class="container gradesheet-container">
         <div class="gradesheet-header">
             {{-- <img src="logo.png" alt="MLG College of Learning, Inc."> --}}
-            <h4>Personal Information</h4>
+            <h2>Personal Information</h2>
             {{-- <p>Brgy. Atabay, Hilongos, Leyte</p> --}}
         </div>
         {{-- <h5 class="text-right">GRADESHEET</h5> --}}
 
         <div class="personal-info">
-
+            <div>
             @if($data->profile_image)
             <img style="height: 140px; width: 140px;" src="{{public_path('storage/'.$data->profile_image)}}" alt="">
             @else
             <img src="{{public_path('default_images/me.jpg')}}" alt="">
             @endif
-
+            </div>
+            <div>
             <p>Name: {{ $data->full_name }}</p>
             <p>Contact: {{ $data->contact_number }}</p>
             <p>Gender: {{ $data->gender }}</p>
@@ -141,6 +143,7 @@
             <p>Religion: {{ $data->religion }}</p>
             <p>Address: {{ $data->barangay . ' ' . $data->municipality . ' ' . $data->province }}</p>
             <p>School ID: {{ $data->school_id ?: 'Not provided' }}</p>
+            </div>
         </div>
 
 
@@ -151,9 +154,9 @@
             <p>Name: {{ $data->guardian_name }}</p>
             <p>Number: {{ $data->incaseof_emergency }}</p>
         </div>
-        <div class="gradesheet-title text-center">
+        {{-- <div class="gradesheet-title text-center">
             GRADE {{ $data->grade_level }}
-        </div>
+        </div> --}}
         {{-- <div class="educational-history">
             <h6>Educational History</h6>
             <p>LRN: 121380080003</p>
@@ -161,6 +164,11 @@
             <p>School Address: RV. Fulache Street Hilongos Leyte</p>
             <p>Year Graduated: 2021</p>
         </div> --}}
+        <div class="table-header">
+            {{-- <img src="logo.png" alt="MLG College of Learning, Inc."> --}}
+            <h2>Subjects</h2>
+            {{-- <p>Brgy. Atabay, Hilongos, Leyte</p> --}}
+        </div>
 
         <table class="table table-bordered gradesheet-table">
             <thead>
@@ -184,7 +192,9 @@
                     <td>{{ $sub->subject_title ?: 'Not provided' }}</td>
                     <td>{{ $section->section->name ?: 'Not provided' }}</td>
                     <td>{{ $teacher->full_name ?: 'Not provided' }}</td>
-                    <td>{{ $sub->day ?: 'Not provided' }}</td>
+                    <td><?php foreach ($sub['day'] as $day): ?>
+                        <?php echo $day.','; ?>
+                     <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
                     <td>{{ $sub->subject_type ?: 'Not provided' }}</td>
                     <td>{{ $sub->units ?: 'Not provided' }}</td>
                     <td>{{ $sub->room ?: 'Not provided' }}</td>
