@@ -19,5 +19,10 @@ Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateS
 
 //Print PDF
 Route::get('download', [PDFController::class, 'downloadpdf'])->name('download.tes');
+<<<<<<< Updated upstream
 
 Route::get('teacher', [PDFController::class, 'teacherProfile'])->name('teacher.profile');
+=======
+Route::get('downloadpdfstudent', [PDFController::class, 'downloadpdfstudent'])->name('download.allstudent');
+Route::get('downloadpdfstudentprofile', [PDFController::class, 'downloadpdfstudentprofile'])->name('download.studentprofile');
+>>>>>>> Stashed changes
