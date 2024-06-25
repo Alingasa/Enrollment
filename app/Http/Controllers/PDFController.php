@@ -57,14 +57,13 @@ class PDFController extends Controller
         ->where('status', EnrolledStatus::ENROLLED)
         ->get();
 
-       $options = [
-        'isPhpEnabled' => true,
-        'defaultFont' => 'Arial',
-        'orientation' => 'landscape',
-    ];
+    //    $options = [
+    //     'isPhpEnabled' => true,
+    //     'defaultFont' => 'Arial',
+    //     'orientation' => 'landscape',
+    // ];
 
-    $pdf = PDF::setOptions($options)
-    ->loadView('allstudent', compact('data'));
+    $pdf = PDF::loadView('allstudent', compact('data'));
 
       // Add footer
     //   $pdf->setOptions(['isHtml5ParserEnabled' => true]);
