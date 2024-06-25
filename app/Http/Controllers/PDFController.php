@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Options;
+use App\EnrolledStatus;
+
 use Carbon\Carbon;
+
 
 use App\Models\Room;
 use App\Models\Section;
@@ -47,4 +51,73 @@ class PDFController extends Controller
         return $pdf->stream('Teacher.pdf');
 
     }
+
+    public function downloadpdfstudent(){
+        $data = Enrollment::with('strand')
+        ->where('status', EnrolledStatus::ENROLLED)
+        ->get();
+
+       $options = [
+        'isPhpEnabled' => true,
+        'defaultFont' => 'Arial',
+        'orientation' => 'landscape',
+    ];
+
+    $pdf = PDF::setOptions($options)
+    ->loadView('allstudent', compact('data'));
+
+      // Add footer
+    //   $pdf->setOptions(['isHtml5ParserEnabled' => true]);
+    //   $pdf->setOptions(['isRemoteEnabled' => true]);
+    //   $pdf->setOptions(['isPhpEnabled' => true]);
+
+    return $pdf->stream('students.pdf');
+    }
+
+
+    public function downloadpdfstudentprofile(){
+      $data = Enrollment::findOrFail(request()->query('record'));
+     $section =   $data->load('section');
+
+    $subjects = $data->subjects;
+
+
+    foreach($subjects as $t){
+
+        $teacher = Teacher::findOrFail($t->id);
+
+    }
+
+
+
+    $pdf = PDF::loadView('studentprofile', compact('data','subjects', 'section', 'teacher'))->setPaper('a4', 'landscape');
+
+
+    return $pdf->stream('studentprofile.pdf');
+
+    }
+
+
+
+
+    public function downloadpdfallsubjects(){
+        $subj = Subject::with('section', 'teacher')->get();
+
+        foreach($subj as $t){
+
+            $teac = Teacher::findOrFail($t->id);
+            $section = Section::findorFail($t->section_id);
+            // dd($t->section_id);
+
+        }
+
+        // $sect =   $subj->load('section');
+
+
+    $pdf = PDF::loadView('allsubjects', compact('subj','section','teac'))->setPaper('a4','landscape');
+
+
+    return $pdf->stream('allsubjects.pdf');
+    }
+
 }

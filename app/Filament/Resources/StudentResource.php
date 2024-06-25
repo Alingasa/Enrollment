@@ -158,7 +158,17 @@ class StudentResource extends Resource
                     ->default(url('default_images/me.jpg'))
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('school_id')
+
+                Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(['first_name', 'middle_name', 'last_name'])
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('grade_level')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                   ->copyMessage('Email address copied')
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('school_id')
                     ->label('School ID')
                     ->default('Set ID')
                     ->badge()
@@ -171,15 +181,6 @@ class StudentResource extends Resource
                         'No Strand' => 'primary',
                         $state => 'success'
                     })
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('full_name')
-                    ->searchable(['first_name', 'middle_name', 'last_name'])
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grade_level')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->copyable()
-                   ->copyMessage('Email address copied')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
@@ -208,14 +209,7 @@ class StudentResource extends Resource
                 // Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make()
                 ->icon(''),
-                // ->mutateRecordDataUsing(function (array $data, Set $set): array {
-                //     // dd($data);
 
-
-
-
-                //     return $data;
-                // }),
                 Tables\Actions\Action::make('Qr')
                 ->icon('heroicon-o-qr-code')
                ->modalContent(fn (Enrollment $record): View => view(
@@ -223,7 +217,16 @@ class StudentResource extends Resource
                ['record' => $record],
                ))->modalSubmitAction(false)->hidden(),
             ])
+            ->headerActions([
+                Tables\Actions\Action::make('print')
+                ->url(fn() => route('download.allstudent'))
+                ->openUrlInNewTab()
+                ->label('print all enrolled')
+                ->icon('heroicon-o-printer')
+                ->color('danger'),
 
+
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
