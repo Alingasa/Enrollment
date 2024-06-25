@@ -47,7 +47,7 @@
 <div class="container gradesheet-container">
     <div class="gradesheet-header">
         {{-- <img src="logo.png" alt="MLG College of Learning, Inc."> --}}
-        <h4 >Personal Information</h4>
+        {{-- <h4 >Subjects</h4> --}}
         {{-- <p>Brgy. Atabay, Hilongos, Leyte</p> --}}
     </div>
     {{-- <h5 class="text-right">GRADESHEET</h5> --}}
@@ -60,26 +60,26 @@
     <div class="personal-info">
 
 {{-- @dd(QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($teacher->id)))) --}}
-        @if($teacher->profile_image)
+        {{-- @if($teacher->profile_image)
         <img style="height: 140px; width: 140px;" src="{{public_path('storage/'.$teacher->profile_image)}}" alt="">
         @else
         <img src="{{public_path('default_images/me.jpg')}}" alt="">
-        @endif
+        @endif --}}
 
-        <p> <b>Name:</b> {{$teacher->full_name}}</p>
-        <p><b>Contact:</b>{{$teacher->contact_number}}1</p>
-        <p><b>Gender:</b> {{$teacher->gender}}</p>
+        <p> <b>Teacher:</b> {{$teacher->full_name}}</p>
+        {{-- <p><b>Contact:</b>{{$teacher->contact_number}}1</p> --}}
+        {{-- <p><b>Gender:</b> {{$teacher->gender}}</p> --}}
         {{-- <p>Civil Status: {{$teacher->civil_status}}</p> --}}
-        <p><b>Religion:</b> {{$teacher->zip_code}}</p>
+        {{-- <p><b>Religion:</b> {{$teacher->zip_code}}</p>
         <p><b>Address:</b> {{$teacher->barangay. ' '. $teacher->municipality.','.' '.$teacher->province}}</p>
-        <p><b>Birth Date:</b> {{$teacher->birthdate}}</p>
+        <p><b>Birth Date:</b> {{$teacher->birthdate}}</p> --}}
     </div>
 
-    <div class="gradesheet-title">
+    {{-- <div class="gradesheet-title">
        Incase of Emergency
     </div>
     <p> <b>Guardian/Parent:</b> {{$teacher->guardian_name}}</p>
-    <p><b>Contact:</b>{{$teacher->incaseof_emergency}}</p>
+    <p><b>Contact:</b>{{$teacher->incaseof_emergency}}</p> --}}
 
     {{-- <p class="text-center">Third Year (Second Semester, AY 2023-2024)</p> --}}
 
