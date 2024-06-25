@@ -19,3 +19,5 @@ Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateS
 
 //Print PDF
 Route::get('download', [PDFController::class, 'downloadpdf'])->name('download.tes');
+
+Route::get('teacher', [PDFController::class, 'teacherProfile'])->name('teacher.profile');
