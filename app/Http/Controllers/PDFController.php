@@ -8,6 +8,8 @@ use App\EnrolledStatus;
 use Carbon\Carbon;
 
 
+use App\Models\Room;
+use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Enrollment;
@@ -35,14 +37,16 @@ class PDFController extends Controller
     public function teacherProfile(){
         $teacher = Teacher::findorFail(request()->query('record'));
 
-
-
-            $teacher->birthdate = Carbon::parse($teacher->birthdate)->isoFormat('MMMM DD, YYYY');
+        // dd($teacher->id);
+        $teacher->birthdate = Carbon::parse($teacher->birthdate)->isoFormat('MMMM DD, YYYY');
 
         $teacherSchedule = $teacher->subjects;
-// dd($teacherSchedule);
-    // dd($teacher);
-        $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule'))->setPaper('a4', 'landscape');
+
+        foreach($teacherSchedule as $sectionId){
+            $sections = Section::findorFail($sectionId->section_id);
+            $rooms = Room::findorFail($sectionId->room_id);
+        }
+        $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule', 'sections', 'rooms'))->setPaper('a4', 'landscape');
 
         return $pdf->stream('Teacher.pdf');
 
