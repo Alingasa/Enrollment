@@ -29,7 +29,7 @@ class ViewStudent extends ViewRecord
                 'record' => $this->data['id'],
             ]))
             ->openUrlInNewTab()
-            ->label('print profile')
+            ->label('Print')
             ->icon('heroicon-o-printer')
             ->color('danger'),
 
