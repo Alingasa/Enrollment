@@ -89,6 +89,7 @@ class PDFController extends Controller
 
     $subjects = $data->subjects;
 
+<<<<<<< Updated upstream
     $teachers = $subjects->load('teacher');
 
 //    foreach($teachers as $teacher){
@@ -98,6 +99,12 @@ class PDFController extends Controller
     $pdf = PDF::loadView('studentprofile', compact('data','subjects', 'section', 'teachers'))->setPaper('a4', 'landscape');
 
 
+=======
+
+
+
+    $pdf = PDF::loadView('studentprofile', compact('data','subjects', 'section',))->setPaper('a4', 'landscape');
+>>>>>>> Stashed changes
 
     return $pdf->stream('studentprofile.pdf');
 

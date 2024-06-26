@@ -117,6 +117,7 @@
                     <td>{{ $sub->subject_code ?: 'Not provided' }}</td>
                     <td>{{ $sub->subject_title ?: 'Not provided' }}</td>
                     <td>{{ $section->section->name ?: 'Not provided' }}</td>
+<<<<<<< Updated upstream
                     {{-- @foreach ( as )
 
                     @endforeach --}}
@@ -126,6 +127,9 @@
                         <?php endif; ?>
                     </td>
                     {{-- <td>{{ $teachers->first_name ?: 'Not provided' }}</td> --}}
+=======
+                    <td>{{ $teacher->first_name ?: 'Not provided' }}</td>
+>>>>>>> Stashed changes
                     <td><?php foreach ($sub['day'] as $day): ?>
                         <?php echo $day.','; ?>
                      <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
