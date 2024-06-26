@@ -36,10 +36,16 @@ class CreateTeacher extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
 
-        $email = strtolower($data['first_name'][0]).".".strtolower($data['last_name'])."@gmail.com";
+        $email = strtolower($data['first_name'][0]).".".strtolower($data['last_name'])."@hsenrollment.com";
         // $record = new ($this->getModel())(Arr::except($data, ['email']));
+        $i = 1;
+        while (User::where('email', $email)->exists()) {
+            $email = strtolower($data['first_name'][0]).".".strtolower($data['last_name']) . $i ."@hsenrollment.com";
+            $i++;
+        }
+
         $record = new ($this->getModel())($data);
-       $record['user_id'] = $record->user()->create([
+        $record['user_id'] = $record->user()->create([
             'name'      => $record->full_name,
             'email'     => $email,
             'password'  => 'password'
