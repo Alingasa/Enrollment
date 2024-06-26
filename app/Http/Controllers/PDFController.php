@@ -71,7 +71,7 @@ class PDFController extends Controller
     //     'orientation' => 'landscape',
     // ];
 
-    $pdf = PDF::loadView('allstudent', compact('data'));
+    $pdf = PDF::loadView('allstudent', compact('data'))->setPaper('a4', 'landscape');
 
       // Add footer
     //   $pdf->setOptions(['isHtml5ParserEnabled' => true]);
