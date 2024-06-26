@@ -28,6 +28,10 @@ class User extends Authenticatable implements FilamentUser
         'password',
     ];
 
+    // protected $with = [
+    //     'teacher'
+    // ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -69,5 +73,10 @@ class User extends Authenticatable implements FilamentUser
         }
         // dd($panel);
         return true;
+    }
+
+    public function getRoleAttribute()
+    {
+        return ($this->teacher()->exists()) ? 'Teacher' : 'Admin';
     }
 }
