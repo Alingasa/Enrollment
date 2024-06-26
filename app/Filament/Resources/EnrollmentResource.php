@@ -238,6 +238,10 @@ class EnrollmentResource extends Resource
                 Tables\Columns\TextColumn::make('grade_level')
                     ->searchable(),
 
+                    Tables\Columns\TextColumn::make('email')
+                    ->searchable()
+                    ->copyable(),
+
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -261,6 +265,7 @@ class EnrollmentResource extends Resource
                 SelectFilter::make('strand_id')
                 ->label('By Strands')
                 ->relationship('strand', 'name'),
+
             ])
             ->actions([
 

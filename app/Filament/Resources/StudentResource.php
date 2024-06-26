@@ -164,17 +164,7 @@ class StudentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->copyable()
-                   ->copyMessage('Email address copied')
-                    ->sortable(),
-                    Tables\Columns\TextColumn::make('school_id')
-                    ->label('School ID')
-                    ->default('Set ID')
-                    ->badge()
-                    ->color('danger')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('strand.name')
+                   Tables\Columns\TextColumn::make('strand.name')
                     ->default('No Strand')
                     ->badge()
                     ->color(fn ($state) => match($state){
@@ -182,6 +172,19 @@ class StudentResource extends Resource
                         $state => 'success'
                     })
                     ->sortable(),
+                    Tables\Columns\TextColumn::make('school_id')
+                    ->label('School ID')
+                    ->default('Set ID')
+                    ->badge()
+                    ->color('danger')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                    ->searchable()
+                   ->copyMessage('Email address copied')
+                    ->sortable(),
+
+
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
