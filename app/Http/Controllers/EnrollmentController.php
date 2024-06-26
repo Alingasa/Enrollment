@@ -8,14 +8,12 @@ use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
 {
-  /**
-     * Display a listing of the resource.
-     */
-
      public function welcome(){
+
         $strand = Strand::all();
         return view('welcome',compact('strand'));
      }
+
     public function index()
     {
         //
@@ -24,9 +22,6 @@ class EnrollmentController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -35,9 +30,6 @@ class EnrollmentController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
@@ -60,9 +52,6 @@ class EnrollmentController extends Controller
             'zip_code'=> 'required',
             'guardian_name'=> 'required',
             'grade_level'=> 'required',
-
-
-
         ]);
 
 
@@ -79,9 +68,6 @@ class EnrollmentController extends Controller
 
         Enrollment::create($data);
 
-
-
-
         return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('success_apply','You are successfully apply for enrollment!');
 
     }
@@ -90,63 +76,46 @@ class EnrollmentController extends Controller
 
         $errorCode = $e->errorInfo[1];
 
-        if ($errorCode == 1062) {
+            if ($errorCode == 1062) {
 
-            return redirect()->back()->with('error', 'Duplicate entry for email.');
-        }
+                return redirect()->back()->with('error', 'Duplicate entry for email.');
+            }
 
         return redirect()->back()->with('error', 'An error occurred during applying for enrollment!.');
     }
 }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Enrollment $student)
     {
         //
         return view('students.edit',compact('student'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Enrollment $student)
     {
 
         try{
 
-        $data =  $request->validate([
-            'first_name' => 'required',
-            'middle_name'=> 'required',
-            'last_name'=> 'required',
-            'email' => 'required|email|unique:users,email',
-            'contact_number'=> 'required',
-            'gender'=> 'required',
-            'birthdate'=> 'required',
-            'civil_status'=> 'required',
-            'religion'=> 'required',
-            'purok'=> 'required',
-            'sitio_street'=> 'required',
-            'barangay'=> 'required',
-            'municipality'=> 'required',
-            'province'=> 'required',
-            'zip_code'=> 'required',
-            'guardian_name'=> 'required',
-            'grade_level'=> 'required',
-
-
-
-        ]);
+            $data =  $request->validate([
+                'first_name' => 'required',
+                'middle_name'=> 'required',
+                'last_name'=> 'required',
+                'email' => 'required|email|unique:users,email',
+                'contact_number'=> 'required',
+                'gender'=> 'required',
+                'birthdate'=> 'required',
+                'civil_status'=> 'required',
+                'religion'=> 'required',
+                'purok'=> 'required',
+                'sitio_street'=> 'required',
+                'barangay'=> 'required',
+                'municipality'=> 'required',
+                'province'=> 'required',
+                'zip_code'=> 'required',
+                'guardian_name'=> 'required',
+                'grade_level'=> 'required',
+            ]);
 
 
 
@@ -171,8 +140,6 @@ class EnrollmentController extends Controller
 
         $data['status'] = 1;
 
-
-        // unset($data['school_id']);
 
         $student->update($data);
 
@@ -200,11 +167,7 @@ public function updatestudent(Request $request, Enrollment $student)
     try{
 
     $data =  $request->validate([
-
         'grade_level'=> 'required',
-
-
-
     ]);
 
     $student = Enrollment::where('school_id', $request->school_id)->first();
@@ -224,7 +187,6 @@ public function updatestudent(Request $request, Enrollment $student)
 
 
     $data['status'] = 1;
-    // unset($data['school_id']);
 
     $student->update($data);
 
@@ -246,21 +208,10 @@ catch (\Illuminate\Database\QueryException $e)
 }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-
     public function findschoolid(Request $request,Enrollment $student){
 
     $data =  $request->validate([
-
         'school_id'=> 'required',
-
     ]);
 
 
@@ -311,12 +262,7 @@ catch (\Illuminate\Database\QueryException $e)
             $profilePath = null;
         }
 
-// dd($data);
-        // unset($data['school_id']);
-
         $student->update($data);
-
-
 
         return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('update_success', 'You are successfully apply for enrollment!');
 
