@@ -19,6 +19,9 @@ class EditEnrollment extends EditRecord
      */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+        if($data['grade_level'] <= 10){
+            $data['strand_id'] = null;
+        }
         $record->update($data);
 
         if($section = $record->section) {
