@@ -18,11 +18,11 @@ class ViewStudent extends ViewRecord
     {
         // dd($this->data);
         return [
+
             Actions\EditAction::make()
             ->label('Edit')
             ->color('warning')
             ->icon('heroicon-o-pencil-square'),
-
 
             Actions\Action::make('print')
             ->url(fn() => route('download.studentProfile',[
