@@ -9,94 +9,67 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            background-color: #f8f9fa;
         }
         .gradesheet-container {
-            max-width: 1000px;
-            margin: 20px auto;
+            max-width: 900px;
+            margin: 30px auto;
             padding: 20px;
-            /* border: 1px solid #ddd; */
-            border-radius: 5px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .gradesheet-header {
-            /* text-align: center; */
+            text-align: center;
             margin-bottom: 20px;
         }
         .gradesheet-header img {
-            width: 100px;
+            width: 80px;
             margin-bottom: 10px;
         }
         .gradesheet-title {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
-            color: red;
-            margin-bottom: 10px;
-        }
-        /* .personal-info, .educational-history, .emergency-contact {
+            color: #343a40;
             margin-bottom: 20px;
-        } */
+        }
+        .personal-info p, .emergency-contact p {
+            margin-bottom: 5px;
+        }
         .gradesheet-table th, .gradesheet-table td {
             text-align: center;
+            vertical-align: middle;
+        }
+        .gradesheet-table th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .gradesheet-table tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    {{-- <div style="text-align: center;">
-        {!! QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($teacher->id))) !!}
-
-    </div> --}}
 <div class="container gradesheet-container">
     <div class="gradesheet-header">
-        {{-- <img src="logo.png" alt="MLG College of Learning, Inc."> --}}
-        <h4 >Personal Information</h4>
-        {{-- <p>Brgy. Atabay, Hilongos, Leyte</p> --}}
+        <h2 class="gradesheet-title">Personal Information</h2>
     </div>
-    {{-- <h5 class="text-right">GRADESHEET</h5> --}}
-{{-- @include('filament.resources.student-resource.pages.teacher') --}}
-{{-- <div style="flex: 1; text-align: center;">
-    <div style="display: inline-block; padding: 10px; background: #fff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        {!! QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($teacher->id))) !!}
-
-    </div> --}}
     <div class="personal-info">
-
-{{-- @dd(QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($teacher->id)))) --}}
         @if($teacher->profile_image)
         <img style="height: 140px; width: 140px;" src="{{public_path('storage/'.$teacher->profile_image)}}" alt="">
         @else
-        <img src="{{public_path('default_images/me.jpg')}}" alt="">
+        <img style="height: 140px; width: 140px;" src="{{public_path('default_images/me.jpg')}}" alt="">
         @endif
-
-        <p> <b>Name:</b> {{$teacher->full_name}}</p>
-        <p><b>Contact:</b>{{$teacher->contact_number}}1</p>
-        <p><b>Gender:</b> {{$teacher->gender}}</p>
-        {{-- <p>Civil Status: {{$teacher->civil_status}}</p> --}}
-        <p><b>Religion:</b> {{$teacher->zip_code}}</p>
-        <p><b>Address:</b> {{$teacher->barangay. ' '. $teacher->municipality.','.' '.$teacher->province}}</p>
-        <p><b>Birth Date:</b> {{$teacher->birthdate}}</p>
+        <p><strong>Name:</strong> {{$teacher->full_name}}</p>
+        <p><strong>Contact:</strong> {{$teacher->contact_number}}</p>
+        <p><strong>Gender:</strong> {{$teacher->gender}}</p>
+        <p><strong>Religion:</strong> {{$teacher->zip_code}}</p>
+        <p><strong>Address:</strong> {{$teacher->barangay . ' ' . $teacher->municipality . ', ' . $teacher->province}}</p>
+        <p><strong>Birth Date:</strong> {{$teacher->birthdate}}</p>
     </div>
-
-    {{-- <div class="gradesheet-title">
-       Incase of Emergency
-    </div>
-    <p> <b>Guardian/Parent:</b> {{$teacher->guardian_name}}</p>
-    <p><b>Contact:</b>{{$teacher->incaseof_emergency}}</p> --}}
-
-    {{-- <p class="text-center">Third Year (Second Semester, AY 2023-2024)</p> --}}
-
     <div class="emergency-contact">
-       <center><h5>Subjects</h5></center>
-        {{-- <p>Name: Rosemarie A. Lora</p>
-        <p>Number: 09368981592</p> --}}
+        <h4 class="gradesheet-title">Subjects</h4>
     </div>
-
-    {{-- <div class="educational-history">
-        <h6>Educational History</h6>
-        <p>LRN: 121380080003</p>
-        <p>School Graduated: Hilongos National Vocational School</p>
-        <p>School Address: RV. Fulache Street Hilongos Leyte</p>
-        <p>Year Graduated: 2021</p>
-    </div> --}}
-
     <table class="table table-bordered gradesheet-table">
         <thead>
             <tr>
@@ -105,32 +78,32 @@
                 <th>Description</th>
                 <th>Section</th>
                 <th>Schedule</th>
-                <th>Subject Type</th>
+                <th>Type</th>
                 <th>Units</th>
                 <th>Room</th>
             </tr>
         </thead>
         <tbody>
-
             @foreach($teacherSchedule as $subjects)
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$subjects->subject_code}}</td>
                 <td>{{$subjects->subject_title}}</td>
                 <td>{{$sections->name}}</td>
-                <td><?php foreach ($subjects['day'] as $day): ?>
-                    <?php echo $day.','; ?>
-                 <?php endforeach; ?>/{{$subjects->time_start.'-'.$subjects->time_end}}</td>
-                 <td>{{$subjects->subject_type}}</td>
-                 <td>{{$subjects->units}}</td>
-                 <td>{{$rooms->room}}</td>
+                <td>
+                    @foreach ($subjects['day'] as $day)
+                        {{$day}},
+                    @endforeach
+                    {{$subjects->time_start}} - {{$subjects->time_end}}
+                </td>
+                <td>{{$subjects->subject_type}}</td>
+                <td>{{$subjects->units}}</td>
+                <td>{{$rooms->room}}</td>
             </tr>
             @endforeach
-
         </tbody>
     </table>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -101,18 +101,7 @@ class PDFController extends Controller
     public function downloadpdfallsubjects(){
         $subj = Subject::with('section', 'teacher')->get();
 
-        foreach($subj as $t){
-
-            $teac = Teacher::findOrFail($t->id);
-            $section = Section::findorFail($t->section_id);
-            // dd($t->section_id);
-
-        }
-
-        // $sect =   $subj->load('section');
-
-
-    $pdf = PDF::loadView('allsubjects', compact('subj','section','teac'))->setPaper('a4','landscape');
+    $pdf = PDF::loadView('allsubjects', compact('subj'))->setPaper('a4','landscape');
 
 
     return $pdf->stream('allsubjects.pdf');
