@@ -61,11 +61,11 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Role')
-                ->color([
+                ->badge()
+                ->color(fn ($state) => match($state){
                     'Admin' => 'danger',
-                    'Teacher' => 'warning',
-                ])
-                ,
+                    'Teacher' => 'warning'
+                }),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
