@@ -34,29 +34,52 @@ class PDFController extends Controller
         return $pdf->stream('List.pdf');
     }
 
-    public function teacherProfile(){
-        $teacher = Teacher::findorFail(request()->query('record'));
+    // public function teacherProfile(){
+    //     $teacher = Teacher::findorFail(request()->query('record'));
 
-        // dd($teacher->id);
+    //     // dd($teacher->id);
+    //     $teacher->birthdate = Carbon::parse($teacher->birthdate)->isoFormat('MMMM DD, YYYY');
+
+    //     $teacherSchedule = $teacher->subjects;
+
+    //     foreach($teacherSchedule as $sectionId){
+    //         $sections = Section::findorFail($sectionId->section_id);
+    //         $rooms = Room::findorFail($sectionId->room_id);
+    //     }
+
+    //         // dd($sections);
+
+
+    //     $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule', 'sections', 'rooms'))->setPaper('a4', 'landscape');
+
+
+
+
+    //     return $pdf->stream('Teacher.pdf');
+
+    // }
+    public function teacherProfile(){
+        $teacher = Teacher::findOrFail(request()->query('record'));
+
         $teacher->birthdate = Carbon::parse($teacher->birthdate)->isoFormat('MMMM DD, YYYY');
 
         $teacherSchedule = $teacher->subjects;
+        $sections = [];
+        $rooms = [];
 
-        foreach($teacherSchedule as $sectionId){
-            $sections = Section::findorFail($sectionId->section_id);
+        foreach($teacherSchedule as $subject){
+            $section = Section::find($subject->section_id);
+            $sections[] = $section ? $section->name : 'Not provided'; // Default value if section is null
 
-            $rooms = Room::findorFail($sectionId->room_id);
+            $room = Room::find($subject->room_id);
+            $rooms[] = $room ? $room->room : 'Not provided'; // Default value if room is null
         }
-
 
         $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule', 'sections', 'rooms'))->setPaper('a4', 'landscape');
 
-
-
-
         return $pdf->stream('Teacher.pdf');
-
     }
+
 
     public function downloadpdfstudent(){
         $data = Enrollment::with('strand')
