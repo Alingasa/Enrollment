@@ -52,6 +52,9 @@ class EnrollmentController extends Controller
             'zip_code'=> 'required',
             'guardian_name'=> 'required',
             'grade_level'=> 'required',
+            'incaseof_emergency' => 'required',
+            'facebook_url' => 'required',
+
         ]);
 
 
@@ -66,7 +69,13 @@ class EnrollmentController extends Controller
             $data['strand_id'] = $request->strand_id;
         }
 
+
+
+
+
+
         Enrollment::create($data);
+
 
         return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('success_apply','You are successfully apply for enrollment!');
 
@@ -115,6 +124,8 @@ class EnrollmentController extends Controller
                 'zip_code'=> 'required',
                 'guardian_name'=> 'required',
                 'grade_level'=> 'required',
+                'incaseof_emergency' => 'required',
+                'facebook_url' => 'required',
             ]);
 
 
@@ -137,6 +148,8 @@ class EnrollmentController extends Controller
         if ($request->hasFile('strand_id')){
             $data['strand_id'] = $request->strand_id;
         }
+
+
 
         $data['status'] = 1;
 
