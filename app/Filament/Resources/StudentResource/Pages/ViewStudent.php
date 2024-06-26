@@ -16,9 +16,11 @@ class ViewStudent extends ViewRecord
 
     protected function getHeaderActions(): array
     {
+        // dd($this->data);
         return [
+
             Actions\Action::make('print')
-            ->url(fn() => route('download.studentprofile',[
+            ->url(fn() => route('download.studentProfile',[
                 'record' => $this->data['id'],
             ]))
             ->openUrlInNewTab()

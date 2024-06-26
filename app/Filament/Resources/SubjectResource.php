@@ -7,6 +7,7 @@ use App\GradeEnum;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Filament\Forms\Form;
 use App\DaySelectionEnum;
 use Filament\Tables\Table;
@@ -40,7 +41,9 @@ class SubjectResource extends Resource
                 ->schema([
                     Forms\Components\Select::make('teacher_id')
                     ->label('Teacher')
-                    ->relationship(name: 'teacher', titleAttribute: 'first_name')
+                    ->options(Teacher::all()->pluck('full_name', 'id'))
+                    // ->relationship(name: 'teachers', titleAttribute: 'first_name')
+                    // ->getOptionLabelFromRecordUsing(fn (Teacher $record) => dd($record))
                     ->required()
                     ->live()
                     ->preload()

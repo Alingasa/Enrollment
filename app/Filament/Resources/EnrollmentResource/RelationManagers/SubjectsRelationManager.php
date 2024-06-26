@@ -26,6 +26,7 @@ class SubjectsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('subject_title')
+                    // ->options(fn ($state) => $state->subject_title)
                     ->label('')
                     ->live()
                     ->preload()

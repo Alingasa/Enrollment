@@ -106,22 +106,34 @@
                     <th>Subject-type</th>
                     <th>Units</th>
                     <th>Room</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach ($subjects as  $sub)
+                @foreach ($subjects as  $index => $sub)
                 <tr>
+
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $sub->subject_code ?: 'Not provided' }}</td>
                     <td>{{ $sub->subject_title ?: 'Not provided' }}</td>
                     <td>{{ $section->section->name ?: 'Not provided' }}</td>
-                    <td>{{ $teacher->full_name ?: 'Not provided' }}</td>
+                    {{-- @foreach ( as )
+
+                    @endforeach --}}
+                    <td>
+                        <?php if (isset($teachers[$index])): ?>
+                            <?php echo $teachers[$index]->teacher->full_name; ?>
+                        <?php endif; ?>
+                    </td>
+                    {{-- <td>{{ $teachers->first_name ?: 'Not provided' }}</td> --}}
                     <td><?php foreach ($sub['day'] as $day): ?>
                         <?php echo $day.','; ?>
                      <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
                     <td>{{ $sub->subject_type ?: 'Not provided' }}</td>
                     <td>{{ $sub->units ?: 'Not provided' }}</td>
                     <td>{{ $sub->room ?: 'Not provided' }}</td>
+
+
                 </tr>
                 @endforeach
             </tbody>
