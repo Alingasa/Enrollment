@@ -16,15 +16,17 @@
             color: #212529;
             border-collapse: collapse;
             border: 1px solid #dee2e6;
-            table-layout: fixed; /* Makes table columns fixed width */
+            table-layout: auto; /* Makes table columns fixed width */
         }
 
         .table th,
         .table td {
+            width: auto;
             padding: .75rem;
             vertical-align: top;
             border: 1px solid #dee2e6;
             word-break: break-word;
+            white-space: nowrap;
         }
 
         .table thead th {
@@ -73,19 +75,19 @@
         <table class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
-                    <th scope="col" style="width: 5%;">#</th>
-                    <th scope="col" style="width: 30%;">Full Name</th>
-                    <th scope="col" style="width: 20%;">Grade</th>
-                    <th scope="col" style="width: 30%;">Email</th>
-                    <th scope="col" style="width: 20%;">ID</th>
-                    <th scope="col" style="width: 18%;">Strand</th>
+                    <th >#</th>
+                    <th >Full Name</th>
+                    <th >Grade</th>
+                    <th >Email</th>
+                    <th >ID</th>
+                    <th>Strand</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $index => $datas)
                 <tr>
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{ $datas->full_name ?: 'Not provided' }}</td>
+                    <th  scope="row">{{ $index + 1 }}</th>
+                    <td style="width: 150px">{{ $datas->full_name ?: 'Not provided' }}</td>
                     <td>{{ $datas->grade_level ?: 'Not provided' }}</td>
                     <td>{{ $datas->email ?: 'Not provided' }}</td>
                     <td>{{ $datas->school_id ?: 'Not provided' }}</td>

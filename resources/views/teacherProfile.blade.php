@@ -84,23 +84,56 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($teacherSchedule as $subjects)
+
+            {{-- @foreach($teacherSchedule as $index => $subjects)
             <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$subjects->subject_code}}</td>
-                <td>{{$subjects->subject_title}}</td>
-                <td>{{$sections->name}}</td>
+                @if($teacherSchedule)
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $subjects->subject_code }}</td>
+                <td>{{ $subjects->subject_title }}</td>
+                <td>{{ $sections[$index] }}</td> <!-- Using the index to get the correct section -->
                 <td>
                     @foreach ($subjects['day'] as $day)
-                        {{$day}},
+                        {{ $day }},
                     @endforeach
-                    {{$subjects->time_start}} - {{$subjects->time_end}}
+                    {{ $subjects->time_start }} - {{ $subjects->time_end }}
                 </td>
-                <td>{{$subjects->subject_type}}</td>
-                <td>{{$subjects->units}}</td>
-                <td>{{$rooms->room}}</td>
+                <td>{{ $subjects->subject_type }}</td>
+                <td>{{ $subjects->units }}</td>
+                <td>{{ $rooms[$index] }}</td> <!-- Using the index to get the correct room -->
+                @else
+                <tr>
+                <td><h1>No Subjects</h></td>
+                </tr>
+                @endif
             </tr>
-            @endforeach
+        @endforeach --}}
+        @if($teacherSchedule->isEmpty())
+    <tr>
+        <td colspan="8"><h3>No Subjects</h3></td>
+    </tr>
+@else
+    @foreach($teacherSchedule as $index => $subjects)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $subjects->subject_code }}</td>
+            <td>{{ $subjects->subject_title }}</td>
+            <td>{{ $sections[$index] }}</td> <!-- Using the index to get the correct section -->
+            <td>
+                @foreach ($subjects['day'] as $day)
+                    {{ $day }},
+                @endforeach
+                {{ $subjects->time_start }} - {{ $subjects->time_end }}
+            </td>
+            <td>{{ $subjects->subject_type }}</td>
+            <td>{{ $subjects->units }}</td>
+            <td>{{ $rooms[$index] }}</td> <!-- Using the index to get the correct room -->
+        </tr>
+    @endforeach
+@endif
+
+
+
         </tbody>
     </table>
 </div>
