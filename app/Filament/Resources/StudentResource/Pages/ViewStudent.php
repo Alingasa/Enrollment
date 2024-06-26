@@ -33,10 +33,7 @@ class ViewStudent extends ViewRecord
             ->icon('heroicon-o-printer')
             ->color('danger'),
 
-            Actions\EditAction::make()
-            ->label('Edit')
-            ->color('warning')
-            ->icon('heroicon-o-pencil-square'),
+
         ];
 
     }
