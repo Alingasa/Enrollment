@@ -221,7 +221,7 @@ class StudentResource extends Resource
                 Tables\Actions\Action::make('print')
                 ->url(fn() => route('download.allstudent'))
                 ->openUrlInNewTab()
-                ->label('print all enrolled')
+                ->label('Print')
                 ->icon('heroicon-o-printer')
                 ->color('danger'),
 

@@ -20,7 +20,7 @@ class ListSubjects extends ListRecords
             Actions\Action::make('print')
             ->url(fn() => route('download.allsubjects'))
             ->openUrlInNewTab()
-            ->label('print subjects')
+            ->label('Print')
             ->icon('heroicon-o-printer')
             ->color('danger'),
 
