@@ -63,6 +63,8 @@ class PDFController extends Controller
         ->where('status', EnrolledStatus::ENROLLED)
         ->get();
 
+
+
     //    $options = [
     //     'isPhpEnabled' => true,
     //     'defaultFont' => 'Arial',

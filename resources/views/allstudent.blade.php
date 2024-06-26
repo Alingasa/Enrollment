@@ -65,7 +65,10 @@
                     <td>{{ $datas->grade_level ?: 'Not provided' }}</td>
                     <td>{{ $datas->email ?: 'Not provided' }}</td>
                     <td>{{ $datas->school_id ?: 'Not provided' }}</td>
-                    <td>{{ $datas->strand ?: 'Not provided' }}</td>
+
+                    <td>{{ $datas->strand->name ?? 'Not provided' }}</td>
+
+
                 </tr>
                 @endforeach
             </tbody>
