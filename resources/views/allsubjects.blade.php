@@ -9,46 +9,40 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <style>
-         body {
+        body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            background-color: #f8f9fa;
         }
         .gradesheet-container {
-            max-width: 1000px;
-            margin: 20px auto;
+            max-width: 900px;
+            margin: 40px auto;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .gradesheet-header {
+        .center-heading {
             text-align: center;
-            margin-bottom: 20px;
-        }
-        .gradesheet-header img {
-            width: 100px;
-            margin-bottom: 10px;
-        }
-        .gradesheet-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: red;
-            margin-bottom: 10px;
-        }
-        .personal-info, .educational-history, .emergency-contact {
             margin-bottom: 20px;
         }
         .gradesheet-table th, .gradesheet-table td {
             text-align: center;
-            width: 100%;
         }
-
-
+        .gradesheet-table thead {
+            background-color: #e9ecef;
+        }
+        .gradesheet-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container ">
-        <h1 class="mt-4 center-heading">List of subjects</h1>
-
+    <div class="container gradesheet-container">
+        <h1 class="center-heading">List of Subjects</h1>
         <table class="table table-bordered gradesheet-table">
             <thead>
                 <tr>
@@ -58,22 +52,22 @@
                     <th>Section</th>
                     <th>Teacher</th>
                     <th>Schedule</th>
-                    <th>Subject-type</th>
+                    <th>Type</th>
                     <th>Units</th>
                     <th>Room</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($subj as  $sub)
+                @foreach ($subj as $sub)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $sub->subject_code ?: 'Not provided' }}</td>
                     <td>{{ $sub->subject_title ?: 'Not provided' }}</td>
-                    <td>{{ $section->name ?: 'Not provided' }}</td>
-                    <td style="width: 200px">{{ $teac->full_name ?: 'Not provided' }}</td>
-                    <td style="width: 220px"><?php foreach ($sub['day'] as $day): ?>
-                        <?php echo $day.','; ?>
-                     <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
+                    <td>{{ $sub->section->name ?: 'Not provided' }}</td>
+                    <td>{{ $sub->teacher->full_name ?: 'Not provided' }}</td>
+                    <td>
+                        {{ implode(', ', $sub['day']) }}/{{ $sub->time_start.'-'.$sub->time_end }}
+                    </td>
                     <td>{{ $sub->subject_type ?: 'Not provided' }}</td>
                     <td>{{ $sub->units ?: 'Not provided' }}</td>
                     <td>{{ $sub->room ?: 'Not provided' }}</td>
@@ -81,14 +75,32 @@
                 @endforeach
             </tbody>
         </table>
-    <div class="footer">
-        <p>No. of Subjects: {{ count($subj) }}</p>
+        <div class="footer">
+            <p>No. of Subjects: {{ count($subj) }}</p>
+        </div>
     </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Bootstrap JS and dependencies (optional) -->
-    <!-- Scripts are usually included at the end of the body section -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+
+        function generatePDF() {
+            const doc = new jsPDF();
+            doc.text("List of Subjects", 20, 10);
+            doc.autoTable({ html: '.gradesheet-table' });
+            doc.save('gradesheet.pdf');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.createElement('button');
+            btn.textContent = 'Download PDF';
+            btn.className = 'btn btn-primary';
+            btn.style.display = 'block';
+            btn.style.margin = '20px auto';
+            btn.onclick = generatePDF;
+            document.body.appendChild(btn);
+        });
+    </script>
 </body>
 </html>
