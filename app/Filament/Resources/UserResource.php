@@ -17,7 +17,25 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Settings';
+
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return 'success';
+    }
+
+    public static function getNavigationBadge(): ?string
+{
+
+    $count = User::count();
+
+    if($count == 0){
+        return null;
+    }
+    return $count;
+}
 
     public static function form(Form $form): Form
     {
