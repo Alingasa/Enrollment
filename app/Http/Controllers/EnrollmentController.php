@@ -260,6 +260,8 @@ catch (\Illuminate\Database\QueryException $e)
             'zip_code'=> 'required',
             'guardian_name'=> 'required',
             'grade_level'=> 'required',
+            'incaseof_emergency' => 'required',
+            'facebook_url' => 'required',
         ]);
 
 
