@@ -17,11 +17,6 @@ class ViewStudent extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make()
-            ->label('Edit')
-            ->color('warning')
-            ->icon('heroicon-o-pencil-square'),
-
             Actions\Action::make('print')
             ->url(fn() => route('download.studentprofile',[
                 'record' => $this->data['id'],
@@ -30,6 +25,12 @@ class ViewStudent extends ViewRecord
             ->label('print profile')
             ->icon('heroicon-o-printer')
             ->color('danger'),
+
+            Actions\EditAction::make()
+            ->label('Edit')
+            ->color('warning')
+            ->icon('heroicon-o-pencil-square'),
         ];
+
     }
 }
