@@ -4,7 +4,10 @@ namespace App\Filament\Teacher\Resources;
 
 use stdClass;
 use Filament\Forms;
+use App\Models\Room;
 use Filament\Tables;
+use App\Models\Strand;
+use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Filament\Forms\Form;
@@ -27,26 +30,29 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('teacher_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('room_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('section_id')
-                    ->numeric(),
+                Forms\Components\Select::make('teacher_id')
+                ->label('Teacher')
+                ->options(Teacher::all()->pluck('full_name', 'id')),
+                    // ->relationship(name: 'teachers', titleAttribute: 'first_name'),
+                    // ->numeric(),
+                Forms\Components\Select::make('room_id')
+                ->label('Room')
+                ->options(Room::all()->pluck('room', 'id')),
+                Forms\Components\Select::make('section_id')
+                ->label('Strand')
+                ->options(Section::all()->pluck('name', 'id')),
                 Forms\Components\TextInput::make('subject_code')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('subject_title')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('strand_id')
-                    ->numeric(),
+                Forms\Components\Select::make('strand_id')
+                    ->options(Strand::all()->pluck('name', 'id')),
                 Forms\Components\TextInput::make('subject_type')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('units')
                     ->numeric(),
                 Forms\Components\TextInput::make('grade_level')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('room')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('day'),
                 Forms\Components\TextInput::make('time_start')
