@@ -114,16 +114,17 @@
                     <td>{{ $section->section->name ?: 'Not provided' }}</td>
                     <td>
                         <?php if (isset($teachers[$index])): ?>
-                            <?php echo $teachers[$index]->teacher->full_name; ?>
+                        <?php echo $teachers[$index]->teacher->full_name; ?>
                         <?php endif; ?>
                     </td>
+                    {{-- @dd($sub['day']); --}}
                     <td><?php foreach ($sub['day'] as $day): ?>
                         <?php echo $day.','; ?>
-                     <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
-                    <td>{{ $sub->subject_type ?: 'Not provided' }}</td>
-                    <td>{{ $sub->units ?: 'Not provided' }}</td>
-                    <td>{{ $sub->room ?: 'Not provided' }}</td>
-                </tr>
+                        <?php endforeach; ?>/{{$sub->time_start.'-'.$sub->time_end}}</td>
+                        <td>{{ $sub->subject_type ?: 'Not provided' }}</td>
+                        <td>{{ $sub->units ?: 'Not provided' }}</td>
+                        <td>{{ $sub->room ?: 'Not provided' }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
