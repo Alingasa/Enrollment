@@ -44,9 +44,15 @@ class PDFController extends Controller
 
         foreach($teacherSchedule as $sectionId){
             $sections = Section::findorFail($sectionId->section_id);
+
             $rooms = Room::findorFail($sectionId->room_id);
         }
+
+
         $pdf = PDF::loadView('teacherProfile', compact('teacher', 'teacherSchedule', 'sections', 'rooms'))->setPaper('a4', 'landscape');
+
+
+
 
         return $pdf->stream('Teacher.pdf');
 
