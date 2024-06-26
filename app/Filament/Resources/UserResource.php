@@ -60,7 +60,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Role'),
+                Tables\Columns\TextColumn::make('Role')
+                ->color([
+                    'Admin' => 'danger',
+                    'Teacher' => 'warning',
+                ])
+                ,
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
