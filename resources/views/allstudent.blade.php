@@ -17,6 +17,7 @@
             border-collapse: collapse;
             border: 1px solid #dee2e6;
             table-layout: auto; /* Makes table columns fixed width */
+
         }
 
         .table th,
@@ -48,7 +49,7 @@
         }
 
         .footer {
-            text-align: center;
+            text-align: left;
             margin-top: 20px;
             font-family: 'Arial', sans-serif;
             color: #343a40;
