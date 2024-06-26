@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,7 +65,11 @@
 
 
     <div class="form-container">
-        <h2 class="text-center mb-4">Student Enrollment Form</h2>
+        <div class="card bg-secondary">
+            <div class="card-header">
+            <h2 class="text-center mb-4">Student Enrollment Form</h2>
+            <div>
+            <div class="card-body">
         <form id="studentform" method="POST" action="{{ url('studentsUpdate',$student->school_id) }}" enctype="multipart/form-data" class="row g-3">
             @csrf
             @method('PUT')
@@ -210,6 +214,13 @@
                 @enderror
             </div>
             <div class="col-md-4">
+                <label for="incaseof_emergency" class="form-label">Emergency Number</label>
+                <input type="number" name="incaseof_emergency" class="form-control @error('incaseof_emergency') is-invalid @enderror" id="incaseof_emergency" value="{{$student->incaseof_emergency }}" placeholder="Phone Number">
+            @error("incaseof_emergency")
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
+            </div>
+            <div class="col-md-4">
                 <label for="grade_level" class="form-label">Grade Level</label>
                 <select id="grade_level" name="grade_level" class="form-select @error('grade_level') is-invalid @enderror">
                     <option selected>{{ $student->grade_level }}</option>
@@ -239,6 +250,13 @@
                 @enderror
             </div>
             <div class="col-md-12">
+                <label for="facebook_url" class="form-label">Facebook Url</label>
+                <input type="text" name="facebook_url" class="form-control" id="facebook_url" placeholder="your url of of your facebook acount." value="{{$student->facebook_url }}">
+                @error("facebook_url")
+                <p class="text-danger ">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="col-md-12">
                 <label for="profile_image" class="form-label">Upload profile</label>
                 <input type="file" name="profile_image" class="form-control" id="profile_image" placeholder="profile image" value="{{old('profile_image') }}">
                 @error("profile_image")
@@ -250,6 +268,8 @@
                 <a href="/" type="button" class="btn btn-danger">Cancel</a>
             </div>
         </form>
+    </div>
+</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLX3RK/Qy3pMAznsG6nnAdN18tbFfDl0ovfyklk3pKTN8e4Rx3mgGoF7hE6Jh" crossorigin="anonymous"></script>
@@ -275,4 +295,4 @@
     </script>
 
 </body>
-</html> --}}
+</html>
