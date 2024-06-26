@@ -70,7 +70,7 @@ class TeacherResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->placeholder('example@gmail.com')
-                    ->unique(table: 'users', column: 'email', ignoreRecord: true)
+                    // ->unique(table: 'users', column: 'email', ignoreRecord: true)
                     ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
                     ->required()
                     ->email()
