@@ -135,7 +135,6 @@
     </style>
 </head>
 <body>
-    @if($getRecord())
     {{-- {{dd($record)}}ere --}}
     <div class="id-card">
         <div class="header">
@@ -175,6 +174,5 @@
             <p>Contact: {{$record->contact_number}}</p>
         </div>
     </div>
-    @endif
 </body>
 </html>

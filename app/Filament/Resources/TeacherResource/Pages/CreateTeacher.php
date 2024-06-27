@@ -15,23 +15,7 @@ class CreateTeacher extends CreateRecord
 {
     protected static string $resource = TeacherResource::class;
 
-    // protected function mutateFormDataBeforeCreate(array $data): array
-    // {
 
-    //     // dd($sample);
-    //     // dd($data['email']);
-    //     // $teacher = Teacher::find($data);
-
-    //     $data['user_id'] = User::create([
-    //         // 'user_id' => $userId,
-    //         // 'role' => 'teacher',
-    //         'name' => $data['first_name'].' '.$data['middle_name'][0].'.'.' '.$data['last_name'],
-    //         'email' => $data['email'],
-    //         'password' => 'password',
-    //     ])->id;
-
-    //     return $data;
-    // }
 
     protected function handleRecordCreation(array $data): Model
     {
@@ -44,7 +28,7 @@ class CreateTeacher extends CreateRecord
             $i++;
         }
 
-        $record = new ($this->getModel())($data);
+        $record = new ($this->getModel())(Arr::except($data, ['qr_code']));
         $record['user_id'] = $record->user()->create([
             'name'      => $record->full_name,
             'email'     => $email,
