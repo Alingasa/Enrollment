@@ -30,35 +30,41 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('teacher_id')
-                ->label('Teacher')
-                ->options(Teacher::all()->pluck('full_name', 'id')),
-                    // ->relationship(name: 'teachers', titleAttribute: 'first_name'),
-                    // ->numeric(),
-                Forms\Components\Select::make('room_id')
-                ->label('Room')
-                ->options(Room::all()->pluck('room', 'id')),
-                Forms\Components\Select::make('section_id')
-                ->label('Strand')
-                ->options(Section::all()->pluck('name', 'id')),
-                Forms\Components\TextInput::make('subject_code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('subject_title')
-                    ->maxLength(255),
-                Forms\Components\Select::make('strand_id')
-                    ->options(Strand::all()->pluck('name', 'id')),
-                Forms\Components\TextInput::make('subject_type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('units')
-                    ->numeric(),
-                Forms\Components\TextInput::make('grade_level')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('day'),
-                Forms\Components\TextInput::make('time_start')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('time_end')
-                    ->maxLength(255),
+                Forms\Components\Section::make('Subjects')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\Select::make('teacher_id')
+                    ->label('Teacher')
+                    ->options(Teacher::all()->pluck('full_name', 'id')),
+                        // ->relationship(name: 'teachers', titleAttribute: 'first_name'),
+                        // ->numeric(),
+                    Forms\Components\Select::make('room_id')
+                    ->label('Room')
+                    ->options(Room::all()->pluck('room', 'id')),
+                    Forms\Components\Select::make('section_id')
+                    ->label('Strand')
+                    ->options(Section::all()->pluck('name', 'id')),
+                    Forms\Components\TextInput::make('subject_code')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('subject_title')
+                        ->maxLength(255),
+                    Forms\Components\Select::make('strand_id')
+                        ->label('Strand')
+                        ->options(Strand::all()->pluck('name', 'id')),
+                    Forms\Components\TextInput::make('subject_type')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('units')
+                        ->numeric(),
+                    Forms\Components\TextInput::make('grade_level')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('day'),
+                    Forms\Components\TextInput::make('time_start')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('time_end')
+                        ->maxLength(255),
+                ])
+
             ]);
     }
 
@@ -116,7 +122,7 @@ class SubjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
@@ -126,9 +132,9 @@ class SubjectResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
