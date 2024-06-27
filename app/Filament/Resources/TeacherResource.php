@@ -41,7 +41,7 @@ class TeacherResource extends Resource
                     ->image(),
                     Forms\Components\ViewField::make('qr_code')
                     ->label('Qr Code')
-                    ->view('filament.resources.student-resource.pages.view-qr-code', ['record' => 'record']) // Initialize record as null
+                    ->view('filament.resources.student-resource.pages.teacher', ['record' => 'record']) // Initialize record as null
                     ->afterStateUpdated(function ($state, $set) {
                         // Fetch enrollment data based on state
                         $enrollment = Teacher::find($state->get('id'));
