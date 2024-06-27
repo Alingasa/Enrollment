@@ -135,12 +135,15 @@ class SubjectResource extends Resource
                 ->searchable(),
                 Tables\Columns\TextColumn::make('section.name')
                 ->numeric()
+                ->searchable()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('day')
                     ->label('Schedule')
+                    ->searchable()
                     ->formatStateUsing(function ($state, $record) {
                         $string = '';
                        $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
@@ -151,9 +154,11 @@ class SubjectResource extends Resource
                       ->searchable(),
                   Tables\Columns\TextColumn::make('units')
                       ->numeric()
+                      ->searchable()
                       ->sortable(),
                 Tables\Columns\TextColumn::make('room.room')
                 ->label('Room')
+                ->searchable()
                 ->default('TBA'),
                 // Tables\Columns\TextColumn::make('strand.name')
                 //     ->default('No Strand')
