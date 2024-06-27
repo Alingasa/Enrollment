@@ -159,7 +159,7 @@
             <p><span>Age:</span> {{$record->age}}</p>
             <p><span>GUARDIAN/PARENT:</span> {{$record->guardian_name}}</p>
             <div class="signature">
-                <p class="signature-label">Student Signature</p>
+                <p class="signature-label">Teacher Signature</p>
 
             </div>
         </div>
