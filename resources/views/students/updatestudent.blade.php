@@ -263,6 +263,7 @@
                 <label for="strand_id" class="form-label">Strand</label>
                 <select id="strand_id" name="strand_id" class="form-select @error('strand_id') is-invalid @enderror">
                    @foreach ($strand as $list)
+                   <option selected>{{ $student->strand_id }}</option>
                    <option value="{{$list->id}}">{{$list->name}}</option>
 
                    @endforeach
