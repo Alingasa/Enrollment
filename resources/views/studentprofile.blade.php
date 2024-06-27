@@ -34,21 +34,16 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            text-align: center; /* Center-aligning table content */
         }
         .gradesheet-table th, .gradesheet-table td {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
             vertical-align: middle;
         }
         .gradesheet-table th {
             background-color: #f2f2f2;
             font-weight: bold;
-        }
-
-        /* DOMPDF landscape orientation */
-        @page {
-            size: landscape;
         }
     </style>
 </head>
