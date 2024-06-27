@@ -139,7 +139,6 @@ class SubjectResource extends Resource
                 ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
-                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('day')
                     ->label('Schedule')
