@@ -17,17 +17,16 @@
             border-collapse: collapse;
             border: 1px solid #dee2e6;
             table-layout: auto; /* Makes table columns fixed width */
-
         }
 
         .table th,
         .table td {
-            width: auto;
             padding: .75rem;
             vertical-align: top;
             border: 1px solid #dee2e6;
             word-break: break-word;
             white-space: nowrap;
+            text-align: center; /* Center align text in table cells */
         }
 
         .table thead th {
@@ -67,6 +66,21 @@
         .table-bordered th, .table-bordered td {
             border: 1px solid #dee2e6;
         }
+
+        /* Additional styles for DOMPDF landscape layout */
+        @page {
+            size: A4 landscape;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -76,18 +90,18 @@
         <table class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
-                    <th >#</th>
-                    <th >Full Name</th>
-                    <th >Grade</th>
-                    <th >Email</th>
-                    <th >ID</th>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                    <th>ID</th>
                     <th>Strand</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $index => $datas)
                 <tr>
-                    <th  scope="row">{{ $index + 1 }}</th>
+                    <th scope="row">{{ $index + 1 }}</th>
                     <td style="width: 150px">{{ $datas->full_name ?: 'Not provided' }}</td>
                     <td>{{ $datas->grade_level ?: 'Not provided' }}</td>
                     <td>{{ $datas->email ?: 'Not provided' }}</td>
