@@ -262,9 +262,8 @@
             <div class="col-md-4" id="stranddiv">
                 <label for="strand" class="form-label">Strand</label>
                 <select id="strand" name="strand" class="form-select @error('strand') is-invalid @enderror">
-                    <option selected>{{ $student->strand }}</option>
+                    <option selected>{{ $student->strand_id }}</option>
                    @foreach ($strand as $list)
-
                    <option value="{{$list->id}}">{{$list->name}}</option>
 
                    @endforeach

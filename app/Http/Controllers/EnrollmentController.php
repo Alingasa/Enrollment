@@ -141,12 +141,14 @@ class EnrollmentController extends Controller
             $profilePath = null;
         }
 
-        if($request->hasFile('grade_level')){
-            $data['grade_level'] = $request->grade_level;
+        if($request->has('grade_level')){
+           $upgrade = $data['grade_level'] = $request->grade_level;
+            $student->update($upgrade);
         }
 
-        if ($request->hasFile('strand_id')){
-            $data['strand_id'] = $request->strand_id;
+        if ($request->has('strand')){
+           $upstrand = $data['strand_id'] = $request->strand;
+            $student->update($upstrand);
         }
 
 
