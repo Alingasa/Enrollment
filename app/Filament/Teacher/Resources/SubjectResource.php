@@ -30,7 +30,7 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Personal Details')
+                Forms\Components\Section::make('Subjects')
                 ->columns(2)
                 ->schema([
                     Forms\Components\Select::make('teacher_id')
@@ -50,6 +50,7 @@ class SubjectResource extends Resource
                     Forms\Components\TextInput::make('subject_title')
                         ->maxLength(255),
                     Forms\Components\Select::make('strand_id')
+                        ->label('Strand')
                         ->options(Strand::all()->pluck('name', 'id')),
                     Forms\Components\TextInput::make('subject_type')
                         ->maxLength(255),
