@@ -149,7 +149,7 @@
             @else
             <img src="{{'http://highschoolenrollment.webactivities.online/default_images/me.jpg'}}" alt="profile">
             @endif
-            <p style="color: red">{{ $record->school_id }}</p>
+            <p style="color: red">ID No.{{ $record->school_id }}</p>
         </div>
 {{-- {{dd($record)}} --}}
         <div class="details">
