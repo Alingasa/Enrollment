@@ -149,7 +149,6 @@
             @else
             <img src="{{'http://highschoolenrollment.webactivities.online/default_images/me.jpg'}}" alt="profile">
             @endif
-
         </div>
 {{-- {{dd($record)}} --}}
         <div class="details">
@@ -158,7 +157,7 @@
             <p><span>Age:</span> {{$record->age}}</p>
             <p><span>GUARDIAN/PARENT:</span> {{$record->guardian_name}}</p>
             <div class="signature">
-                <p class="signature-label">Student Signature</p>
+                <p class="signature-label">Signature</p>
 
             </div>
         </div>
