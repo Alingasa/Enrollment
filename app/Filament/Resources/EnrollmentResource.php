@@ -214,10 +214,10 @@ class EnrollmentResource extends Resource
                                     ->columns(2),
 
 
-                                    Forms\Components\Section::make('Incase of Emergency')
+                                    Forms\Components\Section::make('In case of Emergency')
                                     ->schema([
                                 Forms\Components\TextInput::make('guardian_name')
-                                ->label('Parent \ Guardian name')
+                                ->label('Parent / Guardian name')
                                 ->placeholder('juan dela cruz')
                                 ->required(),
                                     Forms\Components\TextInput::make('incaseof_emergency')

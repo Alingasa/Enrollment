@@ -23,7 +23,7 @@ class UserResource extends Resource
 
     public static function getNavigationBadgeColor(): string | array | null
     {
-        return 'success';
+        return 'warning';
     }
 
     public static function getNavigationBadge(): ?string
