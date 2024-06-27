@@ -54,6 +54,28 @@ class EnrollmentResource extends Resource
         return $form
 
             ->schema([
+                  Forms\Components\Section::make()
+                ->columns(2)
+                ->schema([
+                    Forms\Components\FileUpload::make('profile_image')
+                            // ->avatar()
+                            ->previewable()
+                            ->imagePreviewHeight(200)
+                            ->imageEditor()
+                            ->image(),
+                    Forms\Components\ViewField::make('qr_code')
+                            ->label('Qr Code')
+                            ->view('filament.resources.student-resource.pages.view-qr-code')
+                            ->afterStateUpdated(function ($state, $set) {
+                                // Fetch enrollment data based on state
+                                $enrollment = Enrollment::find($state->get('id'));
+                                if ($enrollment) {
+                                    $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
+                                } else {
+                                    $set(['record' => null]); // Ensure record is null if no enrollment found
+                                }
+                            }),
+                ]),
                 Forms\Components\Section::make('Select Grade to Enroll')
                     ->schema([
                             Forms\Components\Section::make()
@@ -99,48 +121,64 @@ class EnrollmentResource extends Resource
                                     })
                                     ->unique(table: 'enrollments', column: 'school_id', ignoreRecord: true),
                             ]),
+
+                        // Forms\Components\Section::make()
+                        // ->columns(2)
+                        // ->schema([
+                        //     Forms\Components\FileUpload::make('profile_image')
+                        //         // ->avatar()
+                        //         ->previewable()
+                        //         ->imagePreviewHeight(200)
+                        //         ->imageEditor()
+                        //         ->image()
+                        //         ->columnSpanFull(),
+                        // Forms\Components\ViewField::make('qr_code')
+                        //         ->label('Qr Code')
+                        //         ->view('filament.resources.student-resource.pages.view-qr-code')
+                        //         ->afterStateUpdated(function ($state, $set) {
+                        //             // Fetch enrollment data based on state
+                        //             $enrollment = Enrollment::find($state->get('id'));
+                        //             if ($enrollment) {
+                        //                 $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
+                        //             } else {
+                        //                 $set(['record' => null]); // Ensure record is null if no enrollment found
+                        //             }
+                        //         }),
+                        //     ]),
                         Forms\Components\Section::make('Personal Information')
                             ->schema([
-                                Forms\Components\FileUpload::make('profile_image')
-                                // ->avatar()
-                                ->previewable()
-                                ->imagePreviewHeight(200)
-                                ->imageEditor()
-                                ->image()
-                                ->columnSpanFull(),
                                 Forms\Components\TextInput::make('first_name')
-                                    ->placeholder('juan')
-                                    ->required(),
+                                ->placeholder('juan')
+                                ->required(),
 
-                                Forms\Components\TextInput::make('middle_name')
-                                    ->placeholder('dela'),
+                            Forms\Components\TextInput::make('middle_name')
+                                ->placeholder('dela'),
 
-                                Forms\Components\TextInput::make('last_name')
-                                    ->placeholder('cruz')
-                                    ->required(),
-                                    Forms\Components\Select::make('civil_status')
-                                    ->required()
-                                    ->options(CivilStatusEnum::class),
-                                    Forms\Components\Select::make('gender')
-                                    ->options(GenderEnum::class)
-                                    ->required(),
-                                    Forms\Components\Select::make('religion')
-                                            ->required()
-                                            ->options(ReligionEnum::class),
-                                            Forms\Components\DatePicker::make('birthdate')
-                                            ->required(),
-                                            Forms\Components\TextInput::make('email')
-                                            ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
-                                            ->placeholder('example@gmail.com')
-                                            ->live()
-                                            ->email(),
-                                            Forms\Components\TextInput::make('contact_number')
-                                            ->placeholder('09XXXXXXXXX')
-                                            ->numeric(),
-                                            Forms\Components\TextInput::make('facebook_url')
-                                            ->placeholder('https://www.facebook.com/sample-url')
-                                            ->columnSpanFull(),
-
+                            Forms\Components\TextInput::make('last_name')
+                                ->placeholder('cruz')
+                                ->required(),
+                                Forms\Components\Select::make('civil_status')
+                                ->required()
+                                ->options(CivilStatusEnum::class),
+                                Forms\Components\Select::make('gender')
+                                ->options(GenderEnum::class)
+                                ->required(),
+                                Forms\Components\Select::make('religion')
+                                        ->required()
+                                        ->options(ReligionEnum::class),
+                                        Forms\Components\DatePicker::make('birthdate')
+                                        ->required(),
+                                        Forms\Components\TextInput::make('email')
+                                        ->unique(table: 'enrollments', column: 'email', ignoreRecord: true)
+                                        ->placeholder('example@gmail.com')
+                                        ->live()
+                                        ->email(),
+                                        Forms\Components\TextInput::make('contact_number')
+                                        ->placeholder('09XXXXXXXXX')
+                                        ->numeric(),
+                                        Forms\Components\TextInput::make('facebook_url')
+                                        ->placeholder('https://www.facebook.com/sample-url')
+                                        ->columnSpanFull(),
                             ])
                             ->columns(3),
 
