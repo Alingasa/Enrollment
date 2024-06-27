@@ -144,11 +144,7 @@
             <h2>Student</h2>
         </div>
         <div class="photo">
-            <div style="flex: 1; text-align: center;">
-                <div style="display: inline-block; padding: 10px; background: #fff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                    {!! QrCode::size(200)->generate(route('studentview', Crypt::encryptString($getRecord()))) !!}
-                </div>
-            </div>
+
             {{-- <img src="{{ $record->profile_image ?? 'http://try.test/default_images/me.jpg' }}" alt="profile"> --}}
             @if ($record->profile_image)
             <img src='{{"http://highschoolenrollment.webactivities.online/storage/".$record->profile_image}}'; alt="profile"/>
