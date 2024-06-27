@@ -14,6 +14,14 @@ class ListSubjects extends ListRecords
     {
         return [
             // Actions\CreateAction::make(),
+            Actions\Action::make('Print')
+            ->url(fn () => route('teacher.profile', [
+                'record' => $this->data['id'],
+            ]))
+            ->openUrlInNewTab()
+            ->label('Print')
+            ->icon('heroicon-m-printer')
+            ->color('danger'),
         ];
     }
 }
