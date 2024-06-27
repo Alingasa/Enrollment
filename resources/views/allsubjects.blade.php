@@ -24,7 +24,7 @@
         .center-heading {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 28px;
             color: #343a40;
         }
         .gradesheet-table th, .gradesheet-table td {
