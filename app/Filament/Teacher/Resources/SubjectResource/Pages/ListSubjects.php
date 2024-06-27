@@ -10,6 +10,8 @@ class ListSubjects extends ListRecords
 {
     protected static string $resource = SubjectResource::class;
 
+    public ?array $data = [];
+
     protected function getHeaderActions(): array
     {
         return [
