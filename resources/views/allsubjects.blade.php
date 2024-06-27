@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Subjects</title>
+    <title>List of Subjects</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -14,7 +14,7 @@
             line-height: 1.6;
             background-color: #f8f9fa;
         }
-        .gradesheet-container {
+        .container {
             max-width: 900px;
             margin: 40px auto;
             padding: 20px;
@@ -24,9 +24,12 @@
         .center-heading {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
+            color: #343a40;
         }
         .gradesheet-table th, .gradesheet-table td {
             text-align: center;
+            padding: 8px;
         }
         .gradesheet-table thead {
             background-color: #e9ecef;
@@ -37,11 +40,12 @@
         .footer {
             text-align: center;
             margin-top: 20px;
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
-    <div class="container gradesheet-container">
+    <div class="container">
         <h1 class="center-heading">List of Subjects</h1>
         <table class="table table-bordered gradesheet-table">
             <thead>
@@ -60,7 +64,7 @@
             <tbody>
                 @foreach ($subj as $sub)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $sub->subject_code ?: 'Not provided' }}</td>
                     <td>{{ $sub->subject_title ?: 'Not provided' }}</td>
                     <td>{{ $sub->section->name ?: 'Not provided' }}</td>
@@ -76,7 +80,7 @@
             </tbody>
         </table>
         <div class="footer">
-            <p>No. of Subjects: {{ count($subj) }}</p>
+            <p>Total Subjects: {{ count($subj) }}</p>
         </div>
     </div>
 
@@ -89,7 +93,7 @@
             const doc = new jsPDF();
             doc.text("List of Subjects", 20, 10);
             doc.autoTable({ html: '.gradesheet-table' });
-            doc.save('gradesheet.pdf');
+            doc.save('subjects.pdf');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
