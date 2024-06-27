@@ -10,8 +10,11 @@
         </div> --}}
         {{-- {{dd($getRecord()->id)}} --}}
         <div style="flex: 1; text-align: center;">
-            <div style="display: inline-block; padding: 10px;">
-                {!! QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($getRecord()))) !!}
+
+            <div style="display: inline-block; padding: 10px; background: #fff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                {!! QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($getRecord()->id))) !!}
+
+
             </div>
         </div>
     </div>

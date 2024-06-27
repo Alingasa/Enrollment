@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ID Card</title>
+    <title>Card Validation</title>
     <style>
         * {
             margin: 0;
@@ -139,40 +139,29 @@
     <div class="id-card">
         <div class="header">
             {{-- <img src="/default_images/MLG_Logo.png" alt="Logo"> --}}
-            <h1>HighSchool</h1>
-            <h2>Student</h2>
+            <h1>ID VALIDATION</h1>
+
         </div>
         <div class="photo">
-            <div style="flex: 1; text-align: center;">
-                <div style="display: inline-block; padding: 10px; background: #fff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                    {!! QrCode::size(200)->generate(route('studentview', Crypt::encryptString($getRecord()->id))) !!}
-                </div>
-            </div>
             {{-- <img src="{{ $record->profile_image ?? 'http://try.test/default_images/me.jpg' }}" alt="profile"> --}}
             @if ($record->profile_image)
             <img src='{{"http://highschoolenrollment.webactivities.online/storage/".$record->profile_image}}'; alt="profile"/>
             @else
             <img src="{{'http://highschoolenrollment.webactivities.online/default_images/me.jpg'}}" alt="profile">
             @endif
-
-            <p style="color: red">ID No.{{ $record->school_id }}</p>
-
+            <p>ID no: {{ $record->school_id }}</p>
         </div>
 {{-- {{dd($record)}} --}}
         <div class="details">
-            <p><span>NAME:</span> {{ $record->full_name}}</p>
-            <p><span>DATE OF BIRTH:</span> {{$record->birthdate}}</p>
-            <p><span>Age:</span> {{$record->age}}</p>
-            <p><span>GUARDIAN/PARENT:</span> {{$record->guardian_name}}</p>
-            <div class="signature">
-                <p class="signature-label">Signature</p>
-
-            </div>
-        </div>
-        <div class="footer">
+            <h2 class="validateheader">ACTIVE/VALID</h2>
+            <p> {{ $record->full_name}}</p>
             <p>{{$record->barangay}}, {{$record->municipality}}, {{$record->province}} - {{$record->zip_code}}</p>
-            <p>Contact: {{$record->contact_number}}</p>
+            <p>{{$record->school_id}}</p>
+            <p><span>Incase of emergency:</span> </p>
+            <p>{{$record->guardian_name}}</p>
+            <p>{{$record->incaseof_emergency}}</p>
         </div>
+
     </div>
 </body>
 </html>
