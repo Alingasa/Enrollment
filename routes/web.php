@@ -28,3 +28,6 @@ Route::get('downloadpdfstudent', [PDFController::class, 'downloadpdfstudent'])->
 Route::get('downloadProfile', [PDFController::class, 'downloadProfile'])->name('download.studentProfile');
 Route::get('downloadpdfallsubjects', [PDFController::class, 'downloadpdfallsubjects'])->name('download.allsubjects');
 
+Route::get('/try', function(){
+    return view('try');
+});
