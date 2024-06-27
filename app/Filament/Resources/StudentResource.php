@@ -51,18 +51,6 @@ class StudentResource extends Resource
                     ->alignCenter()
                     ->afterStateUpdated(function ($state,Set $set) {
                       } ),
-                    Forms\Components\ViewField::make('qr_code')
-                      ->label('Qr Code')
-                      ->view('filament.resources.student-resource.pages.view-qr-code', ['record' => 'record']) // Initialize record as null
-                      ->afterStateUpdated(function ($state, $set) {
-                          // Fetch enrollment data based on state
-                          $enrollment = Enrollment::find($state->get('id'));
-                          if ($enrollment) {
-                              $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
-                          } else {
-                              $set(['record' => null]); // Ensure record is null if no enrollment found
-                          }
-                      }),
                       Forms\Components\TextInput::make('full_name')
                       ->required()
                        ->afterStateUpdated(function ($state,Set $set) {
