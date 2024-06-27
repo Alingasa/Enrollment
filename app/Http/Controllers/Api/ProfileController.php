@@ -44,4 +44,20 @@ class ProfileController extends Controller
 
         return view('profile.teacher', compact('record'));
     }
+
+    public function studentvalidateid($hash){
+
+        try {
+            $id = Crypt::decryptString($hash);
+            $record = Enrollment::findOrFail($id);
+
+            $record->birthdate = Carbon::parse($record->birthdate)->isoFormat('MMMM DD, YYYY');
+
+        } catch (\Exception $e) {
+
+            abort(404, 'Record not found');
+        }
+
+        return view('profile.viewstudent', compact('record'));
+    }
 }
