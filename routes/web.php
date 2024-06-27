@@ -13,6 +13,7 @@ Route::resource('/students', EnrollmentController::class);
 Route::get('/findschoolid/{school_id}',[EnrollmentController::class,'findschoolid']);
 Route::get('/profile/{hash}', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/teacher/{hash}', [ProfileController::class, 'teacher'])->name('teacher');
+Route::get('/studentview/{hash}', [ProfileController::class, 'studentvalidateid'])->name('studentview');
 Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateSchool']);
 
 
