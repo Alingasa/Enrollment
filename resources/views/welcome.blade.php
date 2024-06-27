@@ -10,24 +10,24 @@
 
     <style>
         body {
-            background-color: #032013;
+            /* background-color: #c4c4c4; */
             font-family: 'Arial', sans-serif;
-            background-image: url('image/school.jpg');
+            /* background-image: url('image/school.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-size: cover;
+            background-size: cover; */
         }
         .boxform {
-            background-color: #032013;
-            color:white;
+            background-color: whitesmoke;
+            /* color:white; */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
             border-radius: 10px;
             padding: 2rem;
             margin-top: 2rem;
-            transition: transform 0.3s;
+            /* transition: transform 0.3s; */
         }
         .boxform:hover {
-            transform: translateY(-5px);
+            /* transform: translateY(-5px); */
         }
         .form-check-label {
             font-weight: 500;
