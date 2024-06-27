@@ -260,16 +260,14 @@
                 @enderror
             </div>
             <div class="col-md-4" id="stranddiv">
-                <label for="strand" class="form-label">Strand</label>
-                <select id="strand" name="strand" class="form-select @error('strand') is-invalid @enderror">
-                    <option selected>{{ $student->strand }}</option>
+                <label for="strand_id" class="form-label">Strand</label>
+                <select id="strand_id" name="strand_id" class="form-select @error('strand_id') is-invalid @enderror">
                    @foreach ($strand as $list)
-
                    <option value="{{$list->id}}">{{$list->name}}</option>
 
                    @endforeach
                 </select>
-                @error("strand")
+                @error("strand_id")
                 <p class="text-danger text-sm">{{ $message }}</p>
                 @enderror
             </div>
