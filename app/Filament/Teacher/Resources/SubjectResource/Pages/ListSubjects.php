@@ -14,6 +14,12 @@ class ListSubjects extends ListRecords
     {
         return [
             // Actions\CreateAction::make(),
+            Actions\Action::make('print')
+            ->url(fn() => route('download.allsubjects'))
+            ->openUrlInNewTab()
+            ->label('Print')
+            ->icon('heroicon-o-printer')
+            ->color('danger'),
         ];
     }
 }
