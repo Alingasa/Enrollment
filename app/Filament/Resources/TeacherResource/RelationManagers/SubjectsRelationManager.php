@@ -81,14 +81,14 @@ class SubjectsRelationManager extends RelationManager
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
                 // Tables\Actions\AttachAction::make(),
-                // Tables\Actions\Action::make('Print')
-                // ->url(fn () => route('teacher.profile', [
-                //     'record' => $this->getOwnerRecord(),
-                // ]))
-                // ->openUrlInNewTab()
-                // ->label('Print')
-                // ->icon('heroicon-m-printer')
-                // ->color('danger'),
+                Tables\Actions\Action::make('Print')
+                ->url(fn () => route('teacher.profile', [
+                    'record' => $this->getOwnerRecord(),
+                ]))
+                ->openUrlInNewTab()
+                ->label('Print')
+                ->icon('heroicon-m-printer')
+                ->color('danger'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
