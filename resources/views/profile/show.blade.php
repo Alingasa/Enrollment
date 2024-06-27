@@ -135,7 +135,7 @@
     </style>
 </head>
 <body>
-    @if($record)
+    @if($getRecord())
     {{-- {{dd($record)}}ere --}}
     <div class="id-card">
         <div class="header">
