@@ -279,6 +279,11 @@ catch (\Illuminate\Database\QueryException $e)
             $profilePath = null;
         }
 
+        if ($request->has('strand_id')){
+            $data['strand_id'] = $request->strand_id;
+
+         }
+
         $student->update($data);
 
         return redirect()->to('http://highschoolenrollment.webactivities.online/')->with('update_success', 'You are successfully apply for enrollment!');
