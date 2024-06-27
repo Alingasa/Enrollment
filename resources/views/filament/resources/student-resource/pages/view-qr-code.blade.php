@@ -8,6 +8,7 @@
             <p style="margin: 5px 0; font-size: 18px; color: #555; font-family: 'Arial, sans-serif';">Age: {{ $record->age }}</p>
             <p style="margin: 5px 0; font-size: 18px; color: #555; font-family: 'Arial, sans-serif';">Gender: {{ $record->gender }}</p>
         </div> --}}
+        {{-- {{dd($getRecord()->id)}} --}}
         <div style="flex: 1; text-align: center;">
             <div style="display: inline-block; padding: 10px;">
                 {!! QrCode::size(200)->generate(route('profile.show', Crypt::encryptString($record))) !!}

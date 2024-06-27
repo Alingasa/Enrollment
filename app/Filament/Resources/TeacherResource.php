@@ -41,7 +41,19 @@ class TeacherResource extends Resource
                     ->image(),
                     Forms\Components\ViewField::make('qr_code')
                     ->label('Qr Code')
-                    ->view('filament.resources.student-resource.pages.view-qr-code', ['record' => 'record']) // Initialize record as null
+                    ->view('filament.resources.student-resource.pages.teacher')
+                       // Tables\Actions\ViewAction::make(),
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\Action::make('Qr')
+            //     ->icon('heroicon-o-qr-code')
+            //     ->modalCancelActionLabel('Close')
+            //    ->modalContent(fn (Teacher $record): View => view(
+            //       'filament.resources.student-resource.pages.teacher',
+            //    ['record' => $record],
+            //    ))->modalSubmitAction(false),
+                //     ->url(fn () => route('teacher.profile', [
+                //     'record' => $this->getOwnerRecord(),
+                // ]))// Initialize record as null
                     ->afterStateUpdated(function ($state, $set) {
                         // Fetch enrollment data based on state
                         $enrollment = Teacher::find($state->get('id'));
