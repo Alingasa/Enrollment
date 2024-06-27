@@ -146,8 +146,8 @@ class EnrollmentController extends Controller
             $student->update($upgrade);
         }
 
-        if ($request->has('strand')){
-           $upstrand = $data['strand_id'] = $request->strand;
+        if ($request->has('strand_id')){
+           $upstrand = $data['strand_id'] = $request->strand_id;
             $student->update($upstrand);
         }
 
