@@ -57,6 +57,30 @@
         .btn-danger:hover {
             background-color: #c82333;
         }
+        #personal-information{
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            padding: 20px;
+            /* width: 200px;
+            height: 150px; */
+        }
+
+        input[type=text]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=number]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=email]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=file]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -76,7 +100,7 @@
         </ul>
     </div>
 @endif --}}
-    <div class="form-container">
+    <div id="personal-information" class="form-container">
         <div class="card bg-secondary">
             <div class="card-header">
             <h2 class="text-center mb-4">Student Enrollment Form</h2>
@@ -84,6 +108,7 @@
             <div class="card-body">
         <form id="studentform" action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" class="row g-3">
             @csrf
+            {{-- <div id="personal-information" class="form-container"> --}}
             <div class="col-md-4">
                 <label for="first_name" class="form-label">First Name</label>
                 <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror" id="first_name" value="{{ old('first_name') }}" placeholder="First Name" autofocus>
@@ -173,6 +198,7 @@
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+
             <div class="col-md-4">
                 <label for="purok" class="form-label">Purok</label>
                 <input type="text" name="purok" class="form-control @error('purok') is-invalid @enderror" id="purok" value="{{ old('purok') }}" placeholder="Purok">
@@ -273,13 +299,13 @@
                 @enderror
             </div>
 
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 d-flex justify-content-between">
 
 
-                <input type="submit" class="btn btn-primary" value="Apply for enrollment">
+                <input type="submit" class="btn btn-primary " value="Apply for enrollment">
 
 
-                <a href="/" type="button" class="btn btn-danger">Cancel</a>
+                <a href="/" type="button" class="btn btn-danger ">Cancel</a>
             </div>
         </form>
             </div>

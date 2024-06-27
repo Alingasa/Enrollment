@@ -52,6 +52,30 @@
         .btn-danger:hover {
             background-color: #c82333;
         }
+        #personal-information{
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            padding: 20px;
+            /* width: 200px;
+            height: 150px; */
+        }
+
+        input[type=text]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=number]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=email]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        input[type=file]{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +88,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    <div class="form-container">
+    <div id="personal-information" class="form-container">
         <div class="card bg-secondary">
             <div class="card-header">
             <h2 class="text-center mb-4">Student Enrollment Form</h2>
@@ -263,7 +287,7 @@
                 <p class="text-danger ">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary">Apply for enrollment</button>
                 <a href="/" type="button" class="btn btn-danger">Cancel</a>
             </div>
