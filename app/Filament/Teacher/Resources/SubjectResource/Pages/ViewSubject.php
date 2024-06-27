@@ -26,18 +26,18 @@ class ViewSubject extends ViewRecord
             //     ->icon('heroicon-m-printer')
             //     ->color('danger'),
             // ])
-            Actions\Action::make('Print')
-            ->url(fn () => route('teacher.profile', [
-                'record' => $this->data['id'],
-            ]))
-            ->openUrlInNewTab()
-            ->label('Print')
-            ->icon('heroicon-m-printer')
-            ->color('danger'),
+            // Actions\Action::make('Print')
+            // ->url(fn () => route('teacher.profile', [
+            //     'record' => $this->data['id'],
+            // ]))
+            // ->openUrlInNewTab()
+            // ->label('Print')
+            // ->icon('heroicon-m-printer')
+            // ->color('danger'),
 
-            Actions\EditAction::make()
-            ->color('warning')
-            ->icon('heroicon-o-pencil-square'),
+            // Actions\EditAction::make()
+            // ->color('warning')
+            // ->icon('heroicon-o-pencil-square'),
         ];
     }
 }

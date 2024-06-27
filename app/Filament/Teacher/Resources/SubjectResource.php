@@ -126,6 +126,18 @@ class SubjectResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                // Tables\Actions\CreateAction::make(),
+                // Tables\Actions\AttachAction::make(),
+                Tables\Actions\Action::make('Print')
+                ->url(fn () => route('teacher.profile', [
+                    'record' => 'record',
+                ]))
+                ->openUrlInNewTab()
+                ->label('Print')
+                ->icon('heroicon-m-printer')
+                ->color('danger'),
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make()
                 ->icon(''),
