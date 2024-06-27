@@ -12,11 +12,11 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            background-color: #f8f9fa;
+            /* background-color: #f8f9fa; */
         }
         .container {
-            max-width: 900px;
-            margin: 40px auto;
+            max-width: 100%; /* Full width container */
+            margin: 0 auto; /* Center align */
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -41,6 +41,11 @@
             text-align: center;
             margin-top: 20px;
             color: #6c757d;
+        }
+
+        /* DOMPDF landscape orientation */
+        @page {
+            size: landscape;
         }
     </style>
 </head>
