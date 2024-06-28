@@ -261,9 +261,9 @@
     <title>Student Enrollment Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
-        fieldset {
+      fieldset {
             border: 5px solid #000; /* Adjust the thickness and color as needed */
-            background-color: #eeeeee;
+            background-color: #ffffff;
             padding: 5px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -276,6 +276,10 @@
         .row{
             border-radius: 10px;
             padding: 10px;
+        }
+
+        h2{
+            font-weight: bold;
         }
     </style>
 </head>

@@ -10,7 +10,7 @@
 
     <style>
         body {
-            /* background-color: #c4c4c4; */
+            background-color: #ffffff;
             font-family: 'Arial', sans-serif;
             /* background-image: url('image/school.jpg');
             background-repeat: no-repeat;
@@ -18,7 +18,7 @@
             background-size: cover; */
         }
         .boxform {
-            background-color: whitesmoke;
+            background-color: #ffffff;
             /* color:white; */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
             border-radius: 10px;
