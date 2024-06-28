@@ -152,7 +152,15 @@ class StudentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
                     ->sortable(),
-                   Tables\Columns\TextColumn::make('strand.name')
+                Tables\Columns\TextColumn::make('section.name')
+                    ->default('Empty')
+                    ->badge()
+                    ->color(fn ($state) => match($state){
+                        'Empty' => 'primary',
+                        $state => 'success'
+                    })
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('strand.name')
                     ->default('No Strand')
                     ->badge()
                     ->color(fn ($state) => match($state){

@@ -17,6 +17,7 @@ use Doctrine\DBAL\Schema\Column;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\ViewField;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -51,18 +52,24 @@ class EnrollmentResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
 
+        return $form
             ->schema([
                   Forms\Components\Section::make()
                 ->columns(2)
                 ->schema([
+                            ViewField::make('qr_code')
+                            ->view('default')
+                            ->hiddenOn(['edit', 'create']),
                     Forms\Components\FileUpload::make('profile_image')
                             // ->avatar()
                             ->previewable()
+                            // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
                             ->imagePreviewHeight(200)
                             ->imageEditor()
-                            ->image(),
+                            ->downloadable()
+                            ->image()
+                            ->hiddenOn('view'),
                     Forms\Components\ViewField::make('qr_code')
                             ->label('Qr Code')
                             ->view('filament.resources.student-resource.pages.view-qr-code')

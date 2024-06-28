@@ -15,7 +15,6 @@ class CreateEnrollment extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-
         $record = new ($this->getModel())(Arr::except($data, ['qr_code']));
 
         if (
@@ -29,5 +28,17 @@ class CreateEnrollment extends CreateRecord
 
         return $record;
     }
+
+    // protected function mutateFormDataBeforeCreate(array $data): array
+    // {
+
+    //      $defaultImagePath = asset('default_images/me.jpg');
+
+    //     // Check if 'profile_image' is null or not set in $data
+    //     if (!isset($data['profile_image']) || is_null($data['profile_image'])) {
+    //         $data['profile_image'] = $defaultImagePath;
+    //     }
+    //     return $data;
+    // }
 
 }
