@@ -33,6 +33,22 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return 'success';
+    }
+
+    public static function getNavigationBadge(): ?string
+{
+
+    $count = Enrollment::where('status', EnrolledStatus::ENROLLED)->count();
+
+    if($count == 0){
+        return null;
+    }
+    return $count;
+}
+
     public static function form(Form $form): Form
     {
         return $form

@@ -23,6 +23,22 @@ class SectionResource extends Resource
 
     protected static ?string $navigationGroup = 'Settings';
 
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return 'success';
+    }
+
+    public static function getNavigationBadge(): ?string
+{
+
+    $count = Section::count();
+
+    if($count == 0){
+        return null;
+    }
+    return $count;
+}
+
     public static function form(Form $form): Form
     {
         return $form

@@ -26,6 +26,22 @@ class TeacherResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $navigationGroup = 'Settings';
+
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return 'success';
+    }
+
+    public static function getNavigationBadge(): ?string
+{
+
+    $count = Teacher::count();
+
+    if($count == 0){
+        return null;
+    }
+    return $count;
+}
     public static function form(Form $form): Form
     {
         return $form
@@ -119,11 +135,11 @@ class TeacherResource extends Resource
                 ]),
 
 
-                Forms\Components\Section::make('Incase of Emergency')
+                Forms\Components\Section::make('In case of Emergency')
                 ->columns(2)
                 ->schema([
                     Forms\Components\TextInput::make('guardian_name')
-                    ->label('Parents \ Guardian name')
+                    ->label('Parents / Guardian name')
                     ->placeholder('juan dela cruz')
                     ->maxLength(255),
                     Forms\Components\TextInput::make('incaseof_emergency')
