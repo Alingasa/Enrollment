@@ -75,7 +75,13 @@
 
         body {
             font-family: 'Arial', sans-serif;
+
         }
+
+         #header-p{
+            font-size: 32px;
+            font-weight: bold;
+         }
 
         .container {
             width: 100%;
@@ -85,7 +91,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-4 center-heading">List of Enrolled Students</h1>
+        <p id="header-p" class="mt-4 center-heading">List of Enrolled Students</p>
 
         <table class="table table-hover table-bordered table-striped">
             <thead>
