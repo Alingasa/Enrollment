@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Contracts\View\View;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\ViewField;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -48,13 +49,18 @@ class TeacherResource extends Resource
                 Forms\Components\Section::make()
                 ->columns(2)
                 ->schema([
+                         ViewField::make('qr_code')
+                            ->view('default')
+                            ->hiddenOn(['edit', 'create']),
                     Forms\Components\FileUpload::make('profile_image')
-                    // ->avatar()
-                    // ->columnSpanFull()
-                    ->previewable()
-                    ->imagePreviewHeight(200)
-                    ->imageEditor()
-                    ->image(),
+                            // ->avatar()
+                            ->previewable()
+                            // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
+                            ->imagePreviewHeight(200)
+                            ->imageEditor()
+                            ->downloadable()
+                            ->image()
+                            ->hiddenOn('view'),
                     Forms\Components\ViewField::make('qr_code')
                     ->label('Qr Code')
                     ->view('filament.resources.student-resource.pages.teacher')

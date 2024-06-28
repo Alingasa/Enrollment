@@ -17,22 +17,17 @@ class EditTeacher extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
+            // Actions\ViewAction::make(),
             Actions\DeleteAction::make(),
             Actions\ForceDeleteAction::make(),
             Actions\RestoreAction::make(),
         ];
     }
-    // protected function handleRecordUpdate(Model $record, array $data): Model
-    // {
-    //     $record->update($data);
-    //     $record->user()->update([
-    //         'email' => $data['email']
-    //     ]);
-
-    //     $record->save();
-    //     return $record;
-    // }
+    protected function handleRecordUpdate(Model $record, array $data): Model
+    {
+        $record->update(Arr::except($data, ['qr_code']));
+        return $record;
+    }
 
     // protected function mutateFormDataBeforeFill(array $data): array
     // {
