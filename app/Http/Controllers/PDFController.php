@@ -100,4 +100,15 @@ class PDFController extends Controller
         return $pdf->stream('allsubjects.pdf');
     }
 
+
+
+    public function downloadallteacher(){
+
+        $data = Teacher::get();
+
+
+        $pdf = PDF::loadView('allteachers', compact('data'))->setPaper('a4', 'landscape');
+
+        return $pdf->stream('allteachers.pdf');
+    }
 }
