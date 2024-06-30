@@ -125,9 +125,14 @@
         @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
 
         body {
-            font-family: 'Calibri', sans-serif !important;
-            /* background-color: #f8f9fa; */
+            font-family: 'Arial', sans-serif;
+
         }
+
+         #header-p{
+            font-size: 28px;
+            font-weight: bold;
+         }
 
         .container {
             margin-top: 50px;
@@ -215,7 +220,7 @@
                         </p>
                         <p><b>Time: </b> {{$subject->time_start}} - {{$subject->time_end}} </p>
                         <p><b>Teacher: </b>{{$subject->teacher->full_name}}</p>
-                        <center> <h5 class="card-title">List of Students</h5></center>
+                        <center> <p id="header-p"  class="card-title">List of Students</p></center>
                     </div>
                     <div class="table-responsive">
                         <table class="table">

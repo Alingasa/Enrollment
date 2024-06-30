@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Enrolled Students</title>
+    <title>Teachers List</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -91,17 +91,17 @@
 </head>
 <body>
     <div class="container">
-        <p id="header-p" class="mt-4 center-heading">List of Enrolled Students</p>
+        <p id="header-p" class="mt-4 center-heading">Teachers List</p>
 
         <table class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Full Name</th>
-                    <th>Grade</th>
-                    <th>Email</th>
                     <th>ID</th>
-                    <th>Strand</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Address</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,10 +109,10 @@
                 <tr>
                     <th scope="row">{{ $index + 1 }}</th>
                     <td style="width: 150px">{{ $datas->full_name ?: 'Not provided' }}</td>
-                    <td>{{ $datas->grade_level ?: 'Not provided' }}</td>
-                    <td>{{ $datas->email ?: 'Not provided' }}</td>
                     <td>{{ $datas->school_id ?: 'Not provided' }}</td>
-                    <td>{{ $datas->strand->name ?? 'Not provided' }}</td>
+                    <td>{{ $datas->gender ?: 'Not provided' }}</td>
+                    <td>{{ $datas->email ?: 'Not provided' }}</td>
+                    <td>{{ $datas->municipality }}</td>
                 </tr>
                 @endforeach
             </tbody>
