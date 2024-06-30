@@ -13,6 +13,7 @@ use App\Models\Teacher;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\View;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -58,11 +59,14 @@ class SubjectResource extends Resource
                         ->numeric(),
                     Forms\Components\TextInput::make('grade_level')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('day'),
-                    Forms\Components\TextInput::make('time_start')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('time_end')
-                        ->maxLength(255),
+
+
+                ]),
+                Forms\Components\Section::make('Schedule')
+                ->schema([
+                    Forms\Components\TextInput::make('schedule')
+                    ->view('forms.components.schedule')
+                    // View::make('forms.components.schedule')
                 ])
 
             ]);
@@ -101,6 +105,7 @@ class SubjectResource extends Resource
                       }),
                 Tables\Columns\TextColumn::make('enrollments_count')
                 ->counts('enrollments')
+                ->alignCenter()
                 ->label('No. of Students'),
                 Tables\Columns\TextColumn::make('subject_type')
                       ->searchable(),

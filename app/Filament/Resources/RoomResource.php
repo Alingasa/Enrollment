@@ -50,6 +50,7 @@ class RoomResource extends Resource
                     ->placeholder('create room')
                     ->unique(table: 'rooms', column: 'room', ignoreRecord: true)
                     ->autocapitalize()
+                    ->required()
                     ->maxLength(255),
             ]);
     }
