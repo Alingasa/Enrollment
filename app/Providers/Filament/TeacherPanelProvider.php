@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
 use App\Filament\Teacher\Resources\TeacherResource\Pages\Dashboard;
 use App\Filament\Teacher\Resources\TeacherResource\Widgets\TeacherSubjectTypeOverview;
 use Filament\Http\Middleware\Authenticate;
@@ -26,7 +27,7 @@ class TeacherPanelProvider extends PanelProvider
         return $panel
             ->id('teacher')
             ->path('teacher')
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

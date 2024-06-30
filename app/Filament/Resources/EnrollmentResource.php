@@ -58,18 +58,29 @@ class EnrollmentResource extends Resource
                   Forms\Components\Section::make()
                 ->columns(2)
                 ->schema([
-                            ViewField::make('qr_code')
+                            // ViewField::make('qr_code')
+                            // ->view('default')
+                            // ->hiddenOn(['edit', 'create']),
+                        Forms\Components\ViewField::make('qr_code')
                             ->view('default')
-                            ->hiddenOn(['edit', 'create']),
+                            ->visible(fn ($get, $operation) => empty($get('profile_image')) && ($operation == 'view')),
+                    // Forms\Components\FileUpload::make('profile_image')
+                    //         // ->avatar()
+                    //         ->previewable()
+                    //         // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
+                    //         ->imagePreviewHeight(200)
+                    //         ->imageEditor()
+                    //         ->downloadable()
+                    //         ->image()
+                    //         ->hiddenOn('view'),
                     Forms\Components\FileUpload::make('profile_image')
-                            // ->avatar()
-                            ->previewable()
-                            // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
-                            ->imagePreviewHeight(200)
-                            ->imageEditor()
-                            ->downloadable()
-                            ->image()
-                            ->hiddenOn('view'),
+                    ->label('')
+                    ->previewable()
+                    ->imagePreviewHeight(200)
+                    ->imageEditor()
+                    ->downloadable()
+                    ->image()
+                    ->visible(fn ($get, $operation) => in_array($operation, ['create', 'edit']) || (!empty($get('profile_image')) && $operation == 'view')),
                     Forms\Components\ViewField::make('qr_code')
                             ->label('Qr Code')
                             ->view('filament.resources.student-resource.pages.view-qr-code')
