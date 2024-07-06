@@ -52,7 +52,10 @@ class EnrollmentsRelationManager extends RelationManager
                     ->label('School ID')
                     ->default('Set ID')
                     ->badge()
-                    ->color('danger')
+                    ->color(fn ($state) => match ($state) {
+                        'Set ID' => 'danger',
+                        $state => 'warning',
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('full_name')
                     ->searchable(['first_name', 'middle_name', 'last_name'])
