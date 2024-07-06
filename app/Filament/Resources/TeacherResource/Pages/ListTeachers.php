@@ -16,6 +16,13 @@ class ListTeachers extends ListRecords
             Actions\CreateAction::make()
             ->label('New Teacher')
             ->icon('heroicon-o-plus'),
+
+            Actions\Action::make('Print')
+            ->url(fn() => route('download.allteacher'))
+            ->openUrlInNewTab()
+            ->label('Print')
+            ->icon('heroicon-o-printer')
+            ->color('danger'),
         ];
     }
 }

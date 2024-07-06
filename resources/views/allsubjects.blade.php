@@ -9,11 +9,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            /* background-color: #f8f9fa; */
+       body {
+            font-family: 'Arial', sans-serif;
+
         }
+
+         #header-p{
+            font-size: 32px;
+            font-weight: bold;
+         }
         .container {
             max-width: 100%; /* Full width container */
             margin: 0 auto; /* Center align */
@@ -51,7 +55,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="center-heading">List of Subjects</h1>
+        <p id="header-p" class="center-heading">List of Subjects</p>
         <table class="table table-bordered gradesheet-table">
             <thead>
                 <tr>

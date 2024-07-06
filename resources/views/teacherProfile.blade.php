@@ -47,6 +47,10 @@
         .gradesheet-table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        #header-p{
+            font-size: 28px;
+            font-weight: bold;
+         }
     </style>
 </head>
 <body>
@@ -110,7 +114,7 @@
         @endforeach --}}
         @if($teacherSchedule->isEmpty())
     <tr>
-        <td colspan="8"><h3>No Subjects</h3></td>
+        <td colspan="8"><p id="header-p">No Subjects</p></td>
     </tr>
 @else
     @foreach($teacherSchedule as $index => $subjects)

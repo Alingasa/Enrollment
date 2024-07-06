@@ -21,7 +21,7 @@ class DataTypeOverview extends BaseWidget
         return [
             //
 
-            Stat::make('Enrolled', Enrollment::query()->count())
+            Stat::make('Enrollee', Enrollment::query()->where('status',EnrolledStatus::PENDING)->count())
             ->description('Enrollee')
             ->descriptionIcon('heroicon-m-users', IconPosition::Before),
             Stat::make('Students', Enrollment::query()->where('status', EnrolledStatus::ENROLLED)->count())

@@ -229,6 +229,7 @@ class TeacherResource extends Resource
             //    ['record' => $record],
             //    ))->modalSubmitAction(false),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
