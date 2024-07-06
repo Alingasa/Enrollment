@@ -5,10 +5,11 @@ namespace App\Filament\Resources\TeacherResource\Pages;
 use Filament\Actions;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\Resources\TeacherResource;
-use Illuminate\Support\Arr;
 
 class EditTeacher extends EditRecord
 {
@@ -51,4 +52,13 @@ class EditTeacher extends EditRecord
     //     return $data;
     // }
 
+    public function getHeading(): string | Htmlable
+    {
+        return $this->getRecord()->full_name;
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'School ID: ' . ($this->getRecord()->school_id ?: 'Not Set');
+    }
 }

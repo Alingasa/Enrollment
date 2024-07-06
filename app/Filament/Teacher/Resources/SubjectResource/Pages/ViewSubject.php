@@ -2,9 +2,10 @@
 
 namespace App\Filament\Teacher\Resources\SubjectResource\Pages;
 
-use App\Filament\Teacher\Resources\SubjectResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Contracts\Support\Htmlable;
+use App\Filament\Teacher\Resources\SubjectResource;
 
 class ViewSubject extends ViewRecord
 {
@@ -12,32 +13,16 @@ class ViewSubject extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            // Actions\EditAction::make(),
-            //     ->headerActions([
-            //     // Tables\Actions\CreateAction::make(),
-            //     // Tables\Actions\AttachAction::make(),
-            //     Tables\Actions\Action::make('Print')
-            //     ->url(fn () => route('teacher.profile', [
-            //         'record' => $this->getOwnerRecord(),
-            //     ]))
-            //     ->openUrlInNewTab()
-            //     ->label('Print')
-            //     ->icon('heroicon-m-printer')
-            //     ->color('danger'),
-            // ])
-            // Actions\Action::make('Print')
-            // ->url(fn () => route('teacher.profile', [
-            //     'record' => $this->data['id'],
-            // ]))
-            // ->openUrlInNewTab()
-            // ->label('Print')
-            // ->icon('heroicon-m-printer')
-            // ->color('danger'),
+        return [];
+    }
+    public function getHeading(): string | Htmlable
+    {
+        dd($this->getRecord()->full_name);
+        return $this->getRecord()->full_name;
+    }
 
-            // Actions\EditAction::make()
-            // ->color('warning')
-            // ->icon('heroicon-o-pencil-square'),
-        ];
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'School ID: ' . ($this->getRecord()->school_id ?: 'Not Set');
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Subject;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\Resources\EnrollmentResource;
 
 class EditEnrollment extends EditRecord
@@ -20,12 +21,12 @@ class EditEnrollment extends EditRecord
      */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        if($data['grade_level'] <= 10){
+        if ($data['grade_level'] <= 10) {
             $data['strand_id'] = null;
         }
         $record->update(Arr::except($data, ['qr_code']));
 
-        if($section = $record->section) {
+        if ($section = $record->section) {
             // $subjects = Subject::where('section_id', $section->id)->pluck('id');
             $subjects = $section->subjects()->pluck('id');
             $record->subjects()->syncWithoutDetaching($subjects);
@@ -43,4 +44,14 @@ class EditEnrollment extends EditRecord
         ];
     }
 
+    public function getHeading(): string | Htmlable
+    {
+        // dd($this->getRecord()->full_name);
+        return $this->getRecord()->full_name;
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'School ID: ' . ($this->getRecord()->school_id ?: 'Not Set');
+    }
 }

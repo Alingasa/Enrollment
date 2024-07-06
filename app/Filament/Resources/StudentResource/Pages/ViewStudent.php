@@ -2,10 +2,11 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
-use App\Filament\Resources\EnrollmentResource;
-use App\Filament\Resources\StudentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Contracts\Support\Htmlable;
+use App\Filament\Resources\StudentResource;
+use App\Filament\Resources\EnrollmentResource;
 
 class ViewStudent extends ViewRecord
 {
@@ -20,21 +21,31 @@ class ViewStudent extends ViewRecord
         return [
 
             Actions\EditAction::make()
-            ->label('Edit')
-            ->color('warning')
-            ->icon('heroicon-o-pencil-square'),
+                ->label('Edit')
+                ->color('warning')
+                ->icon('heroicon-o-pencil-square'),
 
             Actions\Action::make('print')
-            ->url(fn() => route('download.studentProfile',[
-                'record' => $this->data['id'],
-            ]))
-            ->openUrlInNewTab()
-            ->label('Print')
-            ->icon('heroicon-o-printer')
-            ->color('danger'),
+                ->url(fn () => route('download.studentProfile', [
+                    'record' => $this->data['id'],
+                ]))
+                ->openUrlInNewTab()
+                ->label('Print')
+                ->icon('heroicon-o-printer')
+                ->color('danger'),
 
 
         ];
+    }
 
+    public function getHeading(): string | Htmlable
+    {
+        // dd($this->getRecord()->full_name);
+        return $this->getRecord()->full_name;
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'School ID: ' . ($this->getRecord()->school_id ?: 'Not Set');
     }
 }

@@ -44,46 +44,47 @@ class EnrollmentsRelationManager extends RelationManager
                     }
                 ),
                 Tables\Columns\ImageColumn::make('profile_image')
-                ->circular()
-                ->default(url('default_images/me.jpg'))
-                ->alignCenter()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('school_id')
-                ->label('School ID')
-                ->default('Set ID')
-                ->badge()
-                ->color('danger')
-                ->sortable(),
-            Tables\Columns\TextColumn::make('strand.name')
-                ->default('No Strand')
-                ->badge()
-                ->color(fn ($state) => match($state){
-                    'No Strand' => 'primary',
-                    $state => 'success'
-                })
-                ->sortable(),
-            Tables\Columns\TextColumn::make('full_name')
-                ->searchable(['first_name', 'middle_name', 'last_name'])
-                ->sortable(),
-            Tables\Columns\TextColumn::make('grade_level')
-                ->sortable(),
-            Tables\Columns\TextColumn::make('email')
-                ->copyable()
-               ->copyMessage('Email address copied')
-                ->sortable(),
+                    ->circular()
+                    ->default(url('default_images/me.jpg'))
+                    ->alignCenter()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('school_id')
+                    ->label('School ID')
+                    ->default('Set ID')
+                    ->badge()
+                    ->color('danger')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(['first_name', 'middle_name', 'last_name'])
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('strand.name')
+                    ->default('No Strand')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'No Strand' => 'primary',
+                        $state => 'success'
+                    })
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('grade_level')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->copyMessage('Email address copied')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\Action::make('Print')
-                ->url(fn () => route('download.tes', [
-                    'record' => $this->getOwnerRecord()->getKey()
-                ]))
-                ->openUrlInNewTab()
-                ->label('Print')
-                ->icon('heroicon-m-printer')
-                ->color('danger')
+                    ->url(fn () => route('download.tes', [
+                        'record' => $this->getOwnerRecord()->getKey()
+                    ]))
+                    ->openUrlInNewTab()
+                    ->label('Print')
+                    ->icon('heroicon-m-printer')
+                    ->color('danger')
 
                 // Tables\Actions\CreateAction::make(),
 

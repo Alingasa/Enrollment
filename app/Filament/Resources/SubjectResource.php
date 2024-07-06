@@ -38,93 +38,100 @@ class SubjectResource extends Resource
     }
 
     public static function getNavigationBadge(): ?string
-{
+    {
 
-    $count = Subject::count();
+        $count = Subject::count();
 
-    if($count == 0){
-        return null;
+        if ($count == 0) {
+            return null;
+        }
+        return $count;
     }
-    return $count;
-}
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
-                ->columns(2)
-                ->schema([
-                    Forms\Components\Select::make('teacher_id')
-                    ->label('Teacher')
-                    ->options(Teacher::all()->pluck('full_name', 'id'))
-                    // ->relationship(name: 'teachers', titleAttribute: 'first_name')
-                    // ->getOptionLabelFromRecordUsing(fn (Teacher $record) => dd($record))
-                    ->required()
-                    ->live()
-                    ->preload()
-                    ->searchable(['first_name', 'last_name', 'middle_name']),
-                    Forms\Components\Select::make('section_id')
-                    ->label('Section')
-                    ->relationship(name: 'section', titleAttribute: 'name' )
-                    ->required()
-                    ->live()
-                    ->preload()
-                    ->searchable(),
-                Forms\Components\TextInput::make('subject_code')
-                    ->placeholder('subject code')
-                    ->unique(table:"subjects",column:"subject_code",ignoreRecord:true)
-                    ->required(),
+                Forms\Components\Fieldset::make()
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\Select::make('teacher_id')
+                            ->label('Teacher')
+                            ->options(Teacher::all()->pluck('full_name', 'id'))
+                            ->hiddenOn('view')
+                            // ->relationship(name: 'teachers', titleAttribute: 'first_name')
+                            // ->getOptionLabelFromRecordUsing(fn (Teacher $record) => dd($record))
+                            ->required()
+                            ->live()
+                            ->preload()
+                            ->searchable(['first_name', 'last_name', 'middle_name']),
+                        Forms\Components\Select::make('section_id')
+                            ->label('Section')
+                            ->relationship(name: 'section', titleAttribute: 'name')
+                            ->required()
+                            ->live()
+                            ->preload()
+                            ->searchable(),
+                        Forms\Components\TextInput::make('subject_code')
+                            ->placeholder('subject code')
+                            ->unique(table: "subjects", column: "subject_code", ignoreRecord: true)
+                            ->required(),
 
 
-                Forms\Components\TextInput::make('subject_title')
-                    ->placeholder('subject title')
-                    ->required(),
-                Forms\Components\Select::make('subject_type')
-                    ->options([
-                        'LECTURE' => 'LECTURE',
-                        'LABORATORY' => 'LABORATORY'
-                    ])
-                    ->required(),
-                Forms\Components\TextInput::make('units')
-                    ->placeholder('0')
-                    ->maxLength(1)
-                    ->numeric()
-                    ->required(),
-                Forms\Components\Select::make('grade_level')
-                    ->live()
-                    ->options(GradeEnum::class)
-                    ->required(),
-                Forms\Components\Select::make('room_id')
-                    ->live()
-                    ->preload()
-                    ->searchable()
-                    ->required()
-                    ->relationship(name: 'room', titleAttribute: 'room')
-                    ->label('Room ID'),
-                    // ->unique(table: 'subjects', column: 'room_id'),
-                Forms\Components\Select::make('strand_id')
-                    ->relationship(name: 'strand', titleAttribute: 'name')
-                    ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
-                        GradeEnum::GRADE11->value,
-                        GradeEnum::GRADE12->value,
+                        Forms\Components\TextInput::make('subject_title')
+                            ->placeholder('subject title')
+                            ->required(),
+                        Forms\Components\Select::make('subject_type')
+                            ->options([
+                                'LECTURE' => 'LECTURE',
+                                'LABORATORY' => 'LABORATORY'
+                            ])
+                            ->required(),
+                        Forms\Components\TextInput::make('units')
+                            ->placeholder('0')
+                            ->maxLength(1)
+                            ->numeric()
+                            ->required(),
+                        Forms\Components\Select::make('grade_level')
+                            ->live()
+                            ->options(GradeEnum::class)
+                            ->required(),
+                        Forms\Components\Select::make('room_id')
+                            ->live()
+                            ->preload()
+                            ->searchable()
+                            ->required()
+                            ->relationship(name: 'room', titleAttribute: 'room')
+                            ->label('Room ID'),
+                        // ->unique(table: 'subjects', column: 'room_id'),
+                        Forms\Components\Select::make('strand_id')
+                            ->relationship(name: 'strand', titleAttribute: 'name')
+                            ->visible(fn ($get, $operation) => ($operation == 'edit' || $operation == 'create') && in_array($get('grade_level'), [
+                                GradeEnum::GRADE11->value,
+                                GradeEnum::GRADE12->value,
 
-                    ])),
+                            ])),
 
                     ]),
-                    Forms\Components\Section::make('Schedule')
+                Forms\Components\Fieldset::make('Schedule')
+                    ->columns(1)
                     ->schema([
                         Forms\Components\CheckboxList::make('day')
-                       ->label('Day')
-                       ->required()
-                       ->options(DaySelectionEnum::class)
-                       ->columns(6),
-                        Forms\Components\TimePicker::make('time_start')
-                        ->required()
-                        ->seconds(false),
-                        Forms\Components\TimePicker::make('time_end')
-                        ->required()
-                        ->seconds(false),
+                            ->label('Day')
+                            ->required()
+                            ->options(DaySelectionEnum::class)
+                            ->columns(6),
+                        Forms\Components\Fieldset::make('Time')
+                            ->columns(2)
+                            ->schema([
+                                Forms\Components\TimePicker::make('time_start')
+                                    ->required()
+                                    ->seconds(false),
+                                Forms\Components\TimePicker::make('time_end')
+                                    ->required()
+                                    ->seconds(false),
+                            ])
+
                     ]),
             ]);
     }
@@ -144,15 +151,15 @@ class SubjectResource extends Resource
                     }
                 ),
                 Tables\Columns\TextColumn::make('subject_code')
-                ->label('Code')
-                ->searchable(),
+                    ->label('Code')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject_title')
-                ->label('Subject')
-                ->searchable(),
+                    ->label('Subject')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('section.name')
-                ->numeric()
-                ->searchable()
-                ->sortable(),
+                    ->numeric()
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
@@ -161,20 +168,20 @@ class SubjectResource extends Resource
                     ->searchable()
                     ->formatStateUsing(function ($state, $record) {
                         $string = '';
-                       $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
-                    //    dd($record);
-                       return $string;
-                      }),
+                        $string = $state . '/' . ' ' . '(' . $record->time_start . '-' . $record->time_end . ')';
+                        //    dd($record);
+                        return $string;
+                    }),
                 Tables\Columns\TextColumn::make('subject_type')
-                      ->searchable(),
-                  Tables\Columns\TextColumn::make('units')
-                      ->numeric()
-                      ->searchable()
-                      ->sortable(),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('units')
+                    ->numeric()
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('room.room')
-                ->label('Room')
-                ->searchable()
-                ->default('TBA'),
+                    ->label('Room')
+                    ->searchable()
+                    ->default('TBA'),
                 // Tables\Columns\TextColumn::make('strand.name')
                 //     ->default('No Strand')
                 //     ->badge()
@@ -212,18 +219,15 @@ class SubjectResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\TrashedFilter::make(),
                 SelectFilter::make('grade_level')
-                ->options(GradeEnum::class),
+                    ->options(GradeEnum::class),
                 SelectFilter::make('strand_id')
-                ->label('By Strands')
-                ->relationship('strand', 'name'),
+                    ->label('By Strands')
+                    ->relationship('strand', 'name'),
                 SelectFilter::make('section_id')
-                ->label('By Section')
-                ->relationship('section', 'name'),
+                    ->label('By Section')
+                    ->relationship('section', 'name'),
             ])
-            ->headerActions([
-
-
-            ])
+            ->headerActions([])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),

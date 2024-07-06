@@ -31,27 +31,31 @@ class RoomResource extends Resource
     }
 
     public static function getNavigationBadge(): ?string
-{
+    {
 
-    $count = Room::count();
+        $count = Room::count();
 
-    if($count == 0){
-        return null;
+        if ($count == 0) {
+            return null;
+        }
+        return $count;
     }
-    return $count;
-}
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('room')
-                    ->label('Room')
-                    ->placeholder('create room')
-                    ->unique(table: 'rooms', column: 'room', ignoreRecord: true)
-                    ->autocapitalize()
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Fieldset::make('Rooms')
+                    ->schema([
+                        Forms\Components\TextInput::make('room')
+                            ->label('')
+                            ->placeholder('create room')
+                            ->unique(table: 'rooms', column: 'room', ignoreRecord: true)
+                            ->autocapitalize()
+                            ->required()
+                            ->maxLength(255),
+                    ])
+
             ]);
     }
 
@@ -69,7 +73,7 @@ class RoomResource extends Resource
                         );
                     }
                 )
-                ->width(20),
+                    ->width(20),
                 Tables\Columns\TextColumn::make('room')
                     ->label('Rooms')
                     ->searchable(),

@@ -28,32 +28,36 @@ class UserResource extends Resource
     }
 
     public static function getNavigationBadge(): ?string
-{
+    {
 
-    $count = User::count();
+        $count = User::count();
 
-    if($count == 0){
-        return null;
+        if ($count == 0) {
+            return null;
+        }
+        return $count;
     }
-    return $count;
-}
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->revealable()
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Fieldset::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->revealable()
+                            ->password()
+                            ->required()
+                            ->maxLength(255),
+                    ])
+
             ]);
     }
 
@@ -62,11 +66,11 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Role')
-                ->badge()
-                ->color(fn ($state) => match($state){
-                    'Admin' => 'danger',
-                    'Teacher' => 'warning'
-                }),
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'Admin' => 'danger',
+                        'Teacher' => 'warning'
+                    }),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
@@ -87,11 +91,10 @@ class UserResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->defaultSort('created_at', 'desc')
-            ->filters([
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                ->icon(''),
+                    ->icon(''),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

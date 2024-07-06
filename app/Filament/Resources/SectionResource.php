@@ -29,23 +29,28 @@ class SectionResource extends Resource
     }
 
     public static function getNavigationBadge(): ?string
-{
+    {
 
-    $count = Section::count();
+        $count = Section::count();
 
-    if($count == 0){
-        return null;
+        if ($count == 0) {
+            return null;
+        }
+        return $count;
     }
-    return $count;
-}
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->placeholder('create section')
-                    ->required(),
+                Forms\Components\Fieldset::make('Section')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('')
+                            ->placeholder('create section')
+                            ->required(),
+                    ])
+
             ]);
     }
 
@@ -63,7 +68,7 @@ class SectionResource extends Resource
                         );
                     }
                 )
-                ->width(20),
+                    ->width(20),
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),

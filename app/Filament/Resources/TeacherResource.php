@@ -33,201 +33,199 @@ class TeacherResource extends Resource
     }
 
     public static function getNavigationBadge(): ?string
-{
+    {
 
-    $count = Teacher::count();
+        $count = Teacher::count();
 
-    if($count == 0){
-        return null;
+        if ($count == 0) {
+            return null;
+        }
+        return $count;
     }
-    return $count;
-}
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
-                ->columns(2)
-                ->schema([
+                Forms\Components\Fieldset::make('Profile Image')
+                    ->columns(2)
+                    ->schema([
                         //  ViewField::make('qr_code')
                         //     ->view('default')
                         //     ->hiddenOn(['edit', 'create']),
                         Forms\Components\ViewField::make('qr_code')
-                        ->view('default')
-                        ->visible(fn ($get, $operation) => empty($get('profile_image')) && ($operation == 'view')),
-                    // Forms\Components\FileUpload::make('profile_image')
-                    //         // ->avatar()
-                    //         ->previewable()
-                    //         // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
-                    //         ->imagePreviewHeight(200)
-                    //         ->imageEditor()
-                    //         ->downloadable()
-                    //         ->image()
-                    //         ->hiddenOn('view')
-                    Forms\Components\FileUpload::make('profile_image')
-                    ->label('')
-                    ->previewable()
-                    ->imagePreviewHeight(200)
-                    ->imageEditor()
-                    ->downloadable()
-                    ->image()
-                    ->visible(fn ($get, $operation) => in_array($operation, ['create', 'edit']) || (!empty($get('profile_image')) && $operation == 'view')),
-                    Forms\Components\ViewField::make('qr_code')
-                    ->label('Qr Code')
-                    ->view('filament.resources.student-resource.pages.teacher')
-                    ->afterStateUpdated(function ($state, $set) {
-                        // Fetch enrollment data based on state
-                        $enrollment = Teacher::find($state->get('id'));
-                        if ($enrollment) {
-                            $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
-                        } else {
-                            $set(['record' => null]); // Ensure record is null if no enrollment found
-                        }
-                    }),
+                            ->view('default')
+                            ->visible(fn ($get, $operation) => empty($get('profile_image')) && ($operation == 'view')),
+                        // Forms\Components\FileUpload::make('profile_image')
+                        //         // ->avatar()
+                        //         ->previewable()
+                        //         // ->imageEditorEmptyFillColor(asset('default_images/me.jpg'))
+                        //         ->imagePreviewHeight(200)
+                        //         ->imageEditor()
+                        //         ->downloadable()
+                        //         ->image()
+                        //         ->hiddenOn('view')
+                        Forms\Components\FileUpload::make('profile_image')
+                            ->label('')
+                            ->previewable()
+                            ->imagePreviewHeight(200)
+                            ->imageEditor()
+                            ->downloadable()
+                            ->image()
+                            ->visible(fn ($get, $operation) => in_array($operation, ['create', 'edit']) || (!empty($get('profile_image')) && $operation == 'view')),
+                        Forms\Components\ViewField::make('qr_code')
+                            ->label('Qr Code')
+                            ->view('filament.resources.student-resource.pages.teacher')
+                            ->afterStateUpdated(function ($state, $set) {
+                                // Fetch enrollment data based on state
+                                $enrollment = Teacher::find($state->get('id'));
+                                if ($enrollment) {
+                                    $set(['record' => $enrollment->toArray()]); // Passes $record variable to the view as array
+                                } else {
+                                    $set(['record' => null]); // Ensure record is null if no enrollment found
+                                }
+                            }),
 
-                ]),
-                Forms\Components\Section::make('Personal Information')
-                ->columns(3)
-                ->schema([
+                    ]),
+                Forms\Components\Fieldset::make('Personal Information')
+                    ->columns(3)
+                    ->schema([
 
-                    Forms\Components\TextInput::make('first_name')
-                    ->placeholder('juan')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('middle_name')
-                    ->placeholder('dela')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->placeholder('cruz')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->placeholder('example@gmail.com')
-                    // ->unique(table: 'users', column: 'email', ignoreRecord: true)
-                    ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
-                    ->required()
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('birthdate')
-                    ->required(),
-                Forms\Components\Select::make('gender')
-                    ->options(GenderEnum::class)
-                    ->required(),
-                Forms\Components\TextInput::make('contact_number')
-                    ->placeholder('09xxxxxxxxx')
-                    ->numeric()
-                    ->maxLength(11),
-                    Forms\Components\TextInput::make('school_id')
-                    ->placeholder('000000')
-                    ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
-                    ->required()
-                    ->maxLength(255),
+                        Forms\Components\TextInput::make('first_name')
+                            ->placeholder('juan')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('middle_name')
+                            ->placeholder('dela')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('last_name')
+                            ->placeholder('cruz')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->placeholder('example@gmail.com')
+                            // ->unique(table: 'users', column: 'email', ignoreRecord: true)
+                            ->unique(table: 'teachers', column: 'email', ignoreRecord: true)
+                            ->required()
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('birthdate')
+                            ->required(),
+                        Forms\Components\Select::make('gender')
+                            ->options(GenderEnum::class)
+                            ->required(),
+                        Forms\Components\TextInput::make('contact_number')
+                            ->placeholder('09xxxxxxxxx')
+                            ->numeric()
+                            ->maxLength(11),
+                        Forms\Components\TextInput::make('school_id')
+                            ->placeholder('000000')
+                            ->unique(table: 'teachers', column: 'school_id', ignoreRecord: true)
+                            ->required()
+                            ->maxLength(255),
 
-                ]),
-
-
-
-                Forms\Components\Section::make('Personal Address')
-                ->columns(2)
-                ->schema([
-                Forms\Components\TextInput::make('barangay')
-                    ->placeholder('barangay')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('municipality')
-                    ->placeholder('municipality')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('province')
-                    ->placeholder('province')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('zip_code')
-                    ->placeholder('0000')
-                    ->numeric(),
-
-                ]),
+                    ]),
 
 
-                Forms\Components\Section::make('In case of Emergency')
-                ->columns(2)
-                ->schema([
-                    Forms\Components\TextInput::make('guardian_name')
-                    ->label('Parents / Guardian name')
-                    ->placeholder('juan dela cruz')
-                    ->maxLength(255),
-                    Forms\Components\TextInput::make('incaseof_emergency')
-                    ->label('Contact Number')
-                    ->placeholder('09xxxxxxxxx')
-                    ->maxLength(11)
-                    ->numeric(),
-                ])
 
-                ]);
+                Forms\Components\Fieldset::make('Personal Address')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('barangay')
+                            ->placeholder('barangay')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('municipality')
+                            ->placeholder('municipality')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('province')
+                            ->placeholder('province')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('zip_code')
+                            ->placeholder('0000')
+                            ->numeric(),
+
+                    ]),
 
 
+                Forms\Components\Fieldset::make('In case of Emergency')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('guardian_name')
+                            ->label('Parents / Guardian name')
+                            ->placeholder('juan dela cruz')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('incaseof_emergency')
+                            ->label('Contact Number')
+                            ->placeholder('09xxxxxxxxx')
+                            ->maxLength(11)
+                            ->numeric(),
+                    ])
+
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-                ->columns([
-                    Tables\Columns\TextColumn::make('#')->state(
-                        static function (HasTable $livewire, stdClass $rowLoop): string {
-                            return (string) (
-                                $rowLoop->iteration +
-                                ($livewire->getTableRecordsPerPage() * (
-                                    $livewire->getTablePage() - 1
-                                ))
-                            );
-                        }
-                    ),
-                    Tables\Columns\ImageColumn::make('profile_image')
-                        ->circular()
-                        ->default(url('default_images/me.jpg'))
-                        ->alignCenter()
-                        ->sortable(),
-                    Tables\Columns\TextColumn::make('school_id')
-                        ->label('School ID')
-                        ->default('Set ID')
-                        ->badge()
-                        ->color('danger')
-                        ->sortable(),
-                    Tables\Columns\TextColumn::make('full_name')
-                        ->searchable(['first_name', 'middle_name', 'last_name'])
-                        ->sortable(['first_name', 'last_name', 'middle_name']),
-                    Tables\Columns\TextColumn::make('email')
-                        ->label('Email')
-                        ->copyable()
-                        ->searchable()
-                       ->copyMessage('Email address copied')
+            ->columns([
+                Tables\Columns\TextColumn::make('#')->state(
+                    static function (HasTable $livewire, stdClass $rowLoop): string {
+                        return (string) (
+                            $rowLoop->iteration +
+                            ($livewire->getTableRecordsPerPage() * (
+                                $livewire->getTablePage() - 1
+                            ))
+                        );
+                    }
+                ),
+                Tables\Columns\ImageColumn::make('profile_image')
+                    ->circular()
+                    ->default(url('default_images/me.jpg'))
+                    ->alignCenter()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('school_id')
+                    ->label('School ID')
+                    ->default('Set ID')
+                    ->badge()
+                    ->color('danger')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(['first_name', 'middle_name', 'last_name'])
+                    ->sortable(['first_name', 'last_name', 'middle_name']),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->copyable()
+                    ->searchable()
+                    ->copyMessage('Email address copied')
 
-                        ->sortable(),
-                    Tables\Columns\TextColumn::make('gender')
-                        ->sortable(),
-                    Tables\Columns\TextColumn::make('deleted_at')
-                        ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
-                    Tables\Columns\TextColumn::make('created_at')
-                        ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
-                    Tables\Columns\TextColumn::make('updated_at')
-                        ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('gender')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
-            //     Tables\Actions\EditAction::make(),
-            //     Tables\Actions\Action::make('Qr')
-            //     ->icon('heroicon-o-qr-code')
-            //     ->modalCancelActionLabel('Close')
-            //    ->modalContent(fn (Teacher $record): View => view(
-            //       'filament.resources.student-resource.pages.teacher',
-            //    ['record' => $record],
-            //    ))->modalSubmitAction(false),
+                //     Tables\Actions\EditAction::make(),
+                //     Tables\Actions\Action::make('Qr')
+                //     ->icon('heroicon-o-qr-code')
+                //     ->modalCancelActionLabel('Close')
+                //    ->modalContent(fn (Teacher $record): View => view(
+                //       'filament.resources.student-resource.pages.teacher',
+                //    ['record' => $record],
+                //    ))->modalSubmitAction(false),
             ])
 
             ->bulkActions([
