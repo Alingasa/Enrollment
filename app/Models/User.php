@@ -55,20 +55,19 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    public function setPassword($value){
+    public function setPassword($value)
+    {
         return $this->attributes['password'] = Hash::make($value);
     }
 
-    public function teacher(){
+    public function teacher()
+    {
         return $this->hasOne(Teacher::class);
     }
 
     public function canAccessPanel(Panel $panel): bool
     {
-
-        if($panel->getId() == 'admin'){
-           return empty($this->teacher);
-        }
+        return true;
     }
 
     public function getRoleAttribute()

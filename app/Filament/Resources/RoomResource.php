@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RoomResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -39,6 +40,55 @@ class RoomResource extends Resource
             return null;
         }
         return $count;
+    }
+    public static function canCreate(): bool
+    {
+        return static::can('create') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return static::can('update', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return static::can('delete', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return static::can('deleteAny') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return static::can('forceDelete', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return static::can('forceDeleteAny') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canReorder(): bool
+    {
+        return static::can('reorder') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        return static::can('replicate', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return static::can('restore', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return static::can('restoreAny') && auth()->user()->role == 'Admin';
     }
 
     public static function form(Form $form): Form

@@ -12,18 +12,23 @@ class ListSubjects extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\CreateAction::make()
-            ->label('New Subject')
-            ->icon('heroicon-o-plus'),
+        if (auth()->user()->role == 'Admin') {
+            return [
+                Actions\CreateAction::make()
+                    ->label('New Subject')
+                    ->icon('heroicon-o-plus'),
 
-            Actions\Action::make('print')
-            ->url(fn() => route('download.allsubjects'))
-            ->openUrlInNewTab()
-            ->label('Print')
-            ->icon('heroicon-o-printer')
-            ->color('danger'),
+                Actions\Action::make('print')
+                    ->url(fn () => route('download.allsubjects'))
+                    ->openUrlInNewTab()
+                    ->label('Print')
+                    ->icon('heroicon-o-printer')
+                    ->color('danger'),
 
-        ];
+
+
+            ];
+        }
+        return [];
     }
 }

@@ -18,30 +18,45 @@ class DataTypeOverview extends BaseWidget
 {
     protected function getStats(): array
     {
+        if (auth()->user()->role == 'Admin') {
+            return [
+                //
+                Stat::make('Enrollee', Enrollment::query()->where('status', EnrolledStatus::PENDING)->count())
+                    ->description('Enrollee')
+                    ->descriptionIcon('heroicon-m-users', IconPosition::Before),
+                Stat::make('Students', Enrollment::query()->where('status', EnrolledStatus::ENROLLED)->count())
+                    ->description('Students')
+                    ->descriptionIcon('heroicon-m-users', IconPosition::Before),
+                Stat::make('Teachers', Teacher::query()->count())
+                    ->description('Teachers')
+                    ->descriptionIcon('heroicon-m-users', IconPosition::Before),
+                Stat::make('Subjects', Subject::query()->count())
+                    ->description('Subjects')
+                    ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
+                Stat::make('Section', Section::query()->count())
+                    ->description('Section')
+                    ->descriptionIcon('heroicon-m-rectangle-stack', IconPosition::Before),
+                Stat::make('Strands', Strand::query()->count())
+                    ->description('Strands')
+                    ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
+                Stat::make('Rooms', Room::query()->count())
+                    ->description('Rooms')
+                    ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
+            ];
+        }
         return [
-            //
-
-            Stat::make('Enrollee', Enrollment::query()->where('status',EnrolledStatus::PENDING)->count())
-            ->description('Enrollee')
-            ->descriptionIcon('heroicon-m-users', IconPosition::Before),
-            Stat::make('Students', Enrollment::query()->where('status', EnrolledStatus::ENROLLED)->count())
-            ->description('Students')
-            ->descriptionIcon('heroicon-m-users', IconPosition::Before),
-            Stat::make('Teachers', Teacher::query()->count())
-            ->description('Teachers')
-            ->descriptionIcon('heroicon-m-users', IconPosition::Before),
             Stat::make('Subjects', Subject::query()->count())
-            ->description('Subjects')
-            ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
+                ->description('Subjects')
+                ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
             Stat::make('Section', Section::query()->count())
-            ->description('Section')
-            ->descriptionIcon('heroicon-m-rectangle-stack', IconPosition::Before),
+                ->description('Section')
+                ->descriptionIcon('heroicon-m-rectangle-stack', IconPosition::Before),
             Stat::make('Strands', Strand::query()->count())
-            ->description('Strands')
-            ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
+                ->description('Strands')
+                ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
             Stat::make('Rooms', Room::query()->count())
-            ->description('Rooms')
-            ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
+                ->description('Rooms')
+                ->descriptionIcon('heroicon-m-adjustments-vertical', IconPosition::Before),
         ];
     }
 }

@@ -42,6 +42,10 @@ class TeacherResource extends Resource
         }
         return $count;
     }
+    public static function canAccess(): bool
+    {
+        return static::canViewAny() && auth()->user()->role == 'Admin';
+    }
     public static function form(Form $form): Form
     {
         return $form
