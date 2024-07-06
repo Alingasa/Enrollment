@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\ProfileController;
+use App\Filament\Pages\Auth\Login;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\Api\ProfileController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -16,7 +17,7 @@ Route::get('/teacher/{hash}', [ProfileController::class, 'teacher'])->name('teac
 Route::get('/studentview/{hash}', [ProfileController::class, 'studentvalidateid'])->name('studentview');
 Route::put('/studentsUpdate/{school_id}', [EnrollmentController::class, 'updateSchool']);
 
-
+Route::get('/login', Login::class)->name('login');
 
 //Print PDF
 Route::get('download', [PDFController::class, 'downloadpdf'])->name('download.tes');

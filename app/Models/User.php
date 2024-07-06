@@ -69,7 +69,6 @@ class User extends Authenticatable implements FilamentUser
         if($panel->getId() == 'admin'){
            return empty($this->teacher);
         }
-        return true;
     }
 
     public function getRoleAttribute()
