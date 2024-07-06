@@ -81,7 +81,6 @@ class SubjectsRelationManager extends RelationManager
                     ->label('Room')
                     ->default('TBA'),
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\TrashedFilter::make()
             ])
