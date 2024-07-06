@@ -39,7 +39,7 @@ class FilamentServiceProvider extends ServiceProvider
                 ->spa()
                 ->profile(isSimple: false)
                 ->colors([
-                    'primary' => Color::sky,
+                    'primary' => Color::Sky,
                 ]);
         });
 
