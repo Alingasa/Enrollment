@@ -50,12 +50,15 @@ class SubjectResource extends Resource
             }
             return $count;
         }
-        $count = Subject::count();
+
+        $count = Subject::whereHas('teacher', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->count();
 
         if ($count == 0) {
             return null;
         }
-        return $count && Subject::where('teacher', auth()->user()->id);
+        return $count;
     }
 
     public static function canCreate(): bool
@@ -198,6 +201,109 @@ class SubjectResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if (auth()->user()->role == 'Admin') {
+            return $table
+                ->columns([
+                    Tables\Columns\TextColumn::make('#')->state(
+                        static function (HasTable $livewire, stdClass $rowLoop): string {
+                            return (string) (
+                                $rowLoop->iteration +
+                                ($livewire->getTableRecordsPerPage() * (
+                                    $livewire->getTablePage() - 1
+                                ))
+                            );
+                        }
+                    ),
+                    Tables\Columns\TextColumn::make('subject_code')
+                        ->label('Code')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('subject_title')
+                        ->label('Description')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('section.name')
+                        ->numeric()
+                        ->searchable()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('teacher.full_name')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('day')
+                        ->label('Schedule')
+                        ->searchable()
+                        ->formatStateUsing(function ($state, $record) {
+                            $string = '';
+                            $string = $state . '/' . ' ' . '(' . $record->time_start . '-' . $record->time_end . ')';
+                            //    dd($record);
+                            return $string;
+                        }),
+                    Tables\Columns\TextColumn::make('subject_type')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('units')
+                        ->numeric()
+                        ->searchable()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('room.room')
+                        ->label('Room')
+                        ->searchable()
+                        ->default('TBA'),
+                    // Tables\Columns\TextColumn::make('strand.name')
+                    //     ->default('No Strand')
+                    //     ->badge()
+                    //     ->color(fn ($state) => match($state){
+                    //         'No Strand' => 'danger',
+                    //         $state => 'warning',
+                    //     })
+                    //     ->sortable(),
+
+                    // Tables\Columns\TextColumn::make('grade_level')
+                    //     ->searchable(),
+                    // Tables\Columns\TextColumn::make('room')
+                    //     ->default('TBA')
+                    //     ->searchable()
+                    //     ->color(fn ($state) => match($state){
+                    //         'TBA' => 'danger',
+                    //         $state => '',
+                    //        })
+                    //     ->searchable(),
+
+                    Tables\Columns\TextColumn::make('deleted_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])->defaultSort('created_at', 'desc')
+                ->filters([
+                    Tables\Filters\TrashedFilter::make(),
+                    Tables\Filters\TrashedFilter::make(),
+                    SelectFilter::make('grade_level')
+                        ->options(GradeEnum::class),
+                    SelectFilter::make('strand_id')
+                        ->label('By Strands')
+                        ->relationship('strand', 'name'),
+                    SelectFilter::make('section_id')
+                        ->label('By Section')
+                        ->relationship('section', 'name'),
+                ])
+                ->headerActions([])
+                ->actions([
+                    // Tables\Actions\ViewAction::make(),
+                    // Tables\Actions\EditAction::make(),
+                ])
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                        Tables\Actions\ForceDeleteBulkAction::make(),
+                        Tables\Actions\RestoreBulkAction::make(),
+                    ]),
+                ]);
+        }
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('#')->state(
@@ -210,6 +316,10 @@ class SubjectResource extends Resource
                         );
                     }
                 ),
+                Tables\Columns\TextColumn::make('enrollments_count')
+                    ->counts('enrollments')
+                    ->alignCenter()
+                    ->label('No. of Students'),
                 Tables\Columns\TextColumn::make('subject_code')
                     ->label('Code')
                     ->searchable(),
@@ -219,9 +329,6 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('section.name')
                     ->numeric()
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('teacher.full_name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('day')
                     ->label('Schedule')
@@ -242,25 +349,6 @@ class SubjectResource extends Resource
                     ->label('Room')
                     ->searchable()
                     ->default('TBA'),
-                // Tables\Columns\TextColumn::make('strand.name')
-                //     ->default('No Strand')
-                //     ->badge()
-                //     ->color(fn ($state) => match($state){
-                //         'No Strand' => 'danger',
-                //         $state => 'warning',
-                //     })
-                //     ->sortable(),
-
-                // Tables\Columns\TextColumn::make('grade_level')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('room')
-                //     ->default('TBA')
-                //     ->searchable()
-                //     ->color(fn ($state) => match($state){
-                //         'TBA' => 'danger',
-                //         $state => '',
-                //        })
-                //     ->searchable(),
 
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
