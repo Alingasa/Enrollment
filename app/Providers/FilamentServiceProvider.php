@@ -32,15 +32,15 @@ class FilamentServiceProvider extends ServiceProvider
         //
     }
 
-    public function configPanel():void
+    public function configPanel(): void
     {
         Panel::configureUsing(function (Panel $panel) {
             $panel
-            ->spa()
-            ->profile(isSimple: false)
-            ->colors([
-                'primary' => Color::Sky,
-            ]);
+                ->spa()
+                ->profile(isSimple: false)
+                ->colors([
+                    'primary' => Color::sky,
+                ]);
         });
 
         TableViewAction::configureUsing(function (TableViewAction $action) {

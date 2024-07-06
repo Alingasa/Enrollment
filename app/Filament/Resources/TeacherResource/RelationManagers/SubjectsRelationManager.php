@@ -45,14 +45,14 @@ class SubjectsRelationManager extends RelationManager
                     }
                 ),
                 Tables\Columns\TextColumn::make('subject_code')
-                ->label('Code')
-                ->searchable(),
+                    ->label('Code')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject_title')
-                ->label('Subject')
-                ->searchable(),
+                    ->label('Description')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('section.name')
-                ->numeric()
-                ->sortable(),
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
@@ -60,19 +60,19 @@ class SubjectsRelationManager extends RelationManager
                     ->label('Schedule')
                     ->formatStateUsing(function ($state, $record) {
                         $string = '';
-                       $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
-                    //    dd($record);
-                       return $string;
-                      }),
+                        $string = $state . '/' . ' ' . '(' . $record->time_start . '-' . $record->time_end . ')';
+                        //    dd($record);
+                        return $string;
+                    }),
                 Tables\Columns\TextColumn::make('subject_type')
-                      ->searchable(),
-                  Tables\Columns\TextColumn::make('units')
-                      ->numeric()
-                      ->sortable(),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('units')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('room.room')
-                      ->label('Room')
-                      ->default('TBA')
-                      ->searchable(),
+                    ->label('Room')
+                    ->default('TBA')
+                    ->searchable(),
             ])
             ->filters([
 
@@ -82,21 +82,21 @@ class SubjectsRelationManager extends RelationManager
                 // Tables\Actions\CreateAction::make(),
                 // Tables\Actions\AttachAction::make(),
                 Tables\Actions\Action::make('Print')
-                ->url(fn () => route('teacher.profile', [
-                    'record' => $this->getOwnerRecord(),
-                ]))
-                ->openUrlInNewTab()
-                ->label('Print')
-                ->icon('heroicon-m-printer')
-                ->color('danger'),
+                    ->url(fn () => route('teacher.profile', [
+                        'record' => $this->getOwnerRecord(),
+                    ]))
+                    ->openUrlInNewTab()
+                    ->label('Print')
+                    ->icon('heroicon-m-printer')
+                    ->color('danger'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('view')
-                ->label('')
-                ->icon(''),
+                    ->label('')
+                    ->icon(''),
             ]);
     }
 }

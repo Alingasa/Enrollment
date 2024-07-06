@@ -56,7 +56,7 @@ class SubjectsRelationManager extends RelationManager
                     ->label('Code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subject_title')
-                    ->label('Subject')
+                    ->label('Description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('section.name')
                     ->numeric()
