@@ -32,42 +32,42 @@ class SubjectResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('Subjects')
-                ->columns(2)
-                ->schema([
-                    Forms\Components\Select::make('teacher_id')
-                    ->label('Teacher')
-                    ->options(Teacher::all()->pluck('full_name', 'id')),
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\Select::make('teacher_id')
+                            ->label('Teacher')
+                            ->options(Teacher::all()->pluck('full_name', 'id')),
                         // ->relationship(name: 'teachers', titleAttribute: 'first_name'),
                         // ->numeric(),
-                    Forms\Components\Select::make('room_id')
-                    ->label('Room')
-                    ->options(Room::all()->pluck('room', 'id')),
-                    Forms\Components\Select::make('section_id')
-                    ->label('Strand')
-                    ->options(Section::all()->pluck('name', 'id')),
-                    Forms\Components\TextInput::make('subject_code')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('subject_title')
-                        ->maxLength(255),
-                    Forms\Components\Select::make('strand_id')
-                        ->label('Strand')
-                        ->options(Strand::all()->pluck('name', 'id')),
-                    Forms\Components\TextInput::make('subject_type')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('units')
-                        ->numeric(),
-                    Forms\Components\TextInput::make('grade_level')
-                        ->maxLength(255),
+                        Forms\Components\Select::make('room_id')
+                            ->label('Room')
+                            ->options(Room::all()->pluck('room', 'id')),
+                        Forms\Components\Select::make('section_id')
+                            ->label('Strand')
+                            ->options(Section::all()->pluck('name', 'id')),
+                        Forms\Components\TextInput::make('subject_code')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('subject_title')
+                            ->maxLength(255),
+                        Forms\Components\Select::make('strand_id')
+                            ->label('Strand')
+                            ->options(Strand::all()->pluck('name', 'id')),
+                        Forms\Components\TextInput::make('subject_type')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('units')
+                            ->numeric(),
+                        Forms\Components\TextInput::make('grade_level')
+                            ->maxLength(255),
 
 
-                ]),
+                    ]),
                 Forms\Components\Section::make('Schedule')
-                ->schema([
-                    Forms\Components\TextInput::make('schedule')
-                    ->view('forms.components.schedule')
-                    // View::make('forms.components.schedule')
-                ])
+                    ->schema([
+                        Forms\Components\TextInput::make('schedule')
+                            ->view('forms.components.schedule')
+                        // View::make('forms.components.schedule')
+                    ])
 
             ]);
     }
@@ -87,34 +87,34 @@ class SubjectResource extends Resource
                     }
                 ),
                 Tables\Columns\TextColumn::make('subject_code')
-                ->label('Code')
-                ->searchable(),
+                    ->label('Code')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject_title')
-                ->label('Description')
-                ->searchable(),
+                    ->label('Description')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('section.name')
-                ->numeric()
-                ->sortable(),
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('day')
                     ->label('Schedule')
                     ->formatStateUsing(function ($state, $record) {
                         $string = '';
-                       $string = $state .'/'.' '.'('.$record->time_start.'-'.$record->time_end.')';
-                    //    dd($record);
-                       return $string;
-                      }),
+                        $string = $state . '/' . ' ' . '(' . $record->time_start . '-' . $record->time_end . ')';
+                        //    dd($record);
+                        return $string;
+                    }),
                 Tables\Columns\TextColumn::make('enrollments_count')
-                ->counts('enrollments')
-                ->alignCenter()
-                ->label('No. of Students'),
+                    ->counts('enrollments')
+                    ->alignCenter()
+                    ->label('No. of Students'),
                 Tables\Columns\TextColumn::make('subject_type')
-                      ->searchable(),
-                  Tables\Columns\TextColumn::make('units')
-                      ->numeric()
-                      ->sortable(),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('units')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('room.room')
-                ->label('Room')
-                ->default('TBA'),
+                    ->label('Room')
+                    ->default('TBA'),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -127,13 +127,13 @@ class SubjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])->defaultSort('created_at', 'desc')
+            ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                ->icon(''),
+                    ->icon(''),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -165,9 +165,9 @@ class SubjectResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-        ->whereHas('teacher', function($query){
-            $query->where('user_id', auth()->user()->id);
-        })
+            ->whereHas('teacher', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
