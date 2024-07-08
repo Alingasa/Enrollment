@@ -306,16 +306,16 @@ class SubjectResource extends Resource
         }
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('#')->state(
-                    static function (HasTable $livewire, stdClass $rowLoop): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->getTableRecordsPerPage() * (
-                                $livewire->getTablePage() - 1
-                            ))
-                        );
-                    }
-                ),
+                // Tables\Columns\TextColumn::make('#')->state(
+                //     static function (HasTable $livewire, stdClass $rowLoop): string {
+                //         return (string) (
+                //             $rowLoop->iteration +
+                //             ($livewire->getTableRecordsPerPage() * (
+                //                 $livewire->getTablePage() - 1
+                //             ))
+                //         );
+                //     }
+                // ),
                 Tables\Columns\TextColumn::make('enrollments_count')
                     ->counts('enrollments')
                     ->alignCenter()
