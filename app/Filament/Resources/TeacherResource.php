@@ -354,6 +354,11 @@ class TeacherResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('subjects_count')
+                    ->counts('subjects')
+                    ->alignCenter(true)
+                    ->label('Subjects')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

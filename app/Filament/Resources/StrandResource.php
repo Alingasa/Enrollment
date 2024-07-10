@@ -124,6 +124,12 @@ class StrandResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('enrollments_count')
+                    ->sortable()
+                    ->label('Students')
+                    ->alignCenter(true)
+                    ->counts('enrollments')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

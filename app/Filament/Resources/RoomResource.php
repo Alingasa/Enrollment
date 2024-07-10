@@ -131,6 +131,7 @@ class RoomResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subjects_count')
                     ->label('Subjects')
+                    ->sortable()
                     ->alignCenter(true)
                     ->counts('subjects')
                     ->searchable(),
