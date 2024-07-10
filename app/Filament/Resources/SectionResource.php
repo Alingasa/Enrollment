@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SectionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SectionResource\RelationManagers;
+use App\Filament\Resources\SectionResource\RelationManagers\EnrollmentsRelationManager;
+use App\Filament\Resources\SectionResource\RelationManagers\SubjectsRelationManager;
 
 class SectionResource extends Resource
 {
@@ -122,6 +124,12 @@ class SectionResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('subjects_count')
+                    ->label('Subjects')
+                    ->alignCenter(true)
+                    ->sortable()
+                    ->counts('subjects')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -155,6 +163,7 @@ class SectionResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
         ];
     }
 

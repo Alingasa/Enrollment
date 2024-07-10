@@ -136,15 +136,18 @@ class SubjectResource extends Resource
                             ->preload()
                             ->searchable(),
                         Forms\Components\TextInput::make('subject_code')
-                            ->placeholder('subject code')
+                            ->label('Subject Code')
+                            ->placeholder('subject Code')
                             ->unique(table: "subjects", column: "subject_code", ignoreRecord: true)
                             ->required(),
 
 
                         Forms\Components\TextInput::make('subject_title')
-                            ->placeholder('subject title')
+                            ->label('Description')
+                            ->placeholder('Description')
                             ->required(),
                         Forms\Components\Select::make('subject_type')
+                            ->label('Subject Type')
                             ->options([
                                 'LECTURE' => 'LECTURE',
                                 'LABORATORY' => 'LABORATORY'
@@ -265,7 +268,11 @@ class SubjectResource extends Resource
                     //         $state => '',
                     //        })
                     //     ->searchable(),
-
+                    Tables\Columns\TextColumn::make('enrollments_count')
+                        ->counts('enrollments')
+                        ->alignCenter()
+                        ->label('No. of Students')
+                        ->toggleable(isToggledHiddenByDefault: true),
                     Tables\Columns\TextColumn::make('deleted_at')
                         ->dateTime()
                         ->sortable()

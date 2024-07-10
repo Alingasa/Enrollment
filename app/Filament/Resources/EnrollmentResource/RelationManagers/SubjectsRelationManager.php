@@ -11,6 +11,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Contracts\Support\Htmlable;
 
 class SubjectsRelationManager extends RelationManager
 {
