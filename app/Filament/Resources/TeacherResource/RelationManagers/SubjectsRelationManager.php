@@ -75,7 +75,6 @@ class SubjectsRelationManager extends RelationManager
                     ->searchable(),
             ])
             ->filters([
-
                 //
             ])
             ->headerActions([

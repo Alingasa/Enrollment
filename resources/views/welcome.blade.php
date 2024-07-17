@@ -12,26 +12,30 @@
 
     <style>
         body {
-            background-color: #ffffff;
-            font-family: 'Arial', sans-serif;
-            /* background-image: url('image/school.jpg');
+            background-image: url('image/island.jpg');
+            background-size: cover;
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover; */
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+            /*
+            font-family: 'Arial', sans-serif;
+   /* Cover the entire background */
+            /* Prevent image from repeating */
         }
 
         .boxform {
-            background-color: #ffffff;
-            /* color:white; */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+            color: white;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             padding: 2rem;
             margin-top: 2rem;
-            /* transition: transform 0.3s; */
+            transition: transform 0.3s ease-in-out;
         }
 
         .boxform:hover {
-            /* transform: translateY(-5px); */
+            transform: translateY(-5px);
+            /* Example transformation on hover */
         }
 
         .form-check-label {
@@ -60,6 +64,11 @@
 
         .alert {
             margin-top: 1rem;
+        }
+
+        .form-label {
+            /* background-color: rgba(255, 255, 255, 0.5); */
+            padding: 2px;
         }
 
         @media (max-width: 576px) {

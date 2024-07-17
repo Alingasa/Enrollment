@@ -29,6 +29,7 @@ class CreateTeacher extends CreateRecord
         }
 
         $record = new ($this->getModel())(Arr::except($data, ['qr_code']));
+
         $record['user_id'] = $record->user()->create([
             'name'      => $record->full_name,
             'email'     => $email,
@@ -47,3 +48,4 @@ class CreateTeacher extends CreateRecord
         return $record;
     }
 }
+

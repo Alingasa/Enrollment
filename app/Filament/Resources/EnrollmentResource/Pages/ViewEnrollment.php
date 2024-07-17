@@ -94,4 +94,6 @@ class ViewEnrollment extends ViewRecord
     {
         return 'School ID: ' . ($this->getRecord()->school_id ?: 'Not Set');
     }
+
+
 }
