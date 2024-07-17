@@ -277,7 +277,6 @@
 
         fieldset {
             border: 5px solid #000;
-            color: white;
             background-image: linear-gradient(to right, #ffffff, #f0f0f0);
             padding: 5px;
             border-radius: 10px;
