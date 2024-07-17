@@ -263,7 +263,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
-        body {
+        /* body {
             background-image: url('/image/island.jpg');
             background-size: cover;
             background-repeat: no-repeat;
@@ -272,16 +272,16 @@
             /*
             font-family: 'Arial', sans-serif;
    /* Cover the entire background */
-            /* Prevent image from repeating */
-        }
+        /* Prevent image from repeating */
+
 
         fieldset {
             border: 5px solid #000;
             color: white;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-image: linear-gradient(to right, #ffffff, #f0f0f0);
             padding: 5px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         legend {
@@ -296,9 +296,9 @@
 
         h2 {
             font-weight: bold;
-            color: white;
+            /* color: white;
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 10px;
+            padding: 10px; */
         }
     </style>
 </head>

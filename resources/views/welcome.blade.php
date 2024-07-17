@@ -24,9 +24,11 @@
         }
 
         .boxform {
-            color: white;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-image: linear-gradient(to right, #ffffff, #f0f0f0);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* color: white;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
             border-radius: 10px;
             padding: 2rem;
             margin-top: 2rem;
