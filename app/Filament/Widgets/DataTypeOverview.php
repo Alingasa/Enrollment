@@ -45,7 +45,9 @@ class DataTypeOverview extends BaseWidget
             ];
         }
         return [
-            Stat::make('Subjects', Subject::query()->count())
+            Stat::make('Subjects', Subject::whereHas('teacher', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->count())
                 ->description('Subjects')
                 ->descriptionIcon('heroicon-m-book-open', IconPosition::Before),
             Stat::make('Section', Section::query()->count())

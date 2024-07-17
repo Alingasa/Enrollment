@@ -12,8 +12,10 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Contracts\View\View;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\ViewField;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TeacherResource\RelationManagers;
@@ -23,18 +25,45 @@ class TeacherResource extends Resource
 {
     protected static ?string $model = Teacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Settings';
+    // protected static ?string $navigationGroup = 'Settings';
+    public static function getNavigationGroup(): ?string
+    {
+        if (auth()->user()->role == 'Teacher') {
+            return static::$navigationGroup = '';
+        }
+        return static::$navigationGroup = 'Settings';
+    }
 
+    public static function getNavigationIcon(): string | Htmlable | null
+    {
+        if (auth()->user()->role == 'Teacher') {
+            return  static::$navigationIcon = 'heroicon-o-user';
+        }
+        return static::$navigationIcon = 'heroicon-o-users';
+    }
+    public static function getModelLabel(): string
+    {
+        if (auth()->user()->role == 'Teacher') {
+            return 'Profile';
+        }
+        return 'Teacher';
+    }
     public static function getNavigationBadgeColor(): string | array | null
     {
-        return 'success';
+        if (auth()->user()->role == 'Admin') {
+
+            return 'success';
+        }
+        return '';
     }
 
     public static function getNavigationBadge(): ?string
     {
 
+        if (auth()->user()->role == 'Teacher') {
+            return '';
+        }
         $count = Teacher::count();
 
         if ($count == 0) {
@@ -42,9 +71,58 @@ class TeacherResource extends Resource
         }
         return $count;
     }
-    public static function canAccess(): bool
+    // public static function canAccess(): bool
+    // {
+    //     return static::canViewAny() && auth()->user()->role == 'Admin';
+    // }
+    public static function canCreate(): bool
     {
-        return static::canViewAny() && auth()->user()->role == 'Admin';
+        return static::can('create') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return static::can('update', $record) && auth()->user()->role == 'Admin' || $record->user_id == auth()->user()->id;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return static::can('delete', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return static::can('deleteAny') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return static::can('forceDelete', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return static::can('forceDeleteAny') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canReorder(): bool
+    {
+        return static::can('reorder') && auth()->user()->role == 'Admin';
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        return static::can('replicate', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return static::can('restore', $record) && auth()->user()->role == 'Admin';
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return static::can('restoreAny') && auth()->user()->role == 'Admin';
     }
     public static function form(Form $form): Form
     {
@@ -169,6 +247,78 @@ class TeacherResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if (auth()->user()->role == 'Teacher') {
+            return $table
+                ->columns([
+                    // Tables\Columns\TextColumn::make('#')->state(
+                    //     static function (HasTable $livewire, stdClass $rowLoop): string {
+                    //         return (string) (
+                    //             $rowLoop->iteration +
+                    //             ($livewire->getTableRecordsPerPage() * (
+                    //                 $livewire->getTablePage() - 1
+                    //             ))
+                    //         );
+                    //     }
+                    // ),
+                    Tables\Columns\ImageColumn::make('profile_image')
+                        ->circular()
+                        ->default(url('default_images/me.jpg'))
+                        ->alignCenter()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('school_id')
+                        ->label('School ID')
+                        ->default('Set ID')
+                        ->badge()
+                        ->color('danger')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('full_name')
+                        ->searchable(['first_name', 'middle_name', 'last_name'])
+                        ->sortable(['first_name', 'last_name', 'middle_name']),
+                    Tables\Columns\TextColumn::make('email')
+                        ->label('Email')
+                        ->copyable()
+                        ->searchable()
+                        ->copyMessage('Email address copied')
+
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('gender')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('deleted_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])->defaultSort('created_at', 'desc')
+                ->filters([
+                    Tables\Filters\TrashedFilter::make(),
+                ])
+                ->actions([
+                    // Tables\Actions\ViewAction::make(),
+                    //     Tables\Actions\EditAction::make(),
+                    //     Tables\Actions\Action::make('Qr')
+                    //     ->icon('heroicon-o-qr-code')
+                    //     ->modalCancelActionLabel('Close')
+                    //    ->modalContent(fn (Teacher $record): View => view(
+                    //       'filament.resources.student-resource.pages.teacher',
+                    //    ['record' => $record],
+                    //    ))->modalSubmitAction(false),
+                ])
+
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                        Tables\Actions\ForceDeleteBulkAction::make(),
+                        Tables\Actions\RestoreBulkAction::make(),
+                    ]),
+                ]);
+        }
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('#')->state(
@@ -203,6 +353,11 @@ class TeacherResource extends Resource
 
                     ->sortable(),
                 Tables\Columns\TextColumn::make('gender')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subjects_count')
+                    ->counts('subjects')
+                    ->alignCenter(true)
+                    ->label('Subjects')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
@@ -262,9 +417,12 @@ class TeacherResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        if (auth()->user()->role == 'Admin') {
+            return parent::getEloquentQuery()
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+        }
+        return parent::getEloquentQuery()->where('user_id', auth()->user()->id);
     }
 }

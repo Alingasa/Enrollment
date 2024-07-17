@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RoomResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\RoomResource\RelationManagers;
+use App\Filament\Resources\RoomResource\RelationManagers\SubjectsRelationManager;
+use Filament\Support\Enums\Alignment;
 
 class RoomResource extends Resource
 {
@@ -127,6 +129,12 @@ class RoomResource extends Resource
                 Tables\Columns\TextColumn::make('room')
                     ->label('Rooms')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('subjects_count')
+                    ->label('Subjects')
+                    ->sortable()
+                    ->alignCenter(true)
+                    ->counts('subjects')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -160,6 +168,8 @@ class RoomResource extends Resource
     {
         return [
             //
+            SubjectsRelationManager::class,
+
         ];
     }
 

@@ -14,15 +14,18 @@ class Section extends Model
         'name',
     ];
 
-    public function setNameAttribute($value){
+    public function setNameAttribute($value)
+    {
         return $this->attributes['name'] = ucwords($value);
     }
 
-    public function enrollments(){
+    public function enrollments()
+    {
         return $this->hasMany(Section::class);
     }
 
-    public function subjects(){
+    public function subjects()
+    {
         return $this->hasMany(Subject::class);
     }
 }
